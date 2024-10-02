@@ -1,0 +1,43 @@
+name: Clinica
+
+services:
+  frontend:
+    container_name: clinica-frontend
+    image: clinica-frontend-image
+    build: 
+      context: ./frontend
+      dockerfile: dockerfile.dev
+    volumes:
+      - "./frontend:/app"
+    ports:
+      - "5173:5173"
+    command: >
+      bash -c "cp -rfu /cache/node_modules/. /app/node_modules/  
+      && npm run dev"
+  
+  backend:
+    container_name: clinica-backend
+    image: clinica-backend-image
+    build: 
+      context: ./backend
+      dockerfile: dockerfile.dev
+    volumes:
+      - "./backend:/app"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+  
+  database:
+    container_name: clinica-database
+    image: mysql:8.0.34
+    ports:
+      - "3307:3306"
+    environment:
+      - 'MYSQL_DATABASE=clinica'
+      - 'MYSQL_ROOT_PASSWORD=1234'
+    volumes:
+      - clinica-database-volume:/var/lib/mysql
+
+volumes:
+  clinica-database-volume:
