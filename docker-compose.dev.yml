@@ -25,6 +25,10 @@ services:
       - "./backend:/app"
     ports:
       - "8080:8080"
+    environment:
+      - DATABASE_URL=jdbc:mysql://database:3306/clinica
+      - DATABASE_USER=adminclinica
+      - DATABASE_PASSWORD=1234
     depends_on:
       - database
   
@@ -34,8 +38,10 @@ services:
     ports:
       - "3307:3306"
     environment:
-      - 'MYSQL_DATABASE=clinica'
-      - 'MYSQL_ROOT_PASSWORD=1234'
+      - "MYSQL_DATABASE=clinica"
+      - "MYSQL_USER=adminclinica"
+      - "MYSQL_PASSWORD=1234"
+      - "MYSQL_ROOT_PASSWORD=1234"
     volumes:
       - clinica-database-volume:/var/lib/mysql
 
