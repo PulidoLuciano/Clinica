@@ -37,5 +37,4 @@ public class DetalleDiagnostico {
     @Column(name = "fecha_inicio")
     private Date fechaInicio;
 
-    // Otros campos, getters y setters
 }
