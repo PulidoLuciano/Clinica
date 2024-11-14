@@ -19,4 +19,7 @@ public class ObraSocial {
 
     @Column(name = "nombre", unique = true, nullable = false)
     private String nombre;
+
+    @OneToMany(mappedBy = "obraSocial", cascade = CascadeType.ALL, orphanRemoval = false)
+    private Paciente paciente;
 }

@@ -12,9 +12,10 @@ public class Paciente extends Persona{
     @Column(name = "numero_afiliado")
     private int numeroAfiliado;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "obra_social_id")
     private ObraSocial obraSocial;
 
-    @OneToOne
+    @OneToOne(mappedBy = "paciente")
     private HistoriaClinica historiaClinica;
 }

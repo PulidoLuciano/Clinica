@@ -20,4 +20,8 @@ public class HistoriaClinica {
 
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "paciente_cuil", referencedColumnName = "cuil")
+    private Paciente paciente;
 }
