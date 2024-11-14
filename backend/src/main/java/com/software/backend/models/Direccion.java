@@ -37,7 +37,4 @@ public class Direccion {
     @ManyToOne
     @JoinColumn(name = "localidad_id")
     private Localidad localidad;
-
-    @OneToMany(mappedBy = "direccion", cascade = CascadeType.ALL, orphanRemoval = false)
-    private List<Localidad> localidades;
 }

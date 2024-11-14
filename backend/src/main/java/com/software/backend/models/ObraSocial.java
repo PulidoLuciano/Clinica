@@ -1,5 +1,6 @@
 package com.software.backend.models;
 
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -8,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 
 @Entity
 @Table(name = "obras_sociales")
@@ -21,5 +24,5 @@ public class ObraSocial {
     private String nombre;
 
     @OneToMany(mappedBy = "obraSocial", cascade = CascadeType.ALL, orphanRemoval = false)
-    private Paciente paciente;
+    private List<Paciente> pacientes;
 }
