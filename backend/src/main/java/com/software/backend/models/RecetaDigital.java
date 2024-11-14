@@ -31,6 +31,6 @@ public class RecetaDigital {
     @OneToOne(mappedBy = "receta")
     private Evolucion evolucion;
 
-    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = false)
-    private List<Medicamento> medicamentos;
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL)
+    private List<DetalleReceta> detalles;
 }

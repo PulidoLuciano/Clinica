@@ -28,6 +28,6 @@ public class HistoriaClinica {
     @OneToOne(cascade = CascadeType.ALL)
     private Paciente paciente;
 
-    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = false)
-    private List<Diagnostico> diagnosticos;
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL)
+    private List<DetalleDiagnostico> detalles;
 }
