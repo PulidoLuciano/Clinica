@@ -15,19 +15,22 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "historias_clinicas")
-public class HistoriaClinica {
+@Table(name = "recetas_digitales")
+public class RecetaDigital {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "fecha_creacion", nullable = false)
-    private Date fechaCreacion;
+    @Column
+    private Date fecha;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Paciente paciente;
+    @Column(name = "codigo")
+    private int codigo;
 
-    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = false)
-    private List<Diagnostico> diagnosticos;
+    @OneToOne(mappedBy = "receta")
+    private Evolucion evolucion;
+
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = false)
+    private List<Medicamento> medicamentos;
 }

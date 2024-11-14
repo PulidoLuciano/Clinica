@@ -4,30 +4,33 @@ import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
 
 @Entity
-@Table(name = "historias_clinicas")
-public class HistoriaClinica {
-
+@Table(name = "diagnosticos")
+public class Diagnostico {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "fecha_creacion", nullable = false)
-    private Date fechaCreacion;
+    @Column
+    private String nombre;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Paciente paciente;
+    @Column(name = "fecha_generacion")
+    private Date fechaGeneracion;
 
-    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = false)
-    private List<Diagnostico> diagnosticos;
+    @ManyToOne
+    private HistoriaClinica historiaClinica;
+
+    @OneToMany(mappedBy = "diagnostico", cascade = CascadeType.ALL, orphanRemoval = false)
+    private List<Evolucion> evoluciones;
 }
