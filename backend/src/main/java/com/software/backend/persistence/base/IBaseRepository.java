@@ -1,17 +1,18 @@
 package com.software.backend.persistence.base;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.Repository;
 
 @NoRepositoryBean
-public interface IBaseRepository<T, ID> extends Repository<T, ID>{
+public interface IBaseRepository<T, ID> extends ListCrudRepository<T, ID>{
     <S extends T> S save(S entity);
 
     Optional<T> findById(ID primaryKey);
 
-    Iterable<T> findAll();
+    List<T> findAll();
 
     void delete(T entity);
 

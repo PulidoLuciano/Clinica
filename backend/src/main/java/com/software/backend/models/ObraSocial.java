@@ -25,4 +25,36 @@ public class ObraSocial {
 
     @OneToMany(mappedBy = "obraSocial", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Paciente> pacientes;
+
+    public ObraSocial(){}
+
+    public ObraSocial(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
+    }
+
+    
 }
