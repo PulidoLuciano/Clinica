@@ -1,7 +1,6 @@
 package com.software.backend.models;
 
 import java.util.List;
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,8 +16,8 @@ import jakarta.persistence.CascadeType;
 public class ObraSocial {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "nombre", unique = true, nullable = false)
     private String nombre;
@@ -32,11 +31,11 @@ public class ObraSocial {
         this.nombre = nombre;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 

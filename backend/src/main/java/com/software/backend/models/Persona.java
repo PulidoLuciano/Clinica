@@ -12,10 +12,10 @@ import jakarta.persistence.MappedSuperclass;
 public abstract class Persona {
     
     @Id
-    private int cuil;
+    private long cuil;
 
     @Column(unique = true, nullable = false)
-    private int dni;
+    private long dni;
 
     @Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
@@ -24,7 +24,7 @@ public abstract class Persona {
     private String email;
 
     @Column
-    private int telefono;
+    private long telefono;
 
     @Column(nullable = false)
     private String nombre;
@@ -38,7 +38,7 @@ public abstract class Persona {
 
     public Persona(){}
 
-    public Persona(int cuil, int dni, Date fechaNacimiento, String email, int telefono, String nombre, String apellido,
+    public Persona(long cuil, long dni, Date fechaNacimiento, String email, long telefono, String nombre, String apellido,
             Direccion direccion) {
         this.cuil = cuil;
         this.dni = dni;
@@ -50,19 +50,19 @@ public abstract class Persona {
         this.direccion = direccion;
     }
 
-    public int getCuil() {
+    public long getCuil() {
         return cuil;
     }
 
-    public void setCuil(int cuil) {
+    public void setCuil(long cuil) {
         this.cuil = cuil;
     }
 
-    public int getDni() {
+    public long getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(long dni) {
         this.dni = dni;
     }
 
@@ -82,11 +82,11 @@ public abstract class Persona {
         this.email = email;
     }
 
-    public int getTelefono() {
+    public long getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(long telefono) {
         this.telefono = telefono;
     }
 

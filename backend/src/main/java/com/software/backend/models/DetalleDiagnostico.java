@@ -1,7 +1,6 @@
 package com.software.backend.models;
 
 import java.util.List;
-import java.util.UUID;
 import java.sql.Date;
 
 import jakarta.persistence.CascadeType;
@@ -17,8 +16,8 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class DetalleDiagnostico {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "historia_clinica_id")
