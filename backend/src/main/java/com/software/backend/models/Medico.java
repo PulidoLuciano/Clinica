@@ -25,4 +25,25 @@ public class Medico extends Usuario{
         this.matricula = matricula;
         this.especialidad = especialidad;
     }
+
+    public Medico(int cuil, int dni, Date fechaNacimiento, String email, int telefono, String nombre, String apellido,
+            Direccion direccion, String contrasenia) {
+        super(cuil, dni, fechaNacimiento, email, telefono, nombre, apellido, direccion, contrasenia);
+    }
+
+    public int getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(int matricula) {
+        this.matricula = matricula;
+    }
+
+    public Especialidad getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
+    }
 }

@@ -32,4 +32,57 @@ public class RecetaDigital {
 
     @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL)
     private List<DetalleReceta> detalles;
+
+    public RecetaDigital(long id, Date fecha, int codigo, Evolucion evolucion, List<DetalleReceta> detalles) {
+        this.id = id;
+        this.fecha = fecha;
+        this.codigo = codigo;
+        this.evolucion = evolucion;
+        this.detalles = detalles;
+    }
+
+    public RecetaDigital() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public Evolucion getEvolucion() {
+        return evolucion;
+    }
+
+    public void setEvolucion(Evolucion evolucion) {
+        this.evolucion = evolucion;
+    }
+
+    public List<DetalleReceta> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<DetalleReceta> detalles) {
+        this.detalles = detalles;
+    }
+
+    
 }

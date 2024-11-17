@@ -66,4 +66,20 @@ public class GenericController<T, ID, IServicio extends IGenericService<T, ID>, 
             return ResponseEntity.notFound().build(); // Retorna un 404 Not Found si la entidad no fue encontrada
         }
     }
+
+    public IServicio getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(IServicio servicio) {
+        this.servicio = servicio;
+    }
+
+    public TMapper getMapper() {
+        return mapper;
+    }
+
+    public void setMapper(TMapper mapper) {
+        this.mapper = mapper;
+    }
 }
