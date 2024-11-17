@@ -37,6 +37,8 @@ public class GenericController<T, ID, IServicio extends IGenericService<T, ID>, 
     public ResponseEntity<TDto> create(@Valid @RequestBody TDto dto) {
         T entity = mapper.toEntity(dto);
         T savedEntity = servicio.save(entity);
+        if(savedEntity == null)
+            throw new RuntimeException("Ya existe esta entidad");
         TDto savedDto = mapper.toDTO(savedEntity);
         return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
     }

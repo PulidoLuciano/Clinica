@@ -35,4 +35,10 @@ public class GenericService<T, ID, IRepository extends IBaseRepository<T, ID>> i
             repositorio.delete(toEliminate.get());
     }
 
+    public IRepository getRepositorio() {
+        return repositorio;
+    }
+
+    
+
 }
