@@ -2,6 +2,7 @@ package com.software.backend.controllers.dtos;
 
 import java.util.Date;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -35,11 +36,12 @@ public class PacienteDTO {
     @Size(min = 2, max = 255, message = "El apellido debe tener entre 2 y 255 caracteres")
     private String apellido;
 
-    //private DireccionDTO direccion;
+    private DireccionDTO direccion;
 
     @NotNull(message = "El número de afiliado no puede ser nulo")
     private Integer numeroAfiliado;
     
+    @NotNull
     private ObraSocialDTO obraSocial;
 
     public PacienteDTO(@NotNull(message = "El CUIL no puede ser nulo") long cuil,
@@ -50,7 +52,8 @@ public class PacienteDTO {
             @NotBlank(message = "El nombre no puede estar vacío") @Size(min = 2, max = 255, message = "El nombre debe tener entre 2 y 255 caracteres") String nombre,
             @NotBlank(message = "El apellido no puede estar vacío") @Size(min = 2, max = 255, message = "El apellido debe tener entre 2 y 255 caracteres") String apellido,
             @NotNull(message = "El número de afiliado no puede ser nulo") Integer numeroAfiliado,
-            ObraSocialDTO obraSocial) {
+            @NotNull ObraSocialDTO obraSocial,
+            @Valid DireccionDTO direccion) {
         this.cuil = cuil;
         this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
@@ -60,6 +63,7 @@ public class PacienteDTO {
         this.apellido = apellido;
         this.numeroAfiliado = numeroAfiliado;
         this.obraSocial = obraSocial;
+        this.direccion = direccion;
     }
 
     public long getCuil() {
@@ -130,9 +134,15 @@ public class PacienteDTO {
         return obraSocial;
     }
 
+    public DireccionDTO getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(DireccionDTO direccion) {
+        this.direccion = direccion;
+    }
+
     public void setObraSocial(ObraSocialDTO obraSocial) {
         this.obraSocial = obraSocial;
     }
-
-    
 }

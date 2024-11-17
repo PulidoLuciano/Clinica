@@ -2,6 +2,7 @@ package com.software.backend.models;
 
 import java.sql.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -32,7 +33,7 @@ public abstract class Persona {
     @Column(nullable = false)
     private String apellido;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "direccion_id")
     private Direccion direccion;
 

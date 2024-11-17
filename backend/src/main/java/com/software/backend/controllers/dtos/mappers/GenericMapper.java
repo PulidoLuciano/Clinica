@@ -1,7 +1,5 @@
 package com.software.backend.controllers.dtos.mappers;
 
-import org.mapstruct.MappingTarget;
-
 import java.util.List;
 
 public interface GenericMapper<E, D> {
@@ -17,8 +15,5 @@ public interface GenericMapper<E, D> {
 
     // Mapea de una lista de DTOs a una lista de entidades
     List<E> toEntityList(List<D> dtos);
-
-    // Actualiza una entidad existente a partir de un DTO
-    void updateFromDTO(D dto, @MappingTarget E entity);
 }
 

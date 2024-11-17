@@ -19,8 +19,8 @@ public class GenericService<T, ID, IRepository extends IBaseRepository<T, ID>> i
     }
 
     @Override
-    public T save(T paciente) {
-        return repositorio.save(paciente);
+    public T save(T entity) {
+        return repositorio.save(entity);
     }
 
     @Override
