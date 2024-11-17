@@ -3,6 +3,8 @@ package com.software.backend.controllers.dtos;
 import java.util.Date;
 import java.util.List;
 
+import com.software.backend.models.Diagnostico;
+
 public class DetalleDiagnosticoDTO {
 
     private long id;
@@ -11,17 +13,20 @@ public class DetalleDiagnosticoDTO {
 
     private Date fechaInicio;
 
+    private Diagnostico diagnostico;
+
     private List<EvolucionDTO> evoluciones;
 
     public DetalleDiagnosticoDTO() {
         this.fechaInicio = new Date(System.currentTimeMillis());
     }
 
-    public DetalleDiagnosticoDTO(long id, String observaciones, Date fechaInicio, List<EvolucionDTO> evoluciones) {
+    public DetalleDiagnosticoDTO(long id, String observaciones, Date fechaInicio, List<EvolucionDTO> evoluciones, Diagnostico diagnostico) {
         this.id = id;
         this.observaciones = observaciones;
         this.fechaInicio = fechaInicio;
         this.evoluciones = evoluciones;
+        this.diagnostico = diagnostico;
     }
 
     public long getId() {
@@ -54,5 +59,13 @@ public class DetalleDiagnosticoDTO {
 
     public void setEvoluciones(List<EvolucionDTO> evoluciones) {
         this.evoluciones = evoluciones;
+    }
+
+    public Diagnostico getDiagnostico() {
+        return diagnostico;
+    }
+
+    public void setDiagnostico(Diagnostico diagnostico) {
+        this.diagnostico = diagnostico;
     }
 }

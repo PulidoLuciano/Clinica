@@ -2,6 +2,7 @@ package com.software.backend.models;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,8 +34,11 @@ public class Evolucion {
     @JoinColumn(name = "detalle_diagnostico_id")
     private DetalleDiagnostico detalleDiagnostico;
 
-    @OneToOne(optional = true)
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
     private RecetaDigital receta;
+
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    private PedidoLaboratorio pedidoLaboratorio;
 
     @ManyToOne
     Medico medico;
