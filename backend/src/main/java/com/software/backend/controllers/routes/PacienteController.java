@@ -7,12 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.software.backend.controllers.dtos.DetalleDiagnosticoDTO;
+import com.software.backend.controllers.dtos.EvolucionDTO;
 import com.software.backend.controllers.dtos.HistoriaClinicaDTO;
 import com.software.backend.controllers.dtos.PacienteDTO;
 import com.software.backend.controllers.dtos.mappers.DetalleDiagnosticoMapper;
+import com.software.backend.controllers.dtos.mappers.EvolucionMapper;
 import com.software.backend.controllers.dtos.mappers.HistoriaClinicaMapper;
 import com.software.backend.controllers.dtos.mappers.PacienteMapper;
 import com.software.backend.models.Diagnostico;
+import com.software.backend.models.Evolucion;
 import com.software.backend.models.Paciente;
 import com.software.backend.services.interfaces.IPacienteService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +28,8 @@ public class PacienteController extends GenericController<Paciente, Long, IPacie
     private HistoriaClinicaMapper historiaMapper;
     @Autowired
     private DetalleDiagnosticoMapper detallesDiagnosticosMapper;
+    @Autowired
+    private EvolucionMapper evolucionMapper;
     
     @GetMapping("/{cuil}/historia")
     public ResponseEntity<HistoriaClinicaDTO> getHistoriaClinica(@PathVariable("cuil") Long cuil) {
@@ -40,8 +45,9 @@ public class PacienteController extends GenericController<Paciente, Long, IPacie
     }
 
     @PostMapping("/{cuil}/historia/diagnosticos/{diagnostico}/evolucion")
-    public String createEvolucion(@PathVariable("cuil") Long cuil, @PathVariable("diagnostico") String nameDiagnostico) {
-        return nameDiagnostico;
+    public Evolucion createEvolucion(@PathVariable("cuil") Long cuil, @PathVariable("diagnostico") String nameDiagnostico, @RequestBody EvolucionDTO evolucionDto) {
+        Evolucion evolucion = evolucionMapper.toEntity(evolucionDto);
+        return evolucion;
     }
     
     

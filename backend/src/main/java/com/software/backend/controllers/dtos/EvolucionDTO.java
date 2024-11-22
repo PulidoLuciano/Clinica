@@ -2,10 +2,15 @@ package com.software.backend.controllers.dtos;
 
 import java.util.Date;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public class EvolucionDTO {
 
     private long id;
 
+    @NotEmpty(message = "El texto de la evolución no puede estar vacío")
+    @NotNull(message = "El texto de la evolución no puede ser nulo")
     private String texto;
 
     private Date fecha;
@@ -13,6 +18,7 @@ public class EvolucionDTO {
     private RecetaDigitalDTO receta;
 
     public EvolucionDTO() {
+        this.fecha = new Date(System.currentTimeMillis());
     }
 
     public EvolucionDTO(long id, String texto, Date fecha, RecetaDigitalDTO receta) {
