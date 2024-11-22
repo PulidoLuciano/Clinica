@@ -2,45 +2,14 @@ package com.software.backend.models;
 
 import java.util.Date;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
-@Entity
-@Table(name = "evoluciones")
 public class Evolucion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column
     private String texto;
-
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    
-    @ManyToOne
-    @JoinColumn(name = "detalle_diagnostico_id")
     private DetalleDiagnostico detalleDiagnostico;
-
-    @OneToOne(optional = true, cascade = CascadeType.ALL)
     private RecetaDigital receta;
-
-    @OneToOne(optional = true, cascade = CascadeType.ALL)
     private PedidoLaboratorio pedidoLaboratorio;
-
-    @ManyToOne
     Medico medico;
 
     public Evolucion() {
