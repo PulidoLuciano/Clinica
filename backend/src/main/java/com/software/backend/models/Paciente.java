@@ -2,26 +2,13 @@ package com.software.backend.models;
 
 import java.sql.Date;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "Pacientes")
+
 public class Paciente extends Persona{
     
-    @Column(name = "numero_afiliado")
+ 
     private int numeroAfiliado;
-
-    @ManyToOne
-    @JoinColumn(name = "obra_social_id")
     private ObraSocial obraSocial;
-
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL)
     private HistoriaClinica historiaClinica;
 
     public Paciente(){

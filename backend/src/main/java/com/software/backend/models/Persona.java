@@ -2,39 +2,16 @@ package com.software.backend.models;
 
 import java.sql.Date;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
-
-@MappedSuperclass
 public abstract class Persona {
     
-    @Id
+   
     private long cuil;
-
-    @Column(unique = true, nullable = false)
     private long dni;
-
-    @Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
-
-    @Column(nullable = false)
     private String email;
-
-    @Column
     private long telefono;
-
-    @Column(nullable = false)
     private String nombre;
-
-    @Column(nullable = false)
     private String apellido;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "direccion_id")
     private Direccion direccion;
 
     public Persona(){}
