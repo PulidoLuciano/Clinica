@@ -2,14 +2,14 @@ package com.software.backend.models;
 
 import java.util.Date;
 
-public class Paciente extends Persona implements Identifiable<Long>{
+public class Paciente extends Persona{
     
     private int numeroAfiliado;
     private ObraSocial obraSocial;
     private HistoriaClinica historiaClinica;
 
     public Paciente(){
-        this.historiaClinica = new HistoriaClinica(new Date(System.currentTimeMillis()));
+        this.historiaClinica = new HistoriaClinica();
     }
     
     public Paciente(int cuil, int dni, Date fechaNacimiento, String email, int telefono, String nombre, String apellido,
@@ -17,7 +17,7 @@ public class Paciente extends Persona implements Identifiable<Long>{
         super(cuil, dni, fechaNacimiento, email, telefono, nombre, apellido, direccion);
         this.numeroAfiliado = numeroAfiliado;
         this.obraSocial = obraSocial;
-        this.historiaClinica = new HistoriaClinica(new Date(System.currentTimeMillis()));
+        this.historiaClinica = new HistoriaClinica();
     }
 
     public int getNumeroAfiliado() {
@@ -37,12 +37,11 @@ public class Paciente extends Persona implements Identifiable<Long>{
     }
 
     public HistoriaClinica getHistoriaClinica() {
-        if(this.historiaClinica == null) this.historiaClinica = new HistoriaClinica(new Date(System.currentTimeMillis()));
+        if(this.historiaClinica == null) this.historiaClinica = new HistoriaClinica();
         return this.historiaClinica;
     }
 
-    @Override
-    public Long getId() {
-        return super.getCuil();
-    }    
+    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto){
+        return historiaClinica.createEvolucion(medico, diagnostico, texto);
+    }
 }

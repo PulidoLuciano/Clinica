@@ -1,7 +1,9 @@
 package com.software.backend.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class HistoriaClinica {
 
@@ -9,10 +11,8 @@ public class HistoriaClinica {
     private List<DetalleDiagnostico> detalles;
 
     public HistoriaClinica() {
-    }
-
-    public HistoriaClinica(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+        this.fechaCreacion = new Date(System.currentTimeMillis());
+        this.detalles = new ArrayList<>();
     }
 
     public Date getFechaCreacion() {
@@ -29,5 +29,17 @@ public class HistoriaClinica {
 
     public void setDetalles(List<DetalleDiagnostico> detalles) {
         this.detalles = detalles;
+    }
+
+    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto){
+        Optional<DetalleDiagnostico> detalleOpt = detalles.stream().filter(item -> item.getDiagnostico().equals(diagnostico)).findFirst();
+        DetalleDiagnostico detalle;
+        if(detalleOpt.isEmpty()){
+            detalle = new DetalleDiagnostico(diagnostico);
+            detalles.add(detalle);
+        }else{
+            detalle = detalleOpt.get();
+        }
+        return detalle.crearEvolucion(medico, texto);
     }
 }

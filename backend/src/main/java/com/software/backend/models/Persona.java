@@ -2,7 +2,7 @@ package com.software.backend.models;
 
 import java.util.Date;
 
-public abstract class Persona {
+public abstract class Persona implements Identifiable<Long>{
 
     private long cuil;
     private long dni;
@@ -91,5 +91,8 @@ public abstract class Persona {
         this.direccion = direccion;
     }
 
-    
+    @Override
+    public Long getId() {
+        return getCuil();
+    }    
 }

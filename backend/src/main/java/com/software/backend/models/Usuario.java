@@ -1,12 +1,12 @@
 package com.software.backend.models;
 
-import java.sql.Date;
+import java.util.Date;
 
 public abstract class Usuario extends Persona{
 
     private String contrasenia;
 
-    public Usuario(int cuil, int dni, Date fechaNacimiento, String email, int telefono, String nombre, String apellido,
+    public Usuario(long cuil, long dni, Date fechaNacimiento, String email, int telefono, String nombre, String apellido,
             Direccion direccion, String contrasenia) {
         super(cuil, dni, fechaNacimiento, email, telefono, nombre, apellido, direccion);
         this.contrasenia = contrasenia;

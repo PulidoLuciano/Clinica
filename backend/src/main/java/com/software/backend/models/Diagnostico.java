@@ -7,7 +7,7 @@ public class Diagnostico implements Identifiable<String>{
     public Diagnostico() {
     }
 
-    public Diagnostico(long id, String nombre) {
+    public Diagnostico(String nombre) {
         this.nombre = nombre;
     }
 

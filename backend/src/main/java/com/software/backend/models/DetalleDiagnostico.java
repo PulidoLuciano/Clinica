@@ -1,44 +1,22 @@
 package com.software.backend.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 
 public class DetalleDiagnostico {
 
-    private long id;
-    private HistoriaClinica historiaClinica;
     private Diagnostico diagnostico;
     private List<Evolucion> evoluciones;
-    private String observaciones;
     private Date fechaInicio;
 
     public DetalleDiagnostico() {
     }
 
-    public DetalleDiagnostico(long id, HistoriaClinica historiaClinica, Diagnostico diagnostico,
-            List<Evolucion> evoluciones, String observaciones, Date fechaInicio) {
-        this.id = id;
-        this.historiaClinica = historiaClinica;
+    public DetalleDiagnostico(Diagnostico diagnostico) {
         this.diagnostico = diagnostico;
-        this.evoluciones = evoluciones;
-        this.observaciones = observaciones;
-        this.fechaInicio = fechaInicio;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public HistoriaClinica getHistoriaClinica() {
-        return historiaClinica;
-    }
-
-    public void setHistoriaClinica(HistoriaClinica historiaClinica) {
-        this.historiaClinica = historiaClinica;
+        this.evoluciones = new ArrayList<>();
+        this.fechaInicio = new Date(System.currentTimeMillis());
     }
 
     public Diagnostico getDiagnostico() {
@@ -57,20 +35,18 @@ public class DetalleDiagnostico {
         this.evoluciones = evoluciones;
     }
 
-    public String getObservaciones() {
-        return observaciones;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
-    }
-
     public Date getFechaInicio() {
         return fechaInicio;
     }
 
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
+    }
+
+    public Evolucion crearEvolucion(Medico medico, String texto){
+        Evolucion evolucion = new Evolucion(medico, texto, null, null);
+        evoluciones.add(evolucion);
+        return evolucion;
     }
 
 }
