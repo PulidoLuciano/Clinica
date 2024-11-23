@@ -4,28 +4,22 @@ import java.util.List;
 
 
 
-public class Pais {
+public class Pais implements Identifiable<String> {
 
-    private long id;
+  
     private String nombre;
     private List<Provincia> provincias;
 
     public Pais() {
     }
 
-    public Pais(long id, String nombre, List<Provincia> provincias) {
-        this.id = id;
+    public Pais(String nombre, List<Provincia> provincias) {
+       
         this.nombre = nombre;
         this.provincias = provincias;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+   
 
     public String getNombre() {
         return nombre;
@@ -41,6 +35,11 @@ public class Pais {
 
     public void setProvincias(List<Provincia> provincias) {
         this.provincias = provincias;
+    }
+
+    @Override
+    public String getId() {
+        return nombre;
     }
 
     

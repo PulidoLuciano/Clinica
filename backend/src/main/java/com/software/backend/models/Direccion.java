@@ -2,7 +2,7 @@ package com.software.backend.models;
 
 public class Direccion {
 
-    private long id;
+ 
     private String calle;
     private int altura;
     private int piso;
@@ -12,8 +12,8 @@ public class Direccion {
     public Direccion() {
     }
 
-    public Direccion(long id, String calle, int altura, int piso, String departamento, Localidad localidad) {
-        this.id = id;
+    public Direccion(String calle, int altura, int piso, String departamento, Localidad localidad) {
+      
         this.calle = calle;
         this.altura = altura;
         this.piso = piso;
@@ -21,13 +21,6 @@ public class Direccion {
         this.localidad = localidad;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getCalle() {
         return calle;
