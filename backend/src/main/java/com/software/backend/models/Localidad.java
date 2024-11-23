@@ -3,7 +3,6 @@ package com.software.backend.models;
 
 public class Localidad {
 
-    
     private String nombre;
    
     public Localidad() {
@@ -21,7 +20,4 @@ public class Localidad {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-
-    
 }

@@ -2,7 +2,6 @@ package com.software.backend.controllers.dtos;
 
 import java.util.Date;
 
-import com.software.backend.models.Direccion;
 import com.software.backend.models.ObraSocial;
 
 import jakarta.validation.constraints.Digits;
@@ -45,8 +44,6 @@ public class PacienteDTO {
     @Size(min = 2, max = 255, message = "El apellido debe tener entre 2 y 255 caracteres")
     private String apellido;
 
-    private Direccion direccion;
-
     @NotNull(message = "El número de afiliado no puede ser nulo")
     @Min(value = 1, message = "El número de afiliado debe ser mayor que 0")
     private Integer numeroAfiliado;
@@ -61,7 +58,7 @@ public class PacienteDTO {
             @NotNull(message = "El número de teléfono no puede ser nulo") @Digits(integer = 15, fraction = 0, message = "El número de teléfono debe ser válido") Long telefono,
             @NotBlank(message = "El nombre no puede estar vacío") @Size(min = 2, max = 255, message = "El nombre debe tener entre 2 y 255 caracteres") String nombre,
             @NotBlank(message = "El apellido no puede estar vacío") @Size(min = 2, max = 255, message = "El apellido debe tener entre 2 y 255 caracteres") String apellido,
-            Direccion direccion, @NotNull(message = "El número de afiliado no puede ser nulo") Integer numeroAfiliado,
+            @NotNull(message = "El número de afiliado no puede ser nulo") Integer numeroAfiliado,
             @NotNull ObraSocial obraSocial) {
         this.cuil = cuil;
         this.dni = dni;
@@ -70,7 +67,6 @@ public class PacienteDTO {
         this.telefono = telefono;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.direccion = direccion;
         this.numeroAfiliado = numeroAfiliado;
         this.obraSocial = obraSocial;
     }
@@ -78,7 +74,7 @@ public class PacienteDTO {
     public PacienteDTO() {
     }
 
-    public Long getCuil() {
+    public long getCuil() {
         return cuil;
     }
 
@@ -86,7 +82,7 @@ public class PacienteDTO {
         this.cuil = cuil;
     }
 
-    public Long getDni() {
+    public long getDni() {
         return dni;
     }
 
@@ -110,7 +106,7 @@ public class PacienteDTO {
         this.email = email;
     }
 
-    public Long getTelefono() {
+    public long getTelefono() {
         return telefono;
     }
 
@@ -144,14 +140,6 @@ public class PacienteDTO {
 
     public ObraSocial getObraSocial() {
         return obraSocial;
-    }
-
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
     }
 
     public void setObraSocial(ObraSocial obraSocial) {
