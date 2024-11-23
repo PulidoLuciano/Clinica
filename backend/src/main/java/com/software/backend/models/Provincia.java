@@ -3,7 +3,7 @@ package com.software.backend.models;
 import java.util.List;
 
 
-public class Provincia {
+public class Provincia implements Identifiable<String>{
 
 
     private String nombre;
@@ -19,7 +19,7 @@ public class Provincia {
       
     }
 
-  
+
 
     public String getNombre() {
         return nombre;
@@ -35,6 +35,11 @@ public class Provincia {
 
     public void setLocalidades(List<Localidad> localidades) {
         this.localidades = localidades;
+    }
+
+    @Override
+    public String getId() {
+        return nombre;
     }
 
     

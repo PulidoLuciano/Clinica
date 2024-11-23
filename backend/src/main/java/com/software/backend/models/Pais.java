@@ -1,5 +1,6 @@
 package com.software.backend.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,12 +12,13 @@ public class Pais implements Identifiable<String> {
     private List<Provincia> provincias;
 
     public Pais() {
+        this.provincias = new ArrayList<>();
     }
 
     public Pais(String nombre, List<Provincia> provincias) {
        
         this.nombre = nombre;
-        this.provincias = provincias;
+        this.provincias = new ArrayList<>();
     }
 
    
