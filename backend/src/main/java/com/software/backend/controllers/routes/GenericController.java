@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.software.backend.controllers.dtos.mappers.GenericMapper;
-import com.software.backend.services.interfaces.IGenericService;
+import com.software.backend.models.Identifiable;
+import com.software.backend.services.interfaces.GenericService;
 
 import jakarta.validation.Valid;
 
-public class GenericController<T, ID, IServicio extends IGenericService<T, ID>, TDto, TMapper extends GenericMapper<T, TDto>> {
+public class GenericController<T extends Identifiable<ID>, ID, IServicio extends GenericService<T, ID>, TDto, TMapper extends GenericMapper<T, TDto>> {
 
     @Autowired
     private IServicio servicio;
@@ -37,34 +38,27 @@ public class GenericController<T, ID, IServicio extends IGenericService<T, ID>, 
     public ResponseEntity<TDto> create(@Valid @RequestBody TDto dto) {
         T entity = mapper.toEntity(dto);
         T savedEntity = servicio.save(entity);
-        if(savedEntity == null)
-            throw new RuntimeException("Ya existe esta entidad");
         TDto savedDto = mapper.toDTO(savedEntity);
         return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
     }
 
-    // Obtener una entida por su ID
+    // Obtener una entidad por su ID
     @GetMapping("/{id}")
     public ResponseEntity<TDto> getById(@PathVariable("id") ID id) {
-        Optional<T> TOptional = servicio.getById(id);
-        if(TOptional.isPresent()){
-            T entity = TOptional.get();
-            return ResponseEntity.ok(mapper.toDTO(entity));
+        Optional<T> optEntity = servicio.getById(id);
+        if(optEntity.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        else
-            return ResponseEntity.notFound().build();
+        TDto dto = mapper.toDTO(optEntity.get());
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     // Eliminar una entidad por su ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable("id") ID id) {
-        Optional<T> entityOptional = servicio.getById(id);
-        if (entityOptional.isPresent()) {
-            servicio.deleteById(id);
-            return ResponseEntity.noContent().build(); // Retorna un 204 No Content si la eliminación fue exitosa
-        } else {
-            return ResponseEntity.notFound().build(); // Retorna un 404 Not Found si la entidad no fue encontrada
-        }
+    public ResponseEntity<TDto> deleteById(@PathVariable("id") ID id) {
+        T deleted = servicio.deleteById(id);
+        TDto dto = mapper.toDTO(deleted);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     public IServicio getServicio() {

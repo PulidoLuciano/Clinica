@@ -3,36 +3,16 @@ package com.software.backend.persistence.base;
 import java.util.List;
 import java.util.Optional;
 
-public class BaseRepository<T, ID> implements IBaseRepository<T, ID>{
+import com.software.backend.models.Identifiable;
 
-    @Override
-    public T save(T entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
-    }
+public interface BaseRepository<T extends Identifiable<ID>, ID>{
+    T save(T entity);
 
-    @Override
-    public Optional<T> findById(ID primaryKey) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
-    }
+    Optional<T> findById(ID primaryKey);
 
-    @Override
-    public List<T> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    }
+    List<T> findAll();
 
-    @Override
-    public void delete(T entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
+    T deleteById(ID id);
 
-    @Override
-    public boolean existsById(ID primaryKey) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'existsById'");
-    }
-
+    boolean existsById(ID primaryKey);
 }
