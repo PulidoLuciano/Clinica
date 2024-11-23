@@ -5,11 +5,11 @@ import java.util.Date;
 import com.software.backend.models.Direccion;
 import com.software.backend.models.ObraSocial;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
 public class PacienteDTO {
@@ -21,10 +21,11 @@ public class PacienteDTO {
     private long dni;
 
     @NotNull(message = "La fecha de nacimiento no puede ser nula")
+    @PastOrPresent(message = "La fecha de nacimiento no puede ser posterior al presente")
     private Date fechaNacimiento;
 
     @Email(message = "El email debe ser válido")
-    @Size(min = 2, max = 255, message = "El apellido debe tener entre 2 y 255 caracteres")
+    @Size(min = 2, max = 255, message = "El email debe tener entre 2 y 255 caracteres")
     private String email;
 
     @NotNull(message = "El número de teléfono no puede ser nulo")
@@ -46,17 +47,16 @@ public class PacienteDTO {
     
     @NotNull
     private ObraSocial obraSocial;
-
+    
     public PacienteDTO(@NotNull(message = "El CUIL no puede ser nulo") long cuil,
             @NotNull(message = "El DNI no puede ser nulo") long dni,
-            @NotNull(message = "La fecha de nacimiento no puede ser nula") Date fechaNacimiento,
-            @Email(message = "El email debe ser válido") @Size(min = 2, max = 255, message = "El apellido debe tener entre 2 y 255 caracteres") String email,
+            @NotNull(message = "La fecha de nacimiento no puede ser nula") @PastOrPresent(message = "La fecha de nacimiento no puede ser posterior al presente") Date fechaNacimiento,
+            @Email(message = "El email debe ser válido") @Size(min = 2, max = 255, message = "El email debe tener entre 2 y 255 caracteres") String email,
             @NotNull(message = "El número de teléfono no puede ser nulo") @Digits(integer = 15, fraction = 0, message = "El número de teléfono debe ser válido") long telefono,
             @NotBlank(message = "El nombre no puede estar vacío") @Size(min = 2, max = 255, message = "El nombre debe tener entre 2 y 255 caracteres") String nombre,
             @NotBlank(message = "El apellido no puede estar vacío") @Size(min = 2, max = 255, message = "El apellido debe tener entre 2 y 255 caracteres") String apellido,
-            @NotNull(message = "El número de afiliado no puede ser nulo") Integer numeroAfiliado,
-            @NotNull ObraSocial obraSocial,
-            @Valid Direccion direccion) {
+            Direccion direccion, @NotNull(message = "El número de afiliado no puede ser nulo") Integer numeroAfiliado,
+            @NotNull ObraSocial obraSocial) {
         this.cuil = cuil;
         this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
@@ -64,9 +64,12 @@ public class PacienteDTO {
         this.telefono = telefono;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.direccion = direccion;
         this.numeroAfiliado = numeroAfiliado;
         this.obraSocial = obraSocial;
-        this.direccion = direccion;
+    }
+
+    public PacienteDTO() {
     }
 
     public long getCuil() {

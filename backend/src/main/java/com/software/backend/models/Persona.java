@@ -1,10 +1,9 @@
 package com.software.backend.models;
 
-import java.sql.Date;
+import java.util.Date;
 
 public abstract class Persona {
-    
-   
+
     private long cuil;
     private long dni;
     private Date fechaNacimiento;

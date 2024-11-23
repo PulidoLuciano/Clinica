@@ -8,5 +8,4 @@ import com.software.backend.persistence.repositories.interfaces.PaisRepository;
 
 @Repository
 public class PaisRepositoryImpl extends BaseRepositoryImpl<Pais, String> implements PaisRepository{
-
 }

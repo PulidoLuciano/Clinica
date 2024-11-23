@@ -1,30 +1,23 @@
 package com.software.backend.models;
 
-import java.sql.Date;
-
-
+import java.util.Date;
 
 public class Paciente extends Persona implements Identifiable<Long>{
     
- 
     private int numeroAfiliado;
     private ObraSocial obraSocial;
     private HistoriaClinica historiaClinica;
 
     public Paciente(){
-        this.historiaClinica = new HistoriaClinica(new Date(System.currentTimeMillis()), this);
+        this.historiaClinica = new HistoriaClinica(new Date(System.currentTimeMillis()));
     }
     
     public Paciente(int cuil, int dni, Date fechaNacimiento, String email, int telefono, String nombre, String apellido,
-            Direccion direccion, int numeroAfiliado, ObraSocial obraSocial, HistoriaClinica historiaClinica) {
+            Direccion direccion, int numeroAfiliado, ObraSocial obraSocial) {
         super(cuil, dni, fechaNacimiento, email, telefono, nombre, apellido, direccion);
         this.numeroAfiliado = numeroAfiliado;
         this.obraSocial = obraSocial;
-        if(historiaClinica == null){
-            this.historiaClinica = new HistoriaClinica(new Date(System.currentTimeMillis()), this);
-        }else{
-            this.historiaClinica = historiaClinica;
-        }
+        this.historiaClinica = new HistoriaClinica(new Date(System.currentTimeMillis()));
     }
 
     public int getNumeroAfiliado() {
@@ -44,21 +37,12 @@ public class Paciente extends Persona implements Identifiable<Long>{
     }
 
     public HistoriaClinica getHistoriaClinica() {
-        return historiaClinica;
-    }
-
-    public void setHistoriaClinica(HistoriaClinica historiaClinica) {
-        if(historiaClinica == null){
-            this.historiaClinica = new HistoriaClinica(new Date(System.currentTimeMillis()), this);
-        }else{
-            this.historiaClinica = historiaClinica;
-        }
+        if(this.historiaClinica == null) this.historiaClinica = new HistoriaClinica(new Date(System.currentTimeMillis()));
+        return this.historiaClinica;
     }
 
     @Override
     public Long getId() {
         return super.getCuil();
-    }
-
-    
+    }    
 }
