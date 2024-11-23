@@ -8,7 +8,7 @@ import com.software.backend.models.Identifiable;
 
 public class BaseRepositoryImpl<T extends Identifiable<ID>, ID> implements BaseRepository<T, ID>{
 
-    private List<T> entidades;
+    protected List<T> entidades;
     
     public BaseRepositoryImpl() {
         entidades = new ArrayList<T>();

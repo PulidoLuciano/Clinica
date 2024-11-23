@@ -4,7 +4,7 @@ import java.util.List;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class PaisDTO {
+public class PaisConProvinciaDTO {
     
     @NotNull(message="El nombre del país es requerido")
     @NotBlank(message="El nombre del país es requerido")
@@ -13,12 +13,10 @@ public class PaisDTO {
    
     private List<ProvinciaSinLocalidadDTO> provincias;
 
-
-
-    public PaisDTO() {
+    public PaisConProvinciaDTO() {
     }
 
-    public PaisDTO(
+    public PaisConProvinciaDTO(
             @NotNull(message = "El nombre del país es requerido") @NotBlank(message = "El nombre del país es requerido") String nombre,
             List<ProvinciaSinLocalidadDTO> provincias) {
         this.nombre = nombre;
