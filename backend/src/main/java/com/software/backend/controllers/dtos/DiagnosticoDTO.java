@@ -1,25 +1,19 @@
 package com.software.backend.controllers.dtos;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class DiagnosticoDTO {
 
-    private long id;
-
+    @NotNull(message = "El nombre del diagnóstico es requerido")
+    @NotBlank(message = "El nombre del diagnóstico es requerido")
     private String nombre;
 
     public DiagnosticoDTO() {
     }
 
-    public DiagnosticoDTO(long id, String nombre) {
-        this.id = id;
+    public DiagnosticoDTO(String nombre) {
         this.nombre = nombre;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getNombre() {
