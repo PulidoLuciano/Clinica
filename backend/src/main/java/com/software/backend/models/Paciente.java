@@ -4,7 +4,7 @@ import java.sql.Date;
 
 
 
-public class Paciente extends Persona{
+public class Paciente extends Persona implements Identifiable<Long>{
     
  
     private int numeroAfiliado;
@@ -53,6 +53,11 @@ public class Paciente extends Persona{
         }else{
             this.historiaClinica = historiaClinica;
         }
+    }
+
+    @Override
+    public Long getId() {
+        return super.getCuil();
     }
 
     

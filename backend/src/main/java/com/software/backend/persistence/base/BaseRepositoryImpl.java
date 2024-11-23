@@ -1,5 +1,6 @@
 package com.software.backend.persistence.base;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,10 @@ public class BaseRepositoryImpl<T extends Identifiable<ID>, ID> implements BaseR
 
     private List<T> entidades;
     
+    public BaseRepositoryImpl() {
+        entidades = new ArrayList<T>();
+    }
+
     @Override
     public T save(T entity) {
         boolean existeId = existsById(entity.getId());
@@ -28,6 +33,7 @@ public class BaseRepositoryImpl<T extends Identifiable<ID>, ID> implements BaseR
 
     @Override
     public List<T> findAll() {
+        if(entidades.isEmpty()) throw new IllegalArgumentException("No hay entidades de este tipo");
         return entidades;
     }
 

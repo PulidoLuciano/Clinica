@@ -1,8 +1,7 @@
 package com.software.backend.models;
 
-public class Medicamento {
+public class Medicamento implements Identifiable<String>{
 
-    private long id;
     private String nombreComercial;
     private String nombreGenerico;
 
@@ -10,17 +9,8 @@ public class Medicamento {
     }
 
     public Medicamento(long id, String nombreComercial, String nombreGenerico) {
-        this.id = id;
         this.nombreComercial = nombreComercial;
         this.nombreGenerico = nombreGenerico;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getNombreComercial() {
@@ -37,5 +27,10 @@ public class Medicamento {
 
     public void setNombreGenerico(String nombreGenerico) {
         this.nombreGenerico = nombreGenerico;
+    }
+
+    @Override
+    public String getId() {
+        return this.nombreComercial;
     }
 }
