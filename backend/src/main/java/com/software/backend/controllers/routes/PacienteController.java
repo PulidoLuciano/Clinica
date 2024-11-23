@@ -29,7 +29,7 @@ public class PacienteController extends GenericController<Paciente, Long, Pacien
     public ResponseEntity<PacienteDTO> create(@Valid @RequestBody PacienteDTO dto){
         String nombreObraSocial = dto.getObraSocial().getNombre();
         Optional<ObraSocial> obraSocialFromRepo = obraSocialRepository.findById(nombreObraSocial);
-        if(obraSocialFromRepo.isEmpty()) throw new IllegalArgumentException("No existe la obra social con nombre" + nombreObraSocial);
+        if(obraSocialFromRepo.isEmpty()) throw new IllegalArgumentException("No existe la obra social con nombre " + nombreObraSocial);
         dto.setObraSocial(obraSocialFromRepo.get());
         return super.create(dto);
     }

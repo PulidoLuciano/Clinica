@@ -7,6 +7,7 @@ import com.software.backend.models.ObraSocial;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -14,23 +15,27 @@ import jakarta.validation.constraints.Size;
 
 public class PacienteDTO {
 
-    @NotNull(message = "El CUIL no puede ser nulo")
-    private long cuil;
+    @NotNull(message = "El CUIL es requerido")
+    @Min(value = 1, message = "El CUIL debe ser mayor que 0")
+    private Long cuil;
 
-    @NotNull(message = "El DNI no puede ser nulo")
-    private long dni;
+    @NotNull(message = "El DNI es requerido")
+    @Min(value = 1, message = "El CUIL debe ser mayor que 0")
+    private Long dni;
 
-    @NotNull(message = "La fecha de nacimiento no puede ser nula")
+    @NotNull(message = "La fecha de nacimiento es requerida")
     @PastOrPresent(message = "La fecha de nacimiento no puede ser posterior al presente")
     private Date fechaNacimiento;
 
+    @NotNull(message = "El email es requerido")
+    @NotBlank(message = "El email es requerido")
     @Email(message = "El email debe ser válido")
     @Size(min = 2, max = 255, message = "El email debe tener entre 2 y 255 caracteres")
     private String email;
 
-    @NotNull(message = "El número de teléfono no puede ser nulo")
+    @NotNull(message = "El número de teléfono es requerido")
     @Digits(integer = 15, fraction = 0, message = "El número de teléfono debe ser válido")
-    private long telefono;
+    private Long telefono;
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 2, max = 255, message = "El nombre debe tener entre 2 y 255 caracteres")
@@ -43,16 +48,17 @@ public class PacienteDTO {
     private Direccion direccion;
 
     @NotNull(message = "El número de afiliado no puede ser nulo")
+    @Min(value = 1, message = "El número de afiliado debe ser mayor que 0")
     private Integer numeroAfiliado;
     
     @NotNull
     private ObraSocial obraSocial;
     
-    public PacienteDTO(@NotNull(message = "El CUIL no puede ser nulo") long cuil,
-            @NotNull(message = "El DNI no puede ser nulo") long dni,
+    public PacienteDTO(@NotNull(message = "El CUIL no puede ser nulo") Long cuil,
+            @NotNull(message = "El DNI no puede ser nulo") Long dni,
             @NotNull(message = "La fecha de nacimiento no puede ser nula") @PastOrPresent(message = "La fecha de nacimiento no puede ser posterior al presente") Date fechaNacimiento,
             @Email(message = "El email debe ser válido") @Size(min = 2, max = 255, message = "El email debe tener entre 2 y 255 caracteres") String email,
-            @NotNull(message = "El número de teléfono no puede ser nulo") @Digits(integer = 15, fraction = 0, message = "El número de teléfono debe ser válido") long telefono,
+            @NotNull(message = "El número de teléfono no puede ser nulo") @Digits(integer = 15, fraction = 0, message = "El número de teléfono debe ser válido") Long telefono,
             @NotBlank(message = "El nombre no puede estar vacío") @Size(min = 2, max = 255, message = "El nombre debe tener entre 2 y 255 caracteres") String nombre,
             @NotBlank(message = "El apellido no puede estar vacío") @Size(min = 2, max = 255, message = "El apellido debe tener entre 2 y 255 caracteres") String apellido,
             Direccion direccion, @NotNull(message = "El número de afiliado no puede ser nulo") Integer numeroAfiliado,
@@ -72,19 +78,19 @@ public class PacienteDTO {
     public PacienteDTO() {
     }
 
-    public long getCuil() {
+    public Long getCuil() {
         return cuil;
     }
 
-    public void setCuil(long cuil) {
+    public void setCuil(Long cuil) {
         this.cuil = cuil;
     }
 
-    public long getDni() {
+    public Long getDni() {
         return dni;
     }
 
-    public void setDni(long dni) {
+    public void setDni(Long dni) {
         this.dni = dni;
     }
 
@@ -104,11 +110,11 @@ public class PacienteDTO {
         this.email = email;
     }
 
-    public long getTelefono() {
+    public Long getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
 
