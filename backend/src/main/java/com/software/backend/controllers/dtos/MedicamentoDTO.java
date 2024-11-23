@@ -2,8 +2,6 @@ package com.software.backend.controllers.dtos;
 
 public class MedicamentoDTO {
 
-    private long id;
-
     private String nombreComercial;
 
     private String nombreGenerico;
@@ -11,19 +9,12 @@ public class MedicamentoDTO {
     public MedicamentoDTO() {
     }
 
-    public MedicamentoDTO(long id, String nombreComercial, String nombreGenerico) {
-        this.id = id;
+    public MedicamentoDTO(String nombreComercial, String nombreGenerico) {
+       
         this.nombreComercial = nombreComercial;
         this.nombreGenerico = nombreGenerico;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getNombreComercial() {
         return nombreComercial;
