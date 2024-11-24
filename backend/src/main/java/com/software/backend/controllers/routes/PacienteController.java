@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.software.backend.models.PedidoLaboratorio;
 import com.software.backend.models.RecetaDigital;
 
 @RestController
@@ -52,5 +53,12 @@ public class PacienteController extends GenericController<Paciente, Long, Pacien
         List<Diagnostico> diagnosticos = super.getServicio().getDiagnosticos(cuilPaciente);
         return ResponseEntity.ok(diagnosticos);
     }
+
+    @GetMapping("/{cuilPaciente}/historia-clinica/pedidos")
+    public ResponseEntity<List<PedidoLaboratorio>> getPedidosPaciente(@PathVariable("cuilPaciente") Long cuilPaciente){
+        List<PedidoLaboratorio> pedidosLaboratorio = super.getServicio().getPedidos(cuilPaciente);
+        return ResponseEntity.ok(pedidosLaboratorio);
+    }
+
 
 }

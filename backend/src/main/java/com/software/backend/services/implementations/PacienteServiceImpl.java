@@ -13,6 +13,7 @@ import com.software.backend.models.HistoriaClinica;
 import com.software.backend.models.Medico;
 import com.software.backend.models.ObraSocial;
 import com.software.backend.models.Paciente;
+import com.software.backend.models.PedidoLaboratorio;
 import com.software.backend.models.RecetaDigital;
 import com.software.backend.persistence.repositories.interfaces.DiagnosticoRepository;
 import com.software.backend.persistence.repositories.interfaces.MedicoRepository;
@@ -86,4 +87,14 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
          return diagnosticos;
     }
 
+    @Override
+    public List<PedidoLaboratorio> getPedidos(Long cuil){
+        HistoriaClinica historiaClinica = getHistoriaClinica(cuil);
+        List<PedidoLaboratorio> pedidosLaboratorio = new ArrayList<>(); 
+        historiaClinica.getDetalles().forEach(detalle -> { 
+            detalle.getEvoluciones().forEach(evolucion -> {pedidosLaboratorio.add(evolucion.getPedidoLaboratorio());} );
+         });
+        if(pedidosLaboratorio.isEmpty()) throw new IllegalArgumentException("Esta historia clinica no tiene evoluciones con pedidos de laboratorio");  
+         return pedidosLaboratorio;
+    }
 }
