@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import com.software.backend.models.Usuario;
+
 import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
@@ -21,7 +23,7 @@ public class JwtTokenProvider {
     private long jwtExpirationDate;
 
     // generate JWT token
-    public String generateToken(Authentication authentication){
+    public String generateToken(Authentication authentication, Usuario user){
 
         String username = authentication.getName();
 
@@ -33,6 +35,8 @@ public class JwtTokenProvider {
                 .subject(username)
                 .issuedAt(new Date())
                 .expiration(expireDate)
+                .claim("cuil", user.getPersona().getCuil())
+                .claim("nombre", user.getPersona().getNombre() + " " + user.getPersona().getApellido())
                 .signWith(key())
                 .compact();
 
