@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.software.backend.controllers.dtos.CrearEvolucionDTO;
 import com.software.backend.controllers.dtos.PacienteDTO;
 import com.software.backend.controllers.dtos.mappers.PacienteMapper;
+import com.software.backend.models.Diagnostico;
 import com.software.backend.models.Evolucion;
 import com.software.backend.models.HistoriaClinica;
 import com.software.backend.models.Paciente;
@@ -44,6 +45,12 @@ public class PacienteController extends GenericController<Paciente, Long, Pacien
     public ResponseEntity<List<RecetaDigital>> getRecetasPaciente(@PathVariable("cuilPaciente") Long cuilPaciente){
         List<RecetaDigital> recetas = super.getServicio().getRecetas(cuilPaciente);
         return ResponseEntity.ok(recetas);
+    }
+
+    @GetMapping("/{cuilPaciente}/historia-clinica/diagnosticos")
+    public ResponseEntity<List<Diagnostico>> getDiagnosticosPaciente(@PathVariable("cuilPaciente") Long cuilPaciente){
+        List<Diagnostico> diagnosticos = super.getServicio().getDiagnosticos(cuilPaciente);
+        return ResponseEntity.ok(diagnosticos);
     }
 
 }

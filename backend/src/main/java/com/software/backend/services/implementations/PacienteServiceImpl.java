@@ -74,4 +74,16 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
          return recetas;
     }
 
+
+    @Override
+    public List<Diagnostico> getDiagnosticos(Long cuil){
+        HistoriaClinica historiaClinica = getHistoriaClinica(cuil);
+        List<Diagnostico> diagnosticos = new ArrayList<>(); 
+        historiaClinica.getDetalles().forEach(detalle -> { 
+            diagnosticos.add(detalle.getDiagnostico());
+         });
+        if(diagnosticos.isEmpty()) throw new IllegalArgumentException("Esta historia clinica no tiene diagnosticos");  
+         return diagnosticos;
+    }
+
 }
