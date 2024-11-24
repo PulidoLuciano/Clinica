@@ -24,4 +24,4 @@ GET /pacientes/{cuilPaciente}/historia-clinica/diagnosticos -> Trae todos los di
 
 GET /pacientes/{cuilPaciente}/historia-clinica/pedidos -> Trae todos los pedidos de laboratorio del paciente
 
-GET /login -> Login del usuario en el sistema
+POST /login -> Login del usuario en el sistema
