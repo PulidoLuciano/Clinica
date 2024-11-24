@@ -1,5 +1,7 @@
 package com.software.backend.services.implementations;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import com.software.backend.models.HistoriaClinica;
 import com.software.backend.models.Medico;
 import com.software.backend.models.ObraSocial;
 import com.software.backend.models.Paciente;
+import com.software.backend.models.RecetaDigital;
 import com.software.backend.persistence.repositories.interfaces.DiagnosticoRepository;
 import com.software.backend.persistence.repositories.interfaces.MedicoRepository;
 import com.software.backend.persistence.repositories.interfaces.ObraSocialRepository;
@@ -59,4 +62,16 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
         if(paciente.isEmpty()) throw new IllegalArgumentException("No existe un paciente con ese cuil");
         return paciente.get();
     }
+
+    @Override
+    public List<RecetaDigital> getRecetas(Long cuil){
+        HistoriaClinica historiaClinica = getHistoriaClinica(cuil);
+        List<RecetaDigital> recetas = new ArrayList<>(); 
+        historiaClinica.getDetalles().forEach(detalle -> { 
+            detalle.getEvoluciones().forEach(evolucion -> {recetas.add(evolucion.getReceta());} );
+         });
+        if(recetas.isEmpty()) throw new IllegalArgumentException("Esta historia clinica no tiene evoluciones con recetas digitales");  
+         return recetas;
+    }
+
 }
