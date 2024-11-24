@@ -8,14 +8,12 @@ public class RecetaDigital {
     private long id;
     private Date fecha;
     private int codigo;
-    private Evolucion evolucion;
     private List<DetalleReceta> detalles;
 
     public RecetaDigital(long id, Date fecha, int codigo, Evolucion evolucion, List<DetalleReceta> detalles) {
         this.id = id;
         this.fecha = fecha;
         this.codigo = codigo;
-        this.evolucion = evolucion;
         this.detalles = detalles;
     }
 
@@ -44,14 +42,6 @@ public class RecetaDigital {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
-    }
-
-    public Evolucion getEvolucion() {
-        return evolucion;
-    }
-
-    public void setEvolucion(Evolucion evolucion) {
-        this.evolucion = evolucion;
     }
 
     public List<DetalleReceta> getDetalles() {

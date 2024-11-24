@@ -1,44 +1,15 @@
 package com.software.backend.models;
 
+import java.util.List;
+
 public class DetalleReceta {
 
-    private long id;
-    private RecetaDigital receta;
-    private Medicamento medicamento;
+    private List<Medicamento> medicamentos;
     private int cantidad;
-    
-    public DetalleReceta() {
-    }
 
-    public DetalleReceta(long id, RecetaDigital receta, Medicamento medicamento, int cantidad) {
-        this.id = id;
-        this.receta = receta;
-        this.medicamento = medicamento;
+    public DetalleReceta(List<Medicamento> medicamentos, int cantidad) {
+        this.medicamentos = medicamentos;
         this.cantidad = cantidad;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public RecetaDigital getReceta() {
-        return receta;
-    }
-
-    public void setReceta(RecetaDigital receta) {
-        this.receta = receta;
-    }
-
-    public Medicamento getMedicamento() {
-        return medicamento;
-    }
-
-    public void setMedicamento(Medicamento medicamento) {
-        this.medicamento = medicamento;
     }
 
     public int getCantidad() {
@@ -49,5 +20,11 @@ public class DetalleReceta {
         this.cantidad = cantidad;
     }
 
-    
+    public List<Medicamento> getMedicamentos() {
+        return medicamentos;
+    }
+
+    public void setMedicamentos(List<Medicamento> medicamentos) {
+        this.medicamentos = medicamentos;
+    }
 }
