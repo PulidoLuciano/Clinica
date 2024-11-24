@@ -16,11 +16,16 @@ import com.software.backend.models.Medicamento;
 import com.software.backend.models.Medico;
 import com.software.backend.models.ObraSocial;
 import com.software.backend.models.Paciente;
+import com.software.backend.models.ROL;
+import com.software.backend.models.Recepcionista;
+import com.software.backend.models.Usuario;
 import com.software.backend.persistence.repositories.interfaces.DiagnosticoRepository;
 import com.software.backend.persistence.repositories.interfaces.MedicamentoRepository;
 import com.software.backend.persistence.repositories.interfaces.MedicoRepository;
 import com.software.backend.persistence.repositories.interfaces.ObraSocialRepository;
 import com.software.backend.persistence.repositories.interfaces.PacienteRepository;
+import com.software.backend.persistence.repositories.interfaces.RecepcionistaRepository;
+import com.software.backend.persistence.repositories.interfaces.UsuariosRepository;
 
 @Component
 public class DataInitializer implements CommandLineRunner{
@@ -35,6 +40,10 @@ public class DataInitializer implements CommandLineRunner{
     private PacienteRepository pacienteRepository;
     @Autowired
     private MedicoRepository medicoRepository;
+    @Autowired
+    private UsuariosRepository usuarioRepository;
+    @Autowired
+    private RecepcionistaRepository recepcionistaRepository;
 
     public void initializeData() {
         initializeObrasSociales();
@@ -42,6 +51,7 @@ public class DataInitializer implements CommandLineRunner{
         initializeDiagnosticos();
         initializePacientes();
         initializeMedicos();
+        initializeRecepcionistas();
     }
 
     private void initializeObrasSociales() {
@@ -109,27 +119,32 @@ public class DataInitializer implements CommandLineRunner{
             new Especialidad("Oncología"),
             new Especialidad("Dermatología")
         );
-        Random random = new Random();
+        
+        Medico medico1 = new Medico(
+            20123456789L, 12345678, new Date(), "medico1@example.com", 
+            1123456789, "Juan", "Pérez", null, 1234, especialidades.get(0));
+        usuarioRepository.save(new Usuario("password123", medico1, ROL.MEDICO));
+        medicoRepository.save(medico1);
+            
+        Medico medico2 = new Medico(
+            20198765432L, 87654321, new Date(), "medico2@example.com", 
+            1198765432, "Ana", "García", null, 5678, especialidades.get(1));
+        usuarioRepository.save(new Usuario("password123", medico2, ROL.MEDICO));
+        medicoRepository.save(medico2);
+    }
 
-        List<Medico> medicos = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            Medico medico = new Medico(
-                30506070L + i, // CUIL
-                40506070L + i, // DNI
-                new Date(80, random.nextInt(12), random.nextInt(28) + 1), // Fecha de nacimiento
-                "medico" + i + "@email.com", // Email
-                1150000000 + i, // Teléfono
-                "MedicoNombre" + i, // Nombre
-                "Apellido" + i, // Apellido
-                null, // Dirección
-                "password" + i, // Contraseña
-                1000 + i, // Matrícula
-                especialidades.get(i - 1) // Especialidad
-            );
-            medicos.add(medico);
-        }
+    private void initializeRecepcionistas() {
+        Recepcionista recepcionista1 = new Recepcionista(
+            20123456789L, 22334455L, new Date(), "recep1@example.com", 
+            1123456789, "María", "López", null);
+        usuarioRepository.save(new Usuario("password123", recepcionista1, ROL.RECEPCIONISTA));
+        recepcionistaRepository.save(recepcionista1);
 
-        medicos.forEach(medicoRepository::save);
+        Recepcionista recepcionista2 = new Recepcionista(
+            20198765432L, 55443322L, new Date(), "recep2@example.com", 
+            1198765432, "Carlos", "Rodríguez", null);
+        usuarioRepository.save(new Usuario("password123", recepcionista2, ROL.RECEPCIONISTA));
+        recepcionistaRepository.save(recepcionista2);
     }
 
     @Override
