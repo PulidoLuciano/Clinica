@@ -1,0 +1,27 @@
+GET /pacientes/{cuil} -> Trae el paciente del cuil == cuil (HECHO)
+
+POST /pacientes -> Crear un paciente (HECHO)
+
+GET /paises -> Trae todos los paises (HECHO) 
+
+GET /paises/{nombrePais} -> Trae ese pais con sus provincias (HECHO)
+
+GET /paises/{nombrePais}/{nombreProvincia} -> Trae esa provincia con sus localidades (HECHO)
+
+GET /medicamentos -> Trae todos los medicamentos del sistema (HECHO)
+
+GET /obra-social -> Trae todas las obras sociales del sistema (HECHO)
+
+GET /diagnosticos -> Trae todos los diagnósticos del sistema (HECHO)
+
+POST /pacientes/{cuilPaciente}/historia-clinica/{nombre del diagnóstico}/evolucion -> Crea una evolucion con texto, médico, receta y pedido (Falta receta y pedido)
+
+GET /pacientes/{cuilPaciente}/historia-clinica -> Trae TODA la historia clínica del paciente
+
+GET /pacientes/{cuilPaciente}/historia-clinica/recetas -> Trae todas las recetas del paciente
+
+GET /pacientes/{cuilPaciente}/historia-clinica/diagnosticos -> Trae todos los diagnósticos del paciente
+
+GET /pacientes/{cuilPaciente}/historia-clinica/pedidos -> Trae todos los pedidos de laboratorio del paciente
+
+GET /login -> Login del usuario en el sistema
