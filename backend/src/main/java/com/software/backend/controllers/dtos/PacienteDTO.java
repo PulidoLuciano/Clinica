@@ -47,8 +47,7 @@ public class PacienteDTO {
     @NotNull(message = "El número de afiliado no puede ser nulo")
     @Min(value = 1, message = "El número de afiliado debe ser mayor que 0")
     private Integer numeroAfiliado;
-    
-    @NotNull
+
     private ObraSocial obraSocial;
     
     public PacienteDTO(@NotNull(message = "El CUIL no puede ser nulo") Long cuil,

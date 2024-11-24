@@ -26,19 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 @RequestMapping("/pacientes")
 public class PacienteController extends GenericController<Paciente, Long, PacienteService, PacienteDTO, PacienteMapper>{
-
-    @Autowired
-    private ObraSocialRepository obraSocialRepository;
-
-    @Override
-    public ResponseEntity<PacienteDTO> create(@Valid @RequestBody PacienteDTO dto){
-        String nombreObraSocial = dto.getObraSocial().getNombre();
-        Optional<ObraSocial> obraSocialFromRepo = obraSocialRepository.findById(nombreObraSocial);
-        if(obraSocialFromRepo.isEmpty()) throw new IllegalArgumentException("No existe la obra social con nombre " + nombreObraSocial);
-        dto.setObraSocial(obraSocialFromRepo.get());
-        return super.create(dto);
-    }
-
+    
     @PostMapping("/{cuilPaciente}/historia-clinica/{nombreDiagnostico}/evolucion")
     public ResponseEntity<Evolucion> createEvolucion(@Valid @RequestBody CrearEvolucionDTO dto, @PathVariable("cuilPaciente") Long cuilPaciente, @PathVariable("nombreDiagnostico") String nombreDiagnostico){
         Evolucion evolucion = super.getServicio().createEvolucionPaciente(cuilPaciente, dto.getCuilMedico(), nombreDiagnostico, dto.getTexto());
