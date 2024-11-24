@@ -16,7 +16,7 @@ GET /diagnosticos -> Trae todos los diagnósticos del sistema (HECHO)
 
 POST /pacientes/{cuilPaciente}/historia-clinica/{nombre del diagnóstico}/evolucion -> Crea una evolucion con texto, médico, receta y pedido (Falta receta y pedido)
 
-GET /pacientes/{cuilPaciente}/historia-clinica -> Trae TODA la historia clínica del paciente
+GET /pacientes/{cuilPaciente}/historia-clinica -> Trae TODA la historia clínica del paciente (HECHO)
 
 GET /pacientes/{cuilPaciente}/historia-clinica/recetas -> Trae todas las recetas del paciente
 

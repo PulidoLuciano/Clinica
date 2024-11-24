@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.software.backend.models.Diagnostico;
 import com.software.backend.models.Evolucion;
+import com.software.backend.models.HistoriaClinica;
 import com.software.backend.models.Medico;
 import com.software.backend.models.ObraSocial;
 import com.software.backend.models.Paciente;
@@ -39,13 +40,23 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
 
     @Override
     public Evolucion createEvolucionPaciente(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto) {
-        Optional<Paciente> paciente = super.getRepositorio().findById(cuilPaciente);
-        if(paciente.isEmpty()) throw new IllegalArgumentException("No existe un paciente con ese cuil");
+        Paciente paciente = verificarCuilPaciente(cuilPaciente);
         Optional<Diagnostico> diagnostico = diagnosticoRepository.findById(nombreDiagnostico);
         if(diagnostico.isEmpty()) throw new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema");
         Optional<Medico> medico = medicoRepository.findById(cuilMedico);
         if(medico.isEmpty()) throw new IllegalArgumentException("No existe un médico con ese cuil en el sistema");
-        return paciente.get().createEvolucion(medico.get(), diagnostico.get(), texto);
+        return paciente.createEvolucion(medico.get(), diagnostico.get(), texto);
     }
-    
+
+    @Override
+    public HistoriaClinica getHistoriaClinica(Long cuilPaciente) {
+        Paciente paciente = verificarCuilPaciente(cuilPaciente);
+        return paciente.getHistoriaClinica();
+    }
+
+    private Paciente verificarCuilPaciente(Long cuil){
+        Optional<Paciente> paciente = super.getRepositorio().findById(cuil);
+        if(paciente.isEmpty()) throw new IllegalArgumentException("No existe un paciente con ese cuil");
+        return paciente.get();
+    }
 }
