@@ -15,8 +15,12 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,14 +29,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.software.backend.models.PedidoLaboratorio;
 import com.software.backend.models.RecetaDigital;
+import com.software.backend.security.JwtTokenProvider;
 
 @RestController
 @RequestMapping("/pacientes")
 public class PacienteController extends GenericController<Paciente, Long, PacienteService, PacienteDTO, PacienteMapper>{
     
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+    
     @PostMapping("/{cuilPaciente}/historia-clinica/{nombreDiagnostico}/evolucion")
     public ResponseEntity<Evolucion> createEvolucion(@Valid @RequestBody CrearEvolucionDTO dto, @PathVariable("cuilPaciente") Long cuilPaciente, @PathVariable("nombreDiagnostico") String nombreDiagnostico){
-        Evolucion evolucion = super.getServicio().createEvolucionPaciente(cuilPaciente, dto.getCuilMedico(), nombreDiagnostico, dto.getTexto(),dto.getReceta(),dto.getPedidoLaboratorio());
+        Long cuilMedico = getLoggedCuil();
+        Evolucion evolucion = super.getServicio().createEvolucionPaciente(cuilPaciente, cuilMedico, nombreDiagnostico, dto.getTexto(),dto.getReceta(),dto.getPedidoLaboratorio());
         return new ResponseEntity<>(evolucion, HttpStatus.CREATED);
     }
 
@@ -60,5 +69,15 @@ public class PacienteController extends GenericController<Paciente, Long, Pacien
         return ResponseEntity.ok(pedidosLaboratorio);
     }
 
+    public Long getLoggedCuil() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        if (authentication == null)
+            return null;
+        String credentials = authentication.getCredentials().toString();
+        Long cuil = tokenProvider.getCuil(credentials);
+
+        return cuil;
+    }
 
 }

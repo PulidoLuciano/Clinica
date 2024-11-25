@@ -13,9 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.software.backend.models.ROL;
 
 @Configuration
 @EnableMethodSecurity
@@ -31,6 +30,12 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter authenticationFilter;
 
+    @Autowired
+    AccessDeniedHandler accessDeniedHandler;
+
+    @Autowired
+    CustomCorsConfiguration customCorsConfiguration;
+
     @Bean
     public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -39,7 +44,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf.disable())
+        http.cors(cors -> cors.configurationSource(customCorsConfiguration))
+        .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((req) -> {
                     req.requestMatchers("/login").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/**").hasAnyAuthority("MEDICO", "RECEPCIONISTA");
@@ -47,7 +53,7 @@ public class SecurityConfig {
                     req.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());
 
-        http.exceptionHandling( exception -> exception
+        http.exceptionHandling( exception -> exception.accessDeniedHandler(accessDeniedHandler)
                 .authenticationEntryPoint(authenticationEntryPoint));
 
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
