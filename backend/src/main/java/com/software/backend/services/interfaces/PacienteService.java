@@ -10,8 +10,7 @@ import com.software.backend.models.PedidoLaboratorio;
 import com.software.backend.models.RecetaDigital;
 
 public interface PacienteService extends GenericService<Paciente, Long> {
-    public Evolucion createEvolucionPaciente(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico,
-            String texto);
+    public Evolucion createEvolucionPaciente(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto,RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio) ;
 
     public HistoriaClinica getHistoriaClinica(Long cuilPaciente);
 

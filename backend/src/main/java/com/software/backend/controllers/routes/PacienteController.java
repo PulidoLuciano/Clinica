@@ -32,7 +32,7 @@ public class PacienteController extends GenericController<Paciente, Long, Pacien
     
     @PostMapping("/{cuilPaciente}/historia-clinica/{nombreDiagnostico}/evolucion")
     public ResponseEntity<Evolucion> createEvolucion(@Valid @RequestBody CrearEvolucionDTO dto, @PathVariable("cuilPaciente") Long cuilPaciente, @PathVariable("nombreDiagnostico") String nombreDiagnostico){
-        Evolucion evolucion = super.getServicio().createEvolucionPaciente(cuilPaciente, dto.getCuilMedico(), nombreDiagnostico, dto.getTexto());
+        Evolucion evolucion = super.getServicio().createEvolucionPaciente(cuilPaciente, dto.getCuilMedico(), nombreDiagnostico, dto.getTexto(),dto.getReceta(),dto.getPedidoLaboratorio());
         return new ResponseEntity<>(evolucion, HttpStatus.CREATED);
     }
 

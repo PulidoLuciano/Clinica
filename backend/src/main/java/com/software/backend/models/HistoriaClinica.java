@@ -31,7 +31,7 @@ public class HistoriaClinica {
         this.detalles = detalles;
     }
 
-    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto){
+    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto, RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio){
         Optional<DetalleDiagnostico> detalleOpt = detalles.stream().filter(item -> item.getDiagnostico().equals(diagnostico)).findFirst();
         DetalleDiagnostico detalle;
         if(detalleOpt.isEmpty()){
@@ -40,6 +40,6 @@ public class HistoriaClinica {
         }else{
             detalle = detalleOpt.get();
         }
-        return detalle.crearEvolucion(medico, texto);
+        return detalle.crearEvolucion(medico, texto, receta, pedidoLaboratorio);
     }
 }
