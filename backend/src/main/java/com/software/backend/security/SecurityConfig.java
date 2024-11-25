@@ -33,6 +33,9 @@ public class SecurityConfig {
     @Autowired
     AccessDeniedHandler accessDeniedHandler;
 
+    @Autowired
+    CustomCorsConfiguration customCorsConfiguration;
+
     @Bean
     public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -41,7 +44,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf.disable())
+        http.cors(cors -> cors.configurationSource(customCorsConfiguration))
+        .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((req) -> {
                     req.requestMatchers("/login").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/**").hasAnyAuthority("MEDICO", "RECEPCIONISTA");
