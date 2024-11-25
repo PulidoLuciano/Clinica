@@ -1,0 +1,516 @@
+{
+	"info": {
+		"_postman_id": "90d60b63-4dd0-4e73-87eb-74671a2db138",
+		"name": "Clinica",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32041688"
+	},
+	"item": [
+		{
+			"name": "Diagnosticos",
+			"item": [
+				{
+					"name": "getall",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWNlcDFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MzI1MDc2NDgsImV4cCI6MTczMzExMjQ0OCwiY3VpbCI6MjAxMjM0NTY3ODksIm5vbWJyZSI6Ik1hcsOtYSBMw7NwZXoifQ._VcUYsjZtgZ9ELkLtmeY9CvPYtJlFSfWLuYz5yb6XWcw-XdsikgWh-159WjXfWSp",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/diagnosticos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"diagnosticos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNTA5MTQyLCJleHAiOjE3MzMxMTM5NDIsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.5xGs-QDJOni0eLJiEG5B3uRdeLyY_KRP8aPLZwKcuq_-wFY7yPL4Naj_vPdoFt-K",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/diagnosticos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"diagnosticos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/diagnosticos/Gripe",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"diagnosticos",
+								"Gripe"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Obra Social",
+			"item": [
+				{
+					"name": "GetObrasSociales",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDk1NTk1LCJleHAiOjE3MzMxMDAzOTUsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.amt7sO5eRKPNHxKB_5apR75OXjZW9XY0v8tRR8cw3svACxfjVWiTU8cBtEVSmjqO",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/obra-social",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"obra-social"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearObraSocial",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDk1NTk1LCJleHAiOjE3MzMxMDAzOTUsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.amt7sO5eRKPNHxKB_5apR75OXjZW9XY0v8tRR8cw3svACxfjVWiTU8cBtEVSmjqO",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Subsidio de Salud\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/obra-social",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"obra-social"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarObraSocial",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/obra-social/Subsidio de Salud",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"obra-social",
+								"Subsidio de Salud"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Paises",
+			"item": [
+				{
+					"name": "GetAllPaises",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDk1NTk1LCJleHAiOjE3MzMxMDAzOTUsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.amt7sO5eRKPNHxKB_5apR75OXjZW9XY0v8tRR8cw3svACxfjVWiTU8cBtEVSmjqO",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/paises",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"paises"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pacientes",
+			"item": [
+				{
+					"name": "GetAllPacientes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/pacientes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPaciente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWNlcDFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MzI1MDk1MzIsImV4cCI6MTczMzExNDMzMiwiY3VpbCI6MjAxMjM0NTY3ODksIm5vbWJyZSI6Ik1hcsOtYSBMw7NwZXoifQ.Zeek48dL-KJwiuXaHPSrBSjAQ4pfCPeuCe7NQBZqXmLsg8Bt9qUHxMM7vFeH2RQa",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Luciano Nicolas\",\r\n    \"apellido\": \"Pulido\",\r\n    \"cuil\": 20447038253,\r\n    \"dni\": 44703825,\r\n    \"telefono\": 3815712460,\r\n    \"email\": \"lucianonicolaspulido@gmail.com\",\r\n    \"fechaNacimiento\": \"2003-14-04\",\r\n    \"obraSocial\": {\r\n        \"nombre\": \"OSDE\"\r\n    },\r\n    \"numeroAfiliado\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/pacientes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearEvolucion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDk0NTgwLCJleHAiOjE3MzMwOTkzODAsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.TtXzq3SfpEsiPZc0Z0emn9Z9kx6PHSlnPzIUeD6l1kMRA5_nK1S1nMrXxECd-wWw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"texto\": \"El paciente se encuentra mucho mejor. La temperatura ha bajado pero todavía sigue alta\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/pacientes/20304051/historia-clinica/Gripe/evolucion",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes",
+								"20304051",
+								"historia-clinica",
+								"Gripe",
+								"evolucion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetHistoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWNlcDFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MzI0OTM5OTcsImV4cCI6MTczMzA5ODc5NywiY3VpbCI6MjAxMjM0NTY3ODksIm5vbWJyZSI6Ik1hcsOtYSBMw7NwZXoifQ.fi2CeS6ip7dnTmSpouCdwn_Fs1jbF_IVX6s7snkDBfaj1dtyTH9imlGukMgcV8yV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/pacientes/20304051/historia-clinica",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes",
+								"20304051",
+								"historia-clinica"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDiagnosticos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDkwMDc4LCJleHAiOjE3MzMwOTQ4Nzh9.aYI6M_kjaZGWlCxF2SSLYjRNoHaNcUMNvrSQN7M-RqoQN2jfcE7_3NHnzutjEODw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/pacientes/20304051/historia-clinica/diagnosticos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes",
+								"20304051",
+								"historia-clinica",
+								"diagnosticos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRecetas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDkwMDc4LCJleHAiOjE3MzMwOTQ4Nzh9.aYI6M_kjaZGWlCxF2SSLYjRNoHaNcUMNvrSQN7M-RqoQN2jfcE7_3NHnzutjEODw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/pacientes/20304051/historia-clinica/recetas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes",
+								"20304051",
+								"historia-clinica",
+								"recetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPedidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDkwMDc4LCJleHAiOjE3MzMwOTQ4Nzh9.aYI6M_kjaZGWlCxF2SSLYjRNoHaNcUMNvrSQN7M-RqoQN2jfcE7_3NHnzutjEODw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/pacientes/20304051/historia-clinica/pedidos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes",
+								"20304051",
+								"historia-clinica",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"recep1@example.com\",\r\n    \"password\": \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotFound",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWNlcDFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MzI1MDg1MzMsImV4cCI6MTczMzExMzMzMywiY3VpbCI6MjAxMjM0NTY3ODksIm5vbWJyZSI6Ik1hcsOtYSBMw7NwZXoifQ.ynyTiMytvudTNgloSqW-yz_0H0cpNfZA4FXOZD6zuR_bJKCDoKsQsQ5vQpCYVqN_",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/egerg",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"egerg"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
