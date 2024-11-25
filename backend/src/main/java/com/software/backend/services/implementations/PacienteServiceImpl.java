@@ -27,9 +27,9 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     @Autowired
     private DiagnosticoRepository diagnosticoRepository;
     @Autowired
-    private MedicoRepository medicoRepository;
-    @Autowired
     private ObraSocialRepository obraSocialRepository;
+    @Autowired
+    private MedicoRepository medicoRepository;
     
     @Override
     public Paciente save(Paciente paciente){
@@ -45,11 +45,9 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     @Override
     public Evolucion createEvolucionPaciente(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto) {
         Paciente paciente = verificarCuilPaciente(cuilPaciente);
-        Optional<Diagnostico> diagnostico = diagnosticoRepository.findById(nombreDiagnostico);
-        if(diagnostico.isEmpty()) throw new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema");
-        Optional<Medico> medico = medicoRepository.findById(cuilMedico);
-        if(medico.isEmpty()) throw new IllegalArgumentException("No existe un médico con ese cuil en el sistema");
-        return paciente.createEvolucion(medico.get(), diagnostico.get(), texto);
+        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema"));
+        Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema"));
+        return paciente.createEvolucion(medico, diagnostico, texto);
     }
 
     @Override
@@ -71,7 +69,7 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
         historiaClinica.getDetalles().forEach(detalle -> { 
             detalle.getEvoluciones().forEach(evolucion -> {recetas.add(evolucion.getReceta());} );
          });
-        if(recetas.isEmpty()) throw new IllegalArgumentException("Esta historia clinica no tiene evoluciones con recetas digitales");  
+        if(recetas.isEmpty()) throw new IllegalArgumentException("Esta historia clínica no tiene evoluciones con recetas digitales");  
          return recetas;
     }
 

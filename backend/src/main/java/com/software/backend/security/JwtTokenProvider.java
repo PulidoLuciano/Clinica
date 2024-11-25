@@ -58,6 +58,17 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
+    public Long getCuil(String token){
+
+        Object cuilObj =  Jwts.parser()
+                        .verifyWith((SecretKey) key())
+                        .build()
+                        .parseSignedClaims(token)
+                        .getPayload()
+                        .get("cuil");
+        return (Long) cuilObj;
+    }
+
     // validate JWT token
     public boolean validateToken(String token){
             Jwts.parser()

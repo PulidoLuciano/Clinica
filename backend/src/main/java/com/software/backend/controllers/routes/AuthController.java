@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.software.backend.controllers.dtos.JwtAuthResponse;
 import com.software.backend.controllers.dtos.LoginDTO;
-import com.software.backend.models.ROL;
 import com.software.backend.services.interfaces.AuthService;
 
 @RestController
