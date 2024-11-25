@@ -1,46 +1,35 @@
 package com.software.backend.controllers.dtos;
 
-import java.sql.Date;
 import java.util.List;
 
-import com.software.backend.models.DetalleReceta;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class RecetaDigitalDTO {
 
-    private Date fecha;
-    private int codigo;
-    private List<DetalleReceta> detalles;
+    @NotNull(message="La receta debe tener medicamentos")
+    @NotEmpty(message="La receta debe tener medicamentos")
+    @Size(min=1,max=2,message="La receta debe tener uno o dos medicamentos")
+    @Valid
+    private List<DetalleRecetaDTO> detalles;
 
-    public RecetaDigitalDTO(int codigo, List<DetalleReceta> detalles, Date fecha) {
-        this.codigo = codigo;
+    public RecetaDigitalDTO(List<DetalleRecetaDTO> detalles) {
+       
         this.detalles = detalles;
-        this.fecha = fecha;
+       
     }
 
     public RecetaDigitalDTO() {
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public List<DetalleReceta> getDetalles() {
+    public List<DetalleRecetaDTO> getDetalles() {
         return detalles;
     }
 
-    public void setDetalles(List<DetalleReceta> detalles) {
+    public void setDetalles(List<DetalleRecetaDTO> detalles) {
         this.detalles = detalles;
     }
 

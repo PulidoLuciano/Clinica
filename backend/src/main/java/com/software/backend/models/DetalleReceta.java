@@ -1,14 +1,12 @@
 package com.software.backend.models;
 
-import java.util.List;
-
 public class DetalleReceta {
 
-    private List<Medicamento> medicamentos;
+    private Medicamento medicamento;
     private int cantidad;
 
-    public DetalleReceta(List<Medicamento> medicamentos, int cantidad) {
-        this.medicamentos = medicamentos;
+    public DetalleReceta(Medicamento medicamento, int cantidad) {
+        this.medicamento = medicamento;
         this.cantidad = cantidad;
     }
 
@@ -20,11 +18,11 @@ public class DetalleReceta {
         this.cantidad = cantidad;
     }
 
-    public List<Medicamento> getMedicamentos() {
-        return medicamentos;
+    public Medicamento getMedicamentos() {
+        return medicamento;
     }
 
-    public void setMedicamentos(List<Medicamento> medicamentos) {
-        this.medicamentos = medicamentos;
+    public void setMedicamentos(Medicamento medicamento) {
+        this.medicamento = medicamento;
     }
 }

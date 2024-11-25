@@ -1,8 +1,8 @@
 package com.software.backend.controllers.dtos;
 
-import com.software.backend.models.PedidoLaboratorio;
-import com.software.backend.models.RecetaDigital;
 
+
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
 
@@ -11,15 +11,16 @@ public class CrearEvolucionDTO {
     @NotBlank(message = "El texto de la evolución no puede estar vacío")
     private String texto;
 
-    private RecetaDigital receta;
-
-    private PedidoLaboratorio pedidoLaboratorio;
+    @Valid
+    private RecetaDigitalDTO receta;
+    @Valid
+    private PedidoLaboratorioDTO pedidoLaboratorio;
 
     public CrearEvolucionDTO() {
     }
 
     public CrearEvolucionDTO(@NotBlank(message = "El texto de la evolución no puede estar vacío") String texto,
-            RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio) {
+    RecetaDigitalDTO receta, PedidoLaboratorioDTO pedidoLaboratorio) {
         this.texto = texto;
         this.receta = receta;
         this.pedidoLaboratorio = pedidoLaboratorio;
@@ -33,19 +34,19 @@ public class CrearEvolucionDTO {
         this.texto = texto;
     }
 
-    public RecetaDigital getReceta() {
+    public RecetaDigitalDTO getReceta() {
         return receta;
     }
 
-    public void setReceta(RecetaDigital receta) {
+    public void setReceta(RecetaDigitalDTO receta) {
         this.receta = receta;
     }
 
-    public PedidoLaboratorio getPedidoLaboratorio() {
+    public PedidoLaboratorioDTO getPedidoLaboratorio() {
         return pedidoLaboratorio;
     }
 
-    public void setPedidoLaboratorio(PedidoLaboratorio pedidoLaboratorio) {
+    public void setPedidoLaboratorio(PedidoLaboratorioDTO pedidoLaboratorio) {
         this.pedidoLaboratorio = pedidoLaboratorio;
     }
     

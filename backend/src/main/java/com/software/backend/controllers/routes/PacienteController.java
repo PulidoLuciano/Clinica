@@ -27,44 +27,58 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.software.backend.controllers.dtos.mappers.PedidoLaboratorioMapper;
+import com.software.backend.controllers.dtos.mappers.RecetaDigitalMapper;
 import com.software.backend.models.PedidoLaboratorio;
 import com.software.backend.models.RecetaDigital;
 import com.software.backend.security.JwtTokenProvider;
 
 @RestController
 @RequestMapping("/pacientes")
-public class PacienteController extends GenericController<Paciente, Long, PacienteService, PacienteDTO, PacienteMapper>{
-    
+public class PacienteController
+        extends GenericController<Paciente, Long, PacienteService, PacienteDTO, PacienteMapper> {
+
     @Autowired
     private JwtTokenProvider tokenProvider;
-    
+
+    @Autowired
+    private RecetaDigitalMapper recetaDigitalMapper;
+
+    @Autowired
+    private PedidoLaboratorioMapper pedidoLaboratorioMapper;
+
     @PostMapping("/{cuilPaciente}/historia-clinica/{nombreDiagnostico}/evolucion")
-    public ResponseEntity<Evolucion> createEvolucion(@Valid @RequestBody CrearEvolucionDTO dto, @PathVariable("cuilPaciente") Long cuilPaciente, @PathVariable("nombreDiagnostico") String nombreDiagnostico){
+    public ResponseEntity<Evolucion> createEvolucion(@Valid @RequestBody CrearEvolucionDTO dto,
+            @PathVariable("cuilPaciente") Long cuilPaciente,
+            @PathVariable("nombreDiagnostico") String nombreDiagnostico) {
         Long cuilMedico = getLoggedCuil();
-        Evolucion evolucion = super.getServicio().createEvolucionPaciente(cuilPaciente, cuilMedico, nombreDiagnostico, dto.getTexto(),dto.getReceta(),dto.getPedidoLaboratorio());
+        RecetaDigital receta =  recetaDigitalMapper.toEntity(dto.getReceta());
+        PedidoLaboratorio pedidoLaboratorio = pedidoLaboratorioMapper.toEntity(dto.getPedidoLaboratorio());
+        Evolucion evolucion = super.getServicio().createEvolucionPaciente(cuilPaciente, cuilMedico, nombreDiagnostico,
+                dto.getTexto(), receta, pedidoLaboratorio);
         return new ResponseEntity<>(evolucion, HttpStatus.CREATED);
     }
 
     @GetMapping("/{cuilPaciente}/historia-clinica")
-    public ResponseEntity<HistoriaClinica> getHistoriaClinica(@PathVariable("cuilPaciente") Long cuilPaciente){
+    public ResponseEntity<HistoriaClinica> getHistoriaClinica(@PathVariable("cuilPaciente") Long cuilPaciente) {
         HistoriaClinica historia = super.getServicio().getHistoriaClinica(cuilPaciente);
         return ResponseEntity.ok(historia);
     }
 
     @GetMapping("/{cuilPaciente}/historia-clinica/recetas")
-    public ResponseEntity<List<RecetaDigital>> getRecetasPaciente(@PathVariable("cuilPaciente") Long cuilPaciente){
+    public ResponseEntity<List<RecetaDigital>> getRecetasPaciente(@PathVariable("cuilPaciente") Long cuilPaciente) {
         List<RecetaDigital> recetas = super.getServicio().getRecetas(cuilPaciente);
         return ResponseEntity.ok(recetas);
     }
 
     @GetMapping("/{cuilPaciente}/historia-clinica/diagnosticos")
-    public ResponseEntity<List<Diagnostico>> getDiagnosticosPaciente(@PathVariable("cuilPaciente") Long cuilPaciente){
+    public ResponseEntity<List<Diagnostico>> getDiagnosticosPaciente(@PathVariable("cuilPaciente") Long cuilPaciente) {
         List<Diagnostico> diagnosticos = super.getServicio().getDiagnosticos(cuilPaciente);
         return ResponseEntity.ok(diagnosticos);
     }
 
     @GetMapping("/{cuilPaciente}/historia-clinica/pedidos")
-    public ResponseEntity<List<PedidoLaboratorio>> getPedidosPaciente(@PathVariable("cuilPaciente") Long cuilPaciente){
+    public ResponseEntity<List<PedidoLaboratorio>> getPedidosPaciente(@PathVariable("cuilPaciente") Long cuilPaciente) {
         List<PedidoLaboratorio> pedidosLaboratorio = super.getServicio().getPedidos(cuilPaciente);
         return ResponseEntity.ok(pedidosLaboratorio);
     }
