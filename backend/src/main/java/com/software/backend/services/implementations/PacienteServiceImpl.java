@@ -46,7 +46,7 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     public Evolucion createEvolucionPaciente(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto, RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio) {
         Paciente paciente = verificarCuilPaciente(cuilPaciente);
         Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema"));
-        Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese CUIL en el sistema"));
+        Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
         return paciente.createEvolucion(medico, diagnostico, texto, receta, pedidoLaboratorio);
     }
 
