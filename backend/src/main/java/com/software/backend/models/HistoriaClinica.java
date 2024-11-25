@@ -42,4 +42,23 @@ public class HistoriaClinica {
         }
         return detalle.crearEvolucion(medico, texto, receta, pedidoLaboratorio);
     }
+
+    public List<RecetaDigital> getRecetas(){
+        List<RecetaDigital> recetas = new ArrayList<>();
+        detalles.forEach(detalle -> { recetas.addAll(detalle.getRecetas());});
+        return recetas;
+    }
+
+    public List<Diagnostico> getDiagnosticos(){
+        List<Diagnostico> diagnosticos = new ArrayList<>();
+        detalles.forEach(detalle -> { diagnosticos.add(detalle.getDiagnostico());});
+        return diagnosticos;
+    }
+
+    public List<PedidoLaboratorio> getPedidosLaboratorio(){
+        List<PedidoLaboratorio> pedidosLaboratorio = new ArrayList<>();
+        detalles.forEach(detalle -> { pedidosLaboratorio.addAll(detalle.getPedidosLaboratorio());});
+        return pedidosLaboratorio;
+    }
+
 }

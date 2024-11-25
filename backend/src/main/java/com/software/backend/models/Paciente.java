@@ -1,6 +1,7 @@
 package com.software.backend.models;
 
 import java.util.Date;
+import java.util.List;
 
 public class Paciente extends Persona{
     
@@ -43,5 +44,18 @@ public class Paciente extends Persona{
 
     public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto,RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio){
         return historiaClinica.createEvolucion(medico, diagnostico, texto,receta,pedidoLaboratorio);
+    }
+
+    public List<RecetaDigital> getRecetas(){
+        return historiaClinica.getRecetas();
+    }
+
+    public List<Diagnostico> getDiagnosticos(){
+        return historiaClinica.getDiagnosticos();
+    }
+
+    
+    public List<PedidoLaboratorio> getPedidosLaboratorio(){
+        return historiaClinica.getPedidosLaboratorio();
     }
 }

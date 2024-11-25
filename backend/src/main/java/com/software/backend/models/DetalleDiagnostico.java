@@ -2,6 +2,7 @@ package com.software.backend.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.sql.Date;
 
 public class DetalleDiagnostico {
@@ -54,5 +55,24 @@ public class DetalleDiagnostico {
         evoluciones.add(evolucion);
         return evolucion;
     }
+
+    public List<RecetaDigital> getRecetas(){
+        List<RecetaDigital> recetas = new ArrayList<>();
+        evoluciones.stream().forEach(evolucion -> {
+            if(!Objects.isNull(evolucion.getReceta()))
+            recetas.add(evolucion.getReceta());
+        });
+        return recetas;
+    }
+
+    public List<PedidoLaboratorio> getPedidosLaboratorio(){
+        List<PedidoLaboratorio> pedidosLaboratorio = new ArrayList<>();
+        evoluciones.stream().forEach(evolucion -> {
+            if(!Objects.isNull(evolucion.getPedidoLaboratorio()))
+            pedidosLaboratorio.add(evolucion.getPedidoLaboratorio());
+        });
+        return pedidosLaboratorio;
+    }
+
 
 }

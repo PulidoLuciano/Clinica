@@ -1,6 +1,6 @@
 package com.software.backend.services.implementations;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -65,10 +65,7 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     @Override
     public List<RecetaDigital> getRecetas(Long cuil){
         Paciente paciente = verificarCuilPaciente(cuil);
-        List<RecetaDigital> recetas = new ArrayList<>(); 
-        paciente.getHistoriaClinica().getDetalles().forEach(detalle -> { 
-            detalle.getEvoluciones().forEach(evolucion -> {recetas.add(evolucion.getReceta());} );
-         });
+        List<RecetaDigital> recetas = paciente.getRecetas(); 
         if(recetas.isEmpty()) throw new IllegalArgumentException("Esta historia clínica no tiene evoluciones con recetas digitales");  
          return recetas;
     }
@@ -77,10 +74,7 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     @Override
     public List<Diagnostico> getDiagnosticos(Long cuil){
         Paciente paciente = verificarCuilPaciente(cuil);
-        List<Diagnostico> diagnosticos = new ArrayList<>(); 
-        paciente.getHistoriaClinica().getDetalles().forEach(detalle -> { 
-            diagnosticos.add(detalle.getDiagnostico());
-         });
+        List<Diagnostico> diagnosticos = paciente.getDiagnosticos();
         if(diagnosticos.isEmpty()) throw new IllegalArgumentException("Esta historia clinica no tiene diagnosticos");  
          return diagnosticos;
     }
@@ -88,10 +82,7 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     @Override
     public List<PedidoLaboratorio> getPedidos(Long cuil){
         Paciente paciente = verificarCuilPaciente(cuil);
-        List<PedidoLaboratorio> pedidosLaboratorio = new ArrayList<>();         
-        paciente.getHistoriaClinica().getDetalles().forEach(detalle -> { 
-            detalle.getEvoluciones().forEach(evolucion -> {pedidosLaboratorio.add(evolucion.getPedidoLaboratorio());} );
-         });
+        List<PedidoLaboratorio> pedidosLaboratorio = paciente.getPedidosLaboratorio();      
         if(pedidosLaboratorio.isEmpty()) throw new IllegalArgumentException("Esta historia clinica no tiene evoluciones con pedidos de laboratorio");  
          return pedidosLaboratorio;
     }
