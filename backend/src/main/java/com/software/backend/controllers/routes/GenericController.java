@@ -43,6 +43,7 @@ public class GenericController<T extends Identifiable<ID>, ID, IServicio extends
     }
 
     // Obtener una entidad por su ID
+    @SuppressWarnings("null")
     @GetMapping("/{id}")
     public ResponseEntity<TDto> getById(@PathVariable("id") ID id) {
         Optional<T> optEntity = servicio.getById(id);

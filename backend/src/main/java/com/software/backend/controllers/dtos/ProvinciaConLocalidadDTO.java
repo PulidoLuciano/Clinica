@@ -35,4 +35,12 @@ public class ProvinciaConLocalidadDTO {
         this.nombre = nombre;
     }
 
+    public List<Localidad> getLocalidades() {
+        return localidades;
+    }
+
+    public void setLocalidades(List<Localidad> localidades) {
+        this.localidades = localidades;
+    }
+
 }

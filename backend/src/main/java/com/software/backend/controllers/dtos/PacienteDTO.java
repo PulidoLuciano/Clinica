@@ -2,8 +2,6 @@ package com.software.backend.controllers.dtos;
 
 import java.util.Date;
 
-import com.software.backend.models.ObraSocial;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;

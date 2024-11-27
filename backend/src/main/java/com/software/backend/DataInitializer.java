@@ -61,6 +61,7 @@ public class DataInitializer implements CommandLineRunner{
         diagnosticos.forEach(diagnosticoRepository::save);
     }
 
+    @SuppressWarnings("deprecation")
     private void initializePacientes() {
         Random random = new Random();
         List<Integer> codigosObras = List.of(119708, 123404, 106005, 127109, 106104, 111506, 119708, 123404, 106005, 111506, 106104);
