@@ -11,13 +11,22 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import com.software.backend.persistence.base.NotFoundOnRepositoryException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler{
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFoundException(NoResourceFoundException ex){
         ErrorResponse response = new ErrorResponse("Recurso no encontrado", createDetails(ex));
+        return new ResponseEntity<>( response ,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotFoundOnRepositoryException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundOnRepository(NotFoundOnRepositoryException ex){
+        ErrorResponse response = new ErrorResponse("Los datos no corresponden a una entidad existente", createDetails(ex));
         return new ResponseEntity<>( response ,HttpStatus.NOT_FOUND);
     }
     
@@ -51,8 +60,15 @@ public class GlobalExceptionHandler{
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(HttpClientErrorException.class)
+    public ResponseEntity<ErrorResponse> handleHttpClientException(Exception ex) {
+        ErrorResponse response = new ErrorResponse("Hubo un error al hacer un llamado a una API externa", createDetails(ex));
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
+        System.err.println(ex.getClass());
         ErrorResponse response = new ErrorResponse("Ocurrió un error inesperado", createDetails(ex));
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }

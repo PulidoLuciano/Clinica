@@ -10,9 +10,9 @@ public interface BaseRepository<T extends Identifiable<ID>, ID>{
 
     Optional<T> findById(ID primaryKey);
 
-    List<T> findAll();
+    List<T> findAll() throws NotFoundOnRepositoryException;
 
-    T deleteById(ID id);
+    T deleteById(ID id) throws NotFoundOnRepositoryException;
 
     boolean existsById(ID primaryKey);
 }

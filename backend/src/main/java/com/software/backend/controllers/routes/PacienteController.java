@@ -14,6 +14,8 @@ import com.software.backend.services.interfaces.PacienteService;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,8 +29,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.software.backend.controllers.dtos.mappers.PedidoLaboratorioMapper;
-import com.software.backend.controllers.dtos.mappers.RecetaDigitalMapper;
 import com.software.backend.models.PedidoLaboratorio;
 import com.software.backend.models.RecetaDigital;
 import com.software.backend.security.JwtTokenProvider;
@@ -41,21 +41,30 @@ public class PacienteController
     @Autowired
     private JwtTokenProvider tokenProvider;
 
-    @Autowired
-    private RecetaDigitalMapper recetaDigitalMapper;
-
-    @Autowired
-    private PedidoLaboratorioMapper pedidoLaboratorioMapper;
-
     @PostMapping("/{cuilPaciente}/historia-clinica/{nombreDiagnostico}/evolucion")
     public ResponseEntity<Evolucion> createEvolucion(@Valid @RequestBody CrearEvolucionDTO dto,
             @PathVariable("cuilPaciente") Long cuilPaciente,
             @PathVariable("nombreDiagnostico") String nombreDiagnostico) {
+        
+        if(dto.getMedicamentosReceta() != null && dto.getTextoPedidoLaboratorio() != null)
+            throw new IllegalArgumentException("El pedido de laboratorio y la receta digital son excluyentes en una evolución");
+        
         Long cuilMedico = getLoggedCuil();
-        RecetaDigital receta =  recetaDigitalMapper.toEntity(dto.getReceta());
-        PedidoLaboratorio pedidoLaboratorio = pedidoLaboratorioMapper.toEntity(dto.getPedidoLaboratorio());
-        Evolucion evolucion = super.getServicio().createEvolucionPaciente(cuilPaciente, cuilMedico, nombreDiagnostico,
-                dto.getTexto(), receta, pedidoLaboratorio);
+        Evolucion evolucion;
+
+        if(dto.getMedicamentosReceta() != null){
+            List<Map<String, Integer>> medicamentosRecetados = dto.getMedicamentosReceta().stream()
+                .map(detalle -> Map.of(
+                        "codigoMedicamento", detalle.getCodigoMedicamento(),
+                        "cantidad", detalle.getCantidad()))
+                .collect(Collectors.toList());
+            evolucion = super.getServicio().createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, dto.getTexto(), medicamentosRecetados);
+        }else if(dto.getTextoPedidoLaboratorio() != null){
+            String textoPedido = dto.getTextoPedidoLaboratorio();
+            evolucion = super.getServicio().createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, dto.getTexto(), textoPedido);
+        }else{
+            evolucion = super.getServicio().createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, dto.getTexto());
+        }
         return new ResponseEntity<>(evolucion, HttpStatus.CREATED);
     }
 

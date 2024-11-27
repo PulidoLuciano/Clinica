@@ -1,25 +1,46 @@
 package com.software.backend.models;
 
-public class ObraSocial implements Identifiable<String>{
+public class ObraSocial implements Identifiable<Integer>{
 
-    private String nombre;
-
-    public ObraSocial(){}
-
-    public ObraSocial(String nombre) {
-        this.nombre = nombre;
+    private Integer codigo;
+    private String denominacion;
+    private String sigla;
+    
+    public ObraSocial() {
     }
 
-    public String getNombre() {
-        return nombre;
+    public ObraSocial(Integer codigo, String denominacion, String sigla) {
+        this.codigo = codigo;
+        this.denominacion = denominacion;
+        this.sigla = sigla;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDenominacion() {
+        return denominacion;
+    }
+
+    public void setDenominacion(String denominacion) {
+        this.denominacion = denominacion;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
     @Override
-    public String getId() {
-        return nombre;
+    public Integer getId() {
+        return codigo;
     }
 }

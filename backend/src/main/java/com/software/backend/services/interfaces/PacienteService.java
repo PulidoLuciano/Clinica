@@ -1,6 +1,7 @@
 package com.software.backend.services.interfaces;
 
 import java.util.List;
+import java.util.Map;
 
 import com.software.backend.models.Diagnostico;
 import com.software.backend.models.Evolucion;
@@ -10,7 +11,11 @@ import com.software.backend.models.PedidoLaboratorio;
 import com.software.backend.models.RecetaDigital;
 
 public interface PacienteService extends GenericService<Paciente, Long> {
-    public Evolucion createEvolucionPaciente(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto,RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio) ;
+    public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto);
+
+    public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto, List<Map<String, Integer>> detallesReceta);
+
+    public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto, String textoPedidoLaboratorio);
 
     public HistoriaClinica getHistoriaClinica(Long cuilPaciente);
 

@@ -2,8 +2,7 @@ package com.software.backend.controllers.dtos;
 
 import java.util.Date;
 
-import com.software.backend.models.ObraSocial;
-
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -48,7 +47,8 @@ public class PacienteDTO {
     @Min(value = 1, message = "El número de afiliado debe ser mayor que 0")
     private Integer numeroAfiliado;
 
-    private ObraSocial obraSocial;
+    @Valid
+    private ObraSocialDTO obraSocial;
     
     public PacienteDTO(@NotNull(message = "El CUIL no puede ser nulo") Long cuil,
             @NotNull(message = "El DNI no puede ser nulo") Long dni,
@@ -58,7 +58,7 @@ public class PacienteDTO {
             @NotBlank(message = "El nombre no puede estar vacío") @Size(min = 2, max = 255, message = "El nombre debe tener entre 2 y 255 caracteres") String nombre,
             @NotBlank(message = "El apellido no puede estar vacío") @Size(min = 2, max = 255, message = "El apellido debe tener entre 2 y 255 caracteres") String apellido,
             @NotNull(message = "El número de afiliado no puede ser nulo") Integer numeroAfiliado,
-            @NotNull ObraSocial obraSocial) {
+            @Valid ObraSocialDTO obraSocial) {
         this.cuil = cuil;
         this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
@@ -137,11 +137,11 @@ public class PacienteDTO {
         this.numeroAfiliado = numeroAfiliado;
     }
 
-    public ObraSocial getObraSocial() {
+    public ObraSocialDTO getObraSocial() {
         return obraSocial;
     }
 
-    public void setObraSocial(ObraSocial obraSocial) {
+    public void setObraSocial(ObraSocialDTO obraSocial) {
         this.obraSocial = obraSocial;
     }
 }

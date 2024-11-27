@@ -42,8 +42,16 @@ public class Paciente extends Persona{
         return this.historiaClinica;
     }
 
-    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto,RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio){
-        return historiaClinica.createEvolucion(medico, diagnostico, texto,receta,pedidoLaboratorio);
+    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto){
+        return historiaClinica.createEvolucion(medico, diagnostico, texto);
+    }
+
+    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto, List<DetalleReceta> medicamentosRecetados){
+        return historiaClinica.createEvolucion(medico, diagnostico, texto, medicamentosRecetados);
+    }
+
+    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto, String textoPedidoLaboratorio){
+        return historiaClinica.createEvolucion(medico, diagnostico, texto, textoPedidoLaboratorio);
     }
 
     public List<RecetaDigital> getRecetas(){

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.software.backend.models.Identifiable;
 import com.software.backend.persistence.base.BaseRepository;
+import com.software.backend.persistence.base.NotFoundOnRepositoryException;
 import com.software.backend.services.interfaces.GenericService;
 
 public class GenericServiceImpl<T extends Identifiable<ID>, ID, IRepository extends BaseRepository<T, ID>> implements GenericService<T, ID> {
@@ -15,7 +16,7 @@ public class GenericServiceImpl<T extends Identifiable<ID>, ID, IRepository exte
     private IRepository repositorio;
 
     @Override
-    public List<T> getAll() {
+    public List<T> getAll() throws NotFoundOnRepositoryException{
         return repositorio.findAll();
     }
 
@@ -30,7 +31,7 @@ public class GenericServiceImpl<T extends Identifiable<ID>, ID, IRepository exte
     }
 
     @Override
-    public T deleteById(ID id) {
+    public T deleteById(ID id) throws NotFoundOnRepositoryException{
         return repositorio.deleteById(id);
     }
 

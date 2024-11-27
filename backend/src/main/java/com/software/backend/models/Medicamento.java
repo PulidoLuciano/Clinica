@@ -1,36 +1,43 @@
 package com.software.backend.models;
 
-public class Medicamento implements Identifiable<String>{
+public class Medicamento implements Identifiable<Integer>{
 
-    private String nombreComercial;
-    private String nombreGenerico;
-
-    public Medicamento() {
+    private Integer codigo;
+    private String descripcion;
+    private String formato;
+    
+    public Medicamento(Integer codigo, String descripcion, String formato) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.formato = formato;
     }
 
-    public Medicamento(long id, String nombreComercial, String nombreGenerico) {
-        this.nombreComercial = nombreComercial;
-        this.nombreGenerico = nombreGenerico;
+    public Integer getCodigo() {
+        return codigo;
     }
 
-    public String getNombreComercial() {
-        return nombreComercial;
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
-    public void setNombreComercial(String nombreComercial) {
-        this.nombreComercial = nombreComercial;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public String getNombreGenerico() {
-        return nombreGenerico;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public void setNombreGenerico(String nombreGenerico) {
-        this.nombreGenerico = nombreGenerico;
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
     }
 
     @Override
-    public String getId() {
-        return this.nombreComercial;
+    public Integer getId() {
+        return codigo;
     }
 }

@@ -1,31 +1,18 @@
 package com.software.backend.models;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public class RecetaDigital {
 
-    private long id;
     private Date fecha;
-    private int codigo;
+    private Long codigo;
     private List<DetalleReceta> detalles;
 
-    public RecetaDigital(long id, Date fecha, int codigo, Evolucion evolucion, List<DetalleReceta> detalles) {
-        this.id = id;
-        this.fecha = fecha;
-        this.codigo = codigo;
+    public RecetaDigital(List<DetalleReceta> detalles) {
+        this.fecha = new Date(System.currentTimeMillis());
+        this.codigo = (long) (Math.random() * (9999999999999L -  + 1000000000000L)) + 1000000000000L;
         this.detalles = detalles;
-    }
-
-    public RecetaDigital() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public Date getFecha() {
@@ -36,11 +23,11 @@ public class RecetaDigital {
         this.fecha = fecha;
     }
 
-    public int getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
 
@@ -51,6 +38,4 @@ public class RecetaDigital {
     public void setDetalles(List<DetalleReceta> detalles) {
         this.detalles = detalles;
     }
-
-    
 }

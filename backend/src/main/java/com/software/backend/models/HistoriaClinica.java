@@ -31,16 +31,19 @@ public class HistoriaClinica {
         this.detalles = detalles;
     }
 
-    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto, RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio){
-        Optional<DetalleDiagnostico> detalleOpt = detalles.stream().filter(item -> item.getDiagnostico().equals(diagnostico)).findFirst();
-        DetalleDiagnostico detalle;
-        if(detalleOpt.isEmpty()){
-            detalle = new DetalleDiagnostico(diagnostico);
-            detalles.add(detalle);
-        }else{
-            detalle = detalleOpt.get();
-        }
-        return detalle.crearEvolucion(medico, texto, receta, pedidoLaboratorio);
+    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto){
+        DetalleDiagnostico detalle = getDetalleByDiagnostico(diagnostico);
+        return detalle.crearEvolucion(medico, texto);
+    }
+
+    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto, List<DetalleReceta> medicamentosRecetados){
+        DetalleDiagnostico detalle = getDetalleByDiagnostico(diagnostico);
+        return detalle.crearEvolucion(medico, texto, medicamentosRecetados);
+    }
+
+    public Evolucion createEvolucion(Medico medico, Diagnostico diagnostico, String texto, String textoPedidoLaboratorio){
+        DetalleDiagnostico detalle = getDetalleByDiagnostico(diagnostico);
+        return detalle.crearEvolucion(medico, texto, textoPedidoLaboratorio);
     }
 
     public List<RecetaDigital> getRecetas(){
@@ -59,6 +62,18 @@ public class HistoriaClinica {
         List<PedidoLaboratorio> pedidosLaboratorio = new ArrayList<>();
         detalles.forEach(detalle -> { pedidosLaboratorio.addAll(detalle.getPedidosLaboratorio());});
         return pedidosLaboratorio;
+    }
+
+    private DetalleDiagnostico getDetalleByDiagnostico(Diagnostico diagnostico){
+        Optional<DetalleDiagnostico> detalleOpt = detalles.stream().filter(item -> item.getDiagnostico().equals(diagnostico)).findFirst();
+        DetalleDiagnostico detalle;
+        if(detalleOpt.isEmpty()){
+            detalle = new DetalleDiagnostico(diagnostico);
+            detalles.add(detalle);
+        }else{
+            detalle = detalleOpt.get();
+        }
+        return detalle;
     }
 
 }

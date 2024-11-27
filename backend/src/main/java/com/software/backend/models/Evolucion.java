@@ -1,6 +1,7 @@
 package com.software.backend.models;
 
 import java.util.Date;
+import java.util.List;
 
 public class Evolucion {
 
@@ -10,10 +11,26 @@ public class Evolucion {
     private PedidoLaboratorio pedidoLaboratorio;
     private Medico medico;
 
-    public Evolucion(Medico medico, String texto, RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio) {
+    public Evolucion(Medico medico, String texto) {
         this.texto = texto;
-        this.receta = receta;
-        this.pedidoLaboratorio = pedidoLaboratorio;
+        this.receta = null;
+        this.pedidoLaboratorio = null;
+        this.medico = medico;
+        this.fecha = new Date(System.currentTimeMillis());
+    }
+    
+    public Evolucion(Medico medico, String texto, List<DetalleReceta> medicamentosRecetados) {
+        this.texto = texto;
+        this.receta = new RecetaDigital(medicamentosRecetados);
+        this.pedidoLaboratorio = null;
+        this.medico = medico;
+        this.fecha = new Date(System.currentTimeMillis());
+    }
+
+    public Evolucion(Medico medico, String texto, String textoPedidoLaboratorio) {
+        this.texto = texto;
+        this.receta = null;
+        this.pedidoLaboratorio = new PedidoLaboratorio(textoPedidoLaboratorio);
         this.medico = medico;
         this.fecha = new Date(System.currentTimeMillis());
     }
