@@ -58,12 +58,12 @@ public class PacienteController
                         "codigoMedicamento", detalle.getCodigoMedicamento(),
                         "cantidad", detalle.getCantidad()))
                 .collect(Collectors.toList());
-            evolucion = super.getServicio().createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, nombreDiagnostico, medicamentosRecetados);
+            evolucion = super.getServicio().createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, dto.getTexto(), medicamentosRecetados);
         }else if(dto.getTextoPedidoLaboratorio() != null){
             String textoPedido = dto.getTextoPedidoLaboratorio();
-            evolucion = super.getServicio().createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, textoPedido, textoPedido);
+            evolucion = super.getServicio().createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, dto.getTexto(), textoPedido);
         }else{
-            evolucion = super.getServicio().createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, nombreDiagnostico);
+            evolucion = super.getServicio().createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, dto.getTexto());
         }
         return new ResponseEntity<>(evolucion, HttpStatus.CREATED);
     }
