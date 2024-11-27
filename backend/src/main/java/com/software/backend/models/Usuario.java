@@ -1,6 +1,6 @@
 package com.software.backend.models;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class Usuario implements Identifiable<String>{
 
@@ -8,8 +8,11 @@ public class Usuario implements Identifiable<String>{
     private Persona persona;
     private ROL rol;
 
-    public Usuario(String contrasenia, Persona persona, ROL rol) {
-        this.contrasenia = new BCryptPasswordEncoder().encode(contrasenia);
+    private PasswordEncoder passwordEncoder;
+
+    public Usuario(String contrasenia, Persona persona, ROL rol, PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+        this.contrasenia = this.passwordEncoder.encode(contrasenia);
         this.persona = persona;
         this.rol = rol;
     }
@@ -19,7 +22,7 @@ public class Usuario implements Identifiable<String>{
     }
 
     public void setContrasenia(String contrasenia) {
-        this.contrasenia = new BCryptPasswordEncoder().encode(contrasenia);;
+        this.contrasenia = this.passwordEncoder.encode(contrasenia);
     }
 
     public Persona getPersona() {
@@ -49,5 +52,9 @@ public class Usuario implements Identifiable<String>{
 
     public String getUsername() {
         return getId();
+    }
+
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 }

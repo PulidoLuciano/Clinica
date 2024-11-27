@@ -8,6 +8,7 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.software.backend.models.Diagnostico;
@@ -44,6 +45,8 @@ public class DataInitializer implements CommandLineRunner{
     private UsuariosRepository usuarioRepository;
     @Autowired
     private RecepcionistaRepository recepcionistaRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void initializeData() {
         initializeObrasSociales();
@@ -123,13 +126,13 @@ public class DataInitializer implements CommandLineRunner{
         Medico medico1 = new Medico(
             20123456789L, 12345678, new Date(), "medico1@example.com", 
             1123456789, "Juan", "Pérez", null, 1234, especialidades.get(0));
-        usuarioRepository.save(new Usuario("password123", medico1, ROL.MEDICO));
+        usuarioRepository.save(new Usuario("password123", medico1, ROL.MEDICO, passwordEncoder));
         medicoRepository.save(medico1);
             
         Medico medico2 = new Medico(
             20198765432L, 87654321, new Date(), "medico2@example.com", 
             1198765432, "Ana", "García", null, 5678, especialidades.get(1));
-        usuarioRepository.save(new Usuario("password123", medico2, ROL.MEDICO));
+        usuarioRepository.save(new Usuario("password123", medico2, ROL.MEDICO, passwordEncoder));
         medicoRepository.save(medico2);
     }
 
@@ -137,13 +140,13 @@ public class DataInitializer implements CommandLineRunner{
         Recepcionista recepcionista1 = new Recepcionista(
             20123456789L, 22334455L, new Date(), "recep1@example.com", 
             1123456789, "María", "López", null);
-        usuarioRepository.save(new Usuario("password123", recepcionista1, ROL.RECEPCIONISTA));
+        usuarioRepository.save(new Usuario("password123", recepcionista1, ROL.RECEPCIONISTA, passwordEncoder));
         recepcionistaRepository.save(recepcionista1);
 
         Recepcionista recepcionista2 = new Recepcionista(
             20198765432L, 55443322L, new Date(), "recep2@example.com", 
             1198765432, "Carlos", "Rodríguez", null);
-        usuarioRepository.save(new Usuario("password123", recepcionista2, ROL.RECEPCIONISTA));
+        usuarioRepository.save(new Usuario("password123", recepcionista2, ROL.RECEPCIONISTA, passwordEncoder));
         recepcionistaRepository.save(recepcionista2);
     }
 
