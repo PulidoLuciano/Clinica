@@ -5,8 +5,9 @@ Feature: Iniciar sesión en el sistema de la clínica
 
   Background: Existe un médico y un recepcionista registrados en el sistema
     Given existen los siguientes usuarios en el sistema:
-      | medico1@example.com | password  | MEDICO        |
-      | recep1@example.com  | muySeguro | RECEPCIONISTA |
+      | nombre     | apellido       | cuil         | email               | contrasenia | rol           |
+      | Juan       | Perez          | 20123456789  | medico1@example.com | password    | MEDICO        |
+      | Pablo      | Caceres        |20123456788   | recep1@example.com  | muySeguro   | RECEPCIONISTA |
 
   Scenario:
     When el medico intenta ingresar al sistema con el email "medico1@example.com" y contraseña "password"
