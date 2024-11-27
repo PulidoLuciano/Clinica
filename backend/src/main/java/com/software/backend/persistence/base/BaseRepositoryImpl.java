@@ -32,16 +32,16 @@ public class BaseRepositoryImpl<T extends Identifiable<ID>, ID> implements BaseR
     }
 
     @Override
-    public List<T> findAll() {
-        if(entidades.isEmpty()) throw new IllegalArgumentException("No hay entidades de este tipo");
+    public List<T> findAll() throws NotFoundOnRepositoryException {
+        if(entidades.isEmpty()) throw new NotFoundOnRepositoryException("No hay entidades de este tipo");
         return entidades;
     }
 
     @Override
-    public T deleteById(ID id) {
+    public T deleteById(ID id) throws NotFoundOnRepositoryException {
         Optional<T> deleted = findById(id);
         if (deleted.isEmpty()) {
-            throw new IllegalArgumentException("No se encontró ninguna entidad con el ID: " + id);
+            throw new NotFoundOnRepositoryException("No se encontró ninguna entidad con el ID: " + id);
         }
         boolean removed = entidades.remove(deleted.get());
         if(!removed){

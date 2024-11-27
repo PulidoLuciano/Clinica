@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.software.backend.controllers.dtos.mappers.GenericMapper;
 import com.software.backend.models.Identifiable;
+import com.software.backend.persistence.base.NotFoundOnRepositoryException;
 import com.software.backend.services.interfaces.GenericService;
 
 import jakarta.validation.Valid;
@@ -27,7 +28,7 @@ public class GenericController<T extends Identifiable<ID>, ID, IServicio extends
 
     //Buscar todas las entidades
     @GetMapping
-    public ResponseEntity<List<TDto>> getAll() {
+    public ResponseEntity<List<TDto>> getAll() throws NotFoundOnRepositoryException{
         List<T> entities = servicio.getAll();
         List<TDto> dtos = mapper.toDTOList(entities);
         return ResponseEntity.ok(dtos);
@@ -43,12 +44,11 @@ public class GenericController<T extends Identifiable<ID>, ID, IServicio extends
     }
 
     // Obtener una entidad por su ID
-    @SuppressWarnings("null")
     @GetMapping("/{id}")
-    public ResponseEntity<TDto> getById(@PathVariable("id") ID id) {
+    public ResponseEntity<TDto> getById(@PathVariable("id") ID id) throws NotFoundOnRepositoryException{
         Optional<T> optEntity = servicio.getById(id);
         if(optEntity.isEmpty()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            throw new NotFoundOnRepositoryException("La entidad con id " + id + " no existe");
         }
         TDto dto = mapper.toDTO(optEntity.get());
         return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -56,7 +56,7 @@ public class GenericController<T extends Identifiable<ID>, ID, IServicio extends
 
     // Eliminar una entidad por su ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<TDto> deleteById(@PathVariable("id") ID id) {
+    public ResponseEntity<TDto> deleteById(@PathVariable("id") ID id) throws NotFoundOnRepositoryException{
         T deleted = servicio.deleteById(id);
         TDto dto = mapper.toDTO(deleted);
         return new ResponseEntity<>(dto, HttpStatus.OK);
