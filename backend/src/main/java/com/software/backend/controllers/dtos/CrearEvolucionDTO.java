@@ -1,7 +1,5 @@
 package com.software.backend.controllers.dtos;
 
-
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 

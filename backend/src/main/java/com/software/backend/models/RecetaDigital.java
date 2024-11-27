@@ -1,31 +1,22 @@
 package com.software.backend.models;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public class RecetaDigital {
 
-    private long id;
     private Date fecha;
     private int codigo;
     private List<DetalleReceta> detalles;
 
-    public RecetaDigital(long id, Date fecha, int codigo, Evolucion evolucion, List<DetalleReceta> detalles) {
-        this.id = id;
-        this.fecha = fecha;
+    public RecetaDigital(Date fecha, int codigo, List<DetalleReceta> detalles) {
+        this.fecha = new Date(System.currentTimeMillis());
         this.codigo = codigo;
         this.detalles = detalles;
     }
 
     public RecetaDigital() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        this.fecha = new Date(System.currentTimeMillis());
     }
 
     public Date getFecha() {
@@ -51,6 +42,4 @@ public class RecetaDigital {
     public void setDetalles(List<DetalleReceta> detalles) {
         this.detalles = detalles;
     }
-
-    
 }

@@ -15,9 +15,9 @@ import com.software.backend.models.ObraSocial;
 import com.software.backend.models.Paciente;
 import com.software.backend.models.PedidoLaboratorio;
 import com.software.backend.models.RecetaDigital;
+import com.software.backend.persistence.repositories.interfaces.ApiSalud;
 import com.software.backend.persistence.repositories.interfaces.DiagnosticoRepository;
 import com.software.backend.persistence.repositories.interfaces.MedicoRepository;
-import com.software.backend.persistence.repositories.interfaces.ObraSocialRepository;
 import com.software.backend.persistence.repositories.interfaces.PacienteRepository;
 import com.software.backend.services.interfaces.PacienteService;
 
@@ -27,17 +27,15 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     @Autowired
     private DiagnosticoRepository diagnosticoRepository;
     @Autowired
-    private ObraSocialRepository obraSocialRepository;
-    @Autowired
     private MedicoRepository medicoRepository;
+    @Autowired
+    private ApiSalud apiSalud;
     
     @Override
     public Paciente save(Paciente paciente){
         if(paciente.getObraSocial() != null){
-            String nombreObraSocial = paciente.getObraSocial().getNombre();
-            Optional<ObraSocial> obraSocialFromRepo = obraSocialRepository.findById(nombreObraSocial);
-            if(obraSocialFromRepo.isEmpty()) throw new IllegalArgumentException("No existe la obra social con nombre " + nombreObraSocial);
-            paciente.setObraSocial(obraSocialFromRepo.get());
+            ObraSocial obraSocial = apiSalud.getObraSocialbyCode(paciente.getObraSocial().getCodigo());
+            paciente.setObraSocial(obraSocial);
         }
         return super.save(paciente);
     }

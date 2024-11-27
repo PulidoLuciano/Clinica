@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
@@ -51,8 +52,15 @@ public class GlobalExceptionHandler{
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(HttpClientErrorException.class)
+    public ResponseEntity<ErrorResponse> handleHttpClientException(Exception ex) {
+        ErrorResponse response = new ErrorResponse("Hubo un error al hacer un llamado a una API externa", createDetails(ex));
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
+        System.err.println(ex.getClass());
         ErrorResponse response = new ErrorResponse("Ocurrió un error inesperado", createDetails(ex));
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
