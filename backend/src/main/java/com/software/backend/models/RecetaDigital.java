@@ -6,17 +6,13 @@ import java.util.List;
 public class RecetaDigital {
 
     private Date fecha;
-    private int codigo;
+    private Long codigo;
     private List<DetalleReceta> detalles;
 
-    public RecetaDigital(Date fecha, int codigo, List<DetalleReceta> detalles) {
+    public RecetaDigital(List<DetalleReceta> detalles) {
         this.fecha = new Date(System.currentTimeMillis());
-        this.codigo = codigo;
+        this.codigo = (long) (Math.random() * (9999999999999L -  + 1000000000000L)) + 1000000000000L;
         this.detalles = detalles;
-    }
-
-    public RecetaDigital() {
-        this.fecha = new Date(System.currentTimeMillis());
     }
 
     public Date getFecha() {
@@ -27,11 +23,11 @@ public class RecetaDigital {
         this.fecha = fecha;
     }
 
-    public int getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
 

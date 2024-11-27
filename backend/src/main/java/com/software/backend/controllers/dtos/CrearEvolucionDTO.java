@@ -1,7 +1,10 @@
 package com.software.backend.controllers.dtos;
 
+import java.util.List;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 
 public class CrearEvolucionDTO {
@@ -10,18 +13,19 @@ public class CrearEvolucionDTO {
     private String texto;
 
     @Valid
-    private RecetaDigitalDTO receta;
-    @Valid
-    private PedidoLaboratorioDTO pedidoLaboratorio;
+    @Size(min=1,max=2,message="La receta debe tener uno o dos medicamentos")
+    private List<DetalleRecetaDTO> medicamentosReceta;
+    
+    private String textoPedidoLaboratorio;
 
     public CrearEvolucionDTO() {
     }
 
     public CrearEvolucionDTO(@NotBlank(message = "El texto de la evolución no puede estar vacío") String texto,
-    RecetaDigitalDTO receta, PedidoLaboratorioDTO pedidoLaboratorio) {
+            @Valid List<DetalleRecetaDTO> medicamentosReceta, String textoPedidoLaboratorio) {
         this.texto = texto;
-        this.receta = receta;
-        this.pedidoLaboratorio = pedidoLaboratorio;
+        this.medicamentosReceta = medicamentosReceta;
+        this.textoPedidoLaboratorio = textoPedidoLaboratorio;
     }
 
     public String getTexto() {
@@ -32,20 +36,19 @@ public class CrearEvolucionDTO {
         this.texto = texto;
     }
 
-    public RecetaDigitalDTO getReceta() {
-        return receta;
+    public List<DetalleRecetaDTO> getMedicamentosReceta() {
+        return medicamentosReceta;
     }
 
-    public void setReceta(RecetaDigitalDTO receta) {
-        this.receta = receta;
+    public void setMedicamentosReceta(List<DetalleRecetaDTO> medicamentosReceta) {
+        this.medicamentosReceta = medicamentosReceta;
     }
 
-    public PedidoLaboratorioDTO getPedidoLaboratorio() {
-        return pedidoLaboratorio;
+    public String getTextoPedidoLaboratorio() {
+        return textoPedidoLaboratorio;
     }
 
-    public void setPedidoLaboratorio(PedidoLaboratorioDTO pedidoLaboratorio) {
-        this.pedidoLaboratorio = pedidoLaboratorio;
+    public void setTextoPedidoLaboratorio(String textoPedidoLaboratorio) {
+        this.textoPedidoLaboratorio = textoPedidoLaboratorio;
     }
-    
 }

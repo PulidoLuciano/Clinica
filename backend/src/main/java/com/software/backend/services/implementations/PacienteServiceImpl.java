@@ -1,12 +1,16 @@
 package com.software.backend.services.implementations;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.software.backend.models.DetalleReceta;
 import com.software.backend.models.Diagnostico;
 import com.software.backend.models.Evolucion;
 import com.software.backend.models.HistoriaClinica;
@@ -41,11 +45,30 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     }
 
     @Override
-    public Evolucion createEvolucionPaciente(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto, RecetaDigital receta, PedidoLaboratorio pedidoLaboratorio) {
+    public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto) {
         Paciente paciente = verificarCuilPaciente(cuilPaciente);
         Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema"));
         Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
-        return paciente.createEvolucion(medico, diagnostico, texto, receta, pedidoLaboratorio);
+        return paciente.createEvolucion(medico, diagnostico, texto);
+    }
+
+    @Override
+    public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto,
+            List<Map<String, Integer>> detallesReceta) {
+        Paciente paciente = verificarCuilPaciente(cuilPaciente);
+        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema"));
+        Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
+        List<DetalleReceta> medicamentosRecetados = verificarMedicamentos(detallesReceta);
+        return paciente.createEvolucion(medico, diagnostico, texto, medicamentosRecetados);
+    }
+
+    @Override
+    public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto,
+            String textoPedidoLaboratorio) {
+        Paciente paciente = verificarCuilPaciente(cuilPaciente);
+        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema"));
+        Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
+        return paciente.createEvolucion(medico, diagnostico, texto, textoPedidoLaboratorio);
     }
 
     @Override
@@ -58,6 +81,15 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
         Optional<Paciente> paciente = super.getRepositorio().findById(cuil);
         if(paciente.isEmpty()) throw new IllegalArgumentException("No existe un paciente con ese cuil");
         return paciente.get();
+    }
+
+    private List<DetalleReceta> verificarMedicamentos(List<Map<String, Integer>> detallesReceta){
+        List<DetalleReceta> detalles = new ArrayList<>();
+        if(detallesReceta.get(0).get("codigoMedicamento").intValue() == detallesReceta.get(1).get("codigoMedicamento").intValue()){
+            detallesReceta = List.of(Map.of("codigoMedicamento", detallesReceta.get(0).get("codigoMedicamento"), "cantidad", detallesReceta.get(0).get("cantidad") + detallesReceta.get(1).get("cantidad")));
+        }
+        detalles = detallesReceta.stream().map(map -> new DetalleReceta(apiSalud.getMedicamentobyCode(map.get("codigoMedicamento")), map.get("cantidad"))).collect(Collectors.toList());
+        return detalles;
     }
 
     @Override

@@ -44,14 +44,20 @@ public class DetalleDiagnostico {
         this.fechaInicio = fechaInicio;
     }
 
-    // public Evolucion crearEvolucion(Medico medico, String texto){
-    //     Evolucion evolucion = new Evolucion(medico, texto, null, null);
-    //     evoluciones.add(evolucion);
-    //     return evolucion;
-    // }
+    public Evolucion crearEvolucion(Medico medico, String texto){
+        Evolucion evolucion = new Evolucion(medico, texto);
+        evoluciones.add(evolucion);
+        return evolucion;
+    }
 
-    public Evolucion crearEvolucion(Medico medico, String texto, RecetaDigital receta,PedidoLaboratorio pedidoLaboratorio){
-        Evolucion evolucion = new Evolucion(medico, texto, receta, pedidoLaboratorio);
+    public Evolucion crearEvolucion(Medico medico, String texto, List<DetalleReceta> medicamentosRecetados){
+        Evolucion evolucion = new Evolucion(medico, texto, medicamentosRecetados);
+        evoluciones.add(evolucion);
+        return evolucion;
+    }
+
+    public Evolucion crearEvolucion(Medico medico, String texto, String textoPedidoLaboratorio){
+        Evolucion evolucion = new Evolucion(medico, texto, textoPedidoLaboratorio);
         evoluciones.add(evolucion);
         return evolucion;
     }
