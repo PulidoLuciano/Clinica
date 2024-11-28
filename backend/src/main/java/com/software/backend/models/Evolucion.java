@@ -12,26 +12,22 @@ public class Evolucion {
     private Medico medico;
 
     public Evolucion(Medico medico, String texto) {
-        this.texto = texto;
-        this.receta = null;
-        this.pedidoLaboratorio = null;
-        this.medico = medico;
+        setTexto(texto);
+        setMedico(medico);
         this.fecha = new Date(System.currentTimeMillis());
     }
     
     public Evolucion(Medico medico, String texto, List<DetalleReceta> medicamentosRecetados) {
-        this.texto = texto;
-        this.receta = new RecetaDigital(medicamentosRecetados);
-        this.pedidoLaboratorio = null;
-        this.medico = medico;
+        setTexto(texto);
+        setReceta(new RecetaDigital(medicamentosRecetados));
+        setMedico(medico);
         this.fecha = new Date(System.currentTimeMillis());
     }
 
     public Evolucion(Medico medico, String texto, String textoPedidoLaboratorio) {
-        this.texto = texto;
-        this.receta = null;
-        this.pedidoLaboratorio = new PedidoLaboratorio(textoPedidoLaboratorio);
-        this.medico = medico;
+        setTexto(texto);
+        setPedidoLaboratorio(new PedidoLaboratorio(textoPedidoLaboratorio));
+        setMedico(medico);
         this.fecha = new Date(System.currentTimeMillis());
     }
 
@@ -40,6 +36,8 @@ public class Evolucion {
     }
 
     public void setTexto(String texto) {
+        if(texto == null) throw new IllegalArgumentException("El texto de la evolución no puede ser null");
+        if(texto == "") throw new IllegalArgumentException("El texto de la evolución no puede estar vacío");
         this.texto = texto;
     }
 
@@ -56,6 +54,7 @@ public class Evolucion {
     }
 
     public void setReceta(RecetaDigital receta) {
+        if(pedidoLaboratorio != null) throw new IllegalArgumentException("Esta evolución ya tiene pedido de laboratorio y no puede tener receta");
         this.receta = receta;
     }
 
@@ -64,6 +63,7 @@ public class Evolucion {
     }
 
     public void setMedico(Medico medico) {
+        if(medico == null) throw new IllegalArgumentException("El médico de la evolución no puede ser nulo");
         this.medico = medico;
     }
 
@@ -72,6 +72,7 @@ public class Evolucion {
     }
 
     public void setPedidoLaboratorio(PedidoLaboratorio pedidoLaboratorio) {
+        if(receta != null) throw new IllegalArgumentException("Esta evolución ya tiene receta y no puede tener pedido de laboratorio");
         this.pedidoLaboratorio = pedidoLaboratorio;
     }
     

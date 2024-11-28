@@ -65,6 +65,7 @@ public class HistoriaClinica {
     }
 
     private DetalleDiagnostico getDetalleByDiagnostico(Diagnostico diagnostico){
+        if(diagnostico == null) throw new IllegalArgumentException("El diagnóstico no puede ser nulo");
         Optional<DetalleDiagnostico> detalleOpt = detalles.stream().filter(item -> item.getDiagnostico().equals(diagnostico)).findFirst();
         DetalleDiagnostico detalle;
         if(detalleOpt.isEmpty()){

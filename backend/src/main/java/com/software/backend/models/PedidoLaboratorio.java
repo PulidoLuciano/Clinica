@@ -6,7 +6,7 @@ public class PedidoLaboratorio {
     private String texto;
 
     public PedidoLaboratorio(String texto) {
-        this.texto = texto;
+        setTexto(texto);
     }
 
     public PedidoLaboratorio() {
@@ -18,6 +18,8 @@ public class PedidoLaboratorio {
     }
 
     public void setTexto(String texto) {
+        if(texto == null) throw new IllegalArgumentException("El texto del pedido de laboratorio no puede ser null");
+        if(texto.isEmpty()) throw new IllegalArgumentException("El texto del pedido de laboratorio no puede ser vacío");
         this.texto = texto;
     }
 

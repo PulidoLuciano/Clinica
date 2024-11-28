@@ -46,35 +46,39 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
 
     @Override
     public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto) {
-        Paciente paciente = verificarCuilPaciente(cuilPaciente);
-        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnóstico con ese nombre en el sistema"));
-        Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
-        return paciente.createEvolucion(medico, diagnostico, texto);
+        Map<String, Object> neededData = verificarObjetosComunes(cuilPaciente, cuilMedico, nombreDiagnostico, texto);
+        Paciente paciente = (Paciente) neededData.get("paciente");
+        return paciente.createEvolucion((Medico) neededData.get("medico"), (Diagnostico) neededData.get("diagnostico"), texto);
     }
 
     @Override
     public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto,
             List<Map<String, Integer>> detallesReceta) {
-        Paciente paciente = verificarCuilPaciente(cuilPaciente);
-        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnóstico con ese nombre en el sistema"));
-        Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
+        Map<String, Object> neededData = verificarObjetosComunes(cuilPaciente, cuilMedico, nombreDiagnostico, texto);
+        Paciente paciente = (Paciente) neededData.get("paciente");
         List<DetalleReceta> medicamentosRecetados = verificarMedicamentos(detallesReceta);
-        return paciente.createEvolucion(medico, diagnostico, texto, medicamentosRecetados);
+        return paciente.createEvolucion((Medico) neededData.get("medico"), (Diagnostico) neededData.get("diagnostico"), texto, medicamentosRecetados);
     }
 
     @Override
     public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto,
             String textoPedidoLaboratorio) {
-        Paciente paciente = verificarCuilPaciente(cuilPaciente);
-        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnóstico con ese nombre en el sistema"));
-        Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
-        return paciente.createEvolucion(medico, diagnostico, texto, textoPedidoLaboratorio);
+        Map<String, Object> neededData = verificarObjetosComunes(cuilPaciente, cuilMedico, nombreDiagnostico, texto);
+        Paciente paciente = (Paciente) neededData.get("paciente");
+        return paciente.createEvolucion((Medico) neededData.get("medico"), (Diagnostico) neededData.get("diagnostico"), texto, textoPedidoLaboratorio);
     }
 
     @Override
     public HistoriaClinica getHistoriaClinica(Long cuilPaciente) {
         Paciente paciente = verificarCuilPaciente(cuilPaciente);
         return paciente.getHistoriaClinica();
+    }
+
+    private Map<String, Object> verificarObjetosComunes(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto){
+        Paciente paciente = verificarCuilPaciente(cuilPaciente);
+        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnóstico con ese nombre en el sistema"));
+        Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
+        return Map.of("paciente", paciente, "medico", medico, "diagnostico", diagnostico);
     }
 
     private Paciente verificarCuilPaciente(Long cuil){
@@ -84,10 +88,9 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     }
 
     private List<DetalleReceta> verificarMedicamentos(List<Map<String, Integer>> detallesReceta){
+        if(detallesReceta == null) throw new IllegalArgumentException("La lista de medicamentos recetados no puede ser null");
+        if(detallesReceta.isEmpty()) throw new IllegalArgumentException("El número de medicamentos recetados no puede ser menor que uno");
         List<DetalleReceta> detalles = new ArrayList<>();
-        if(detallesReceta.get(0).get("codigoMedicamento").intValue() == detallesReceta.get(1).get("codigoMedicamento").intValue()){
-            detallesReceta = List.of(Map.of("codigoMedicamento", detallesReceta.get(0).get("codigoMedicamento"), "cantidad", detallesReceta.get(0).get("cantidad") + detallesReceta.get(1).get("cantidad")));
-        }
         detalles = detallesReceta.stream().map(map -> new DetalleReceta(apiSalud.getMedicamentobyCode(map.get("codigoMedicamento")), map.get("cantidad"))).collect(Collectors.toList());
         return detalles;
     }

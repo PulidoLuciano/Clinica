@@ -15,7 +15,7 @@ public class DetalleDiagnostico {
     }
 
     public DetalleDiagnostico(Diagnostico diagnostico) {
-        this.diagnostico = diagnostico;
+        setDiagnostico(diagnostico);
         this.evoluciones = new ArrayList<>();
         this.fechaInicio = new Date(System.currentTimeMillis());
     }
@@ -25,6 +25,7 @@ public class DetalleDiagnostico {
     }
 
     public void setDiagnostico(Diagnostico diagnostico) {
+        if(diagnostico == null) throw new IllegalArgumentException("El diagnóstico no puede ser nulo");
         this.diagnostico = diagnostico;
     }
 

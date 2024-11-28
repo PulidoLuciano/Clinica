@@ -254,7 +254,7 @@ class PacienteServiceTest {
 
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> pacienteService.createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, texto, medicamentos));
-        assertEquals("El número de medicamentos en la receta debe ser uno o dos", exception.getMessage());
+        assertEquals("El número de medicamentos en la receta debe ser dos o menos", exception.getMessage());
     }
 
     @Test
@@ -268,7 +268,7 @@ class PacienteServiceTest {
 
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> pacienteService.createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, texto, medicamentos));
-        assertEquals("El número de medicamentos en la receta debe ser uno o dos", exception.getMessage());
+        assertEquals("El número de medicamentos recetados no puede ser menor que uno", exception.getMessage());
     }
 
     @Test
@@ -335,7 +335,7 @@ class PacienteServiceTest {
 
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> pacienteService.createEvolucion(cuilPaciente, cuilMedico, nombreDiagnostico, texto, medicamentos));
-        assertEquals("El número de medicamentos debe ser mayor que uno", exception.getMessage());
+        assertEquals("No se puede recetar una cantidad menor a uno de un medicamento", exception.getMessage());
     }
 
     private void assertEvolucionCreada(Evolucion result) {
