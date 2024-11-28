@@ -23,6 +23,7 @@ function MainPage() {
         obraSocial: "",
     });
     const [diagnosticoVisible, setDiagnosticoVisible] = useState({});
+    const [recargar, setRecargar] = useState(false); // Estado para controlar la recarga
 
     useEffect(() => {
         const obtenerHistoriaClinica = async () => {
@@ -44,7 +45,7 @@ function MainPage() {
         };
 
         obtenerHistoriaClinica();
-    }, [paciente]);
+    }, [paciente, recargar]); // Agregar `recargar` como dependencia
 
     const handleLogout = () => {
         if (window.confirm("¿Estás seguro de que deseas cerrar sesión?")) {
@@ -122,6 +123,7 @@ function MainPage() {
             // Aquí iría la llamada a la API para crear la evolución
             console.log("Nueva evolución:", evolucion);
             setModalEvolucionVisible(false);
+            setRecargar(!recargar); // Cambiar el estado para forzar la recarga
         } catch (error) {
             console.error("Error al crear la evolución:", error);
             alert("Error al crear la evolución");
@@ -405,12 +407,16 @@ function MainPage() {
                             )}
                         </div>
                         <div className="flex-shrink-0">
-                            <button
-                                onClick={() => setModalEvolucionVisible(true)}
-                                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 w-full"
-                            >
-                                Agregar evolución
-                            </button>
+                            {paciente && (
+                                <button
+                                    onClick={() =>
+                                        setModalEvolucionVisible(true)
+                                    }
+                                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 w-full"
+                                >
+                                    Agregar evolución
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -528,6 +534,7 @@ function MainPage() {
                 visible={modalEvolucionVisible}
                 onClose={() => setModalEvolucionVisible(false)}
                 onSubmit={handleCreateEvolucion}
+                paciente={paciente} // Pasamos el paciente al modal
             />
         </div>
     );
