@@ -25,16 +25,12 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
 
         setBuscando(true);
         try {
-            const descripcionCodificada = encodeURIComponent(descripcion);
-            const url = `https://istp1service.azurewebsites.net/api/servicio-salud/medicamentos?descripcion=${descripcionCodificada}`;
-            const proxyUrl = `https://cors-anywhere.herokuapp.com/${url}`;
-            console.log("URL de búsqueda:", proxyUrl); // Agregar log para depuración
-
-            const response = await fetch(proxyUrl, {
+            const url = `http://localhost:8080/medicamentos?descripcion=${descripcion}`;
+            const response = await fetch(url, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    accept: "*/*",
+                    "Authorization": `Bearer ${sessionStorage.getItem("jwt")}`
                 },
             });
             console.log("Response status:", response.status); // Agregar log para depuración
