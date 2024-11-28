@@ -1,23 +1,23 @@
 {
 	"info": {
-		"_postman_id": "90d60b63-4dd0-4e73-87eb-74671a2db138",
+		"_postman_id": "807e3f0e-db12-4d68-8d3e-04c22273643c",
 		"name": "Clinica",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "32041688"
+		"_exporter_id": "29284541"
 	},
 	"item": [
 		{
 			"name": "Diagnosticos",
 			"item": [
 				{
-					"name": "getall",
+					"name": "GetAllDiagnosticos",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWNlcDFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MzI1MDc2NDgsImV4cCI6MTczMzExMjQ0OCwiY3VpbCI6MjAxMjM0NTY3ODksIm5vbWJyZSI6Ik1hcsOtYSBMw7NwZXoifQ._VcUYsjZtgZ9ELkLtmeY9CvPYtJlFSfWLuYz5yb6XWcw-XdsikgWh-159WjXfWSp",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -38,14 +38,14 @@
 					"response": []
 				},
 				{
-					"name": "create",
+					"name": "CreateDiagnostico",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNTM0NjcxLCJleHAiOjE3MzMxMzk0NzEsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.JwmAk_-6wHiUSZk6FL3dVHnayWmGk52cDsBE2xfFCN0eAx9QdxQb9g5naXW3uIWG",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -54,7 +54,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"\"\r\n}",
+							"raw": "{\r\n    \"nombre\": \"Covid\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -75,19 +75,29 @@
 					"response": []
 				},
 				{
-					"name": "byId",
+					"name": "GetDiagnosticoByName",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/diagnosticos/Gripe",
+							"raw": "localhost:8080/diagnosticos/Covid",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"diagnosticos",
-								"Gripe"
+								"Covid"
 							]
 						}
 					},
@@ -106,7 +116,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDk1NTk1LCJleHAiOjE3MzMxMDAzOTUsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.amt7sO5eRKPNHxKB_5apR75OXjZW9XY0v8tRR8cw3svACxfjVWiTU8cBtEVSmjqO",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -114,32 +124,36 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/obra-social",
+							"raw": "http://localhost:8080/obras-sociales",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"obra-social"
+								"obras-sociales"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "CrearObraSocial",
+					"name": "GetObrasSocialesById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDk1NTk1LCJleHAiOjE3MzMxMDAzOTUsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.amt7sO5eRKPNHxKB_5apR75OXjZW9XY0v8tRR8cw3svACxfjVWiTU8cBtEVSmjqO",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -151,32 +165,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/obra-social",
+							"raw": "http://localhost:8080/obras-sociales/111506",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"obra-social"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "EliminarObraSocial",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/obra-social/Subsidio de Salud",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"obra-social",
-								"Subsidio de Salud"
+								"obras-sociales",
+								"111506"
 							]
 						}
 					},
@@ -185,17 +182,17 @@
 			]
 		},
 		{
-			"name": "Paises",
+			"name": "Medicamentos",
 			"item": [
 				{
-					"name": "GetAllPaises",
+					"name": "GetAllMedicamentos",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDk1NTk1LCJleHAiOjE3MzMxMDAzOTUsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.amt7sO5eRKPNHxKB_5apR75OXjZW9XY0v8tRR8cw3svACxfjVWiTU8cBtEVSmjqO",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -203,27 +200,39 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/paises",
+							"raw": "http://localhost:8080/medicamentos/todos?pagina=1&limite=1000",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"paises"
+								"medicamentos",
+								"todos"
+							],
+							"query": [
+								{
+									"key": "pagina",
+									"value": "1"
+								},
+								{
+									"key": "limite",
+									"value": "1000"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GetOne",
+					"name": "GetMedicamentoByDescripcion",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNTc2MDQzLCJleHAiOjE3MzMxODA4NDIsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.pdOJnanAi9TYgjzuUgDBUi4l9V9kb_ac1d20KXmvOVJenBFiY-38MuDdgSjllaIH",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -231,14 +240,50 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/paises/Argentina",
+							"raw": "http://localhost:8080/medicamentos?descripcion=paracetamol",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"paises",
-								"Argentina"
+								"medicamentos"
+							],
+							"query": [
+								{
+									"key": "descripcion",
+									"value": "paracetamol"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMedicamentoByCodigo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/medicamentos/17681",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"medicamentos",
+								"17681"
 							]
 						}
 					},
@@ -250,48 +295,14 @@
 			"name": "Pacientes",
 			"item": [
 				{
-					"name": "GetAllPacientes",
+					"name": "CreatePaciente",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNTc2MDQzLCJleHAiOjE3MzMxODA4NDIsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.pdOJnanAi9TYgjzuUgDBUi4l9V9kb_ac1d20KXmvOVJenBFiY-38MuDdgSjllaIH",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "",
-								"value": "",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "localhost:8080/pacientes",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pacientes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createPaciente",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNzEwMTQzLCJleHAiOjE3MzMzMTQ5NDMsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.mRLbUf8VnpTrbhYs41LBv5pw7ASLridWDsxyfK-UWbzxmPu_FCytUIhIThV-tpwX",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -321,14 +332,77 @@
 					"response": []
 				},
 				{
-					"name": "CrearEvolucion",
+					"name": "GetAllPacientes",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNTc2MDQzLCJleHAiOjE3MzMxODA4NDIsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.pdOJnanAi9TYgjzuUgDBUi4l9V9kb_ac1d20KXmvOVJenBFiY-38MuDdgSjllaIH",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/pacientes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPacienteByCuilt",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/pacientes/20304051",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes",
+								"20304051"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateEvolucion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -338,6 +412,88 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"texto\": \"El paciente tiene la temperatura alta.\",\r\n    \"textoPedidoLaboratorio\": \"Esto es un texto para el pedido de laboratorio.\",\r\n    \"medicamentosReceta\": [\r\n        {\r\n            \"codigoMedicamento\": 38819,\r\n            \"cantidad\": 2\r\n        },\r\n        {\r\n            \"codigoMedicamento\": 38819,\r\n            \"cantidad\": 1\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/pacientes/20304051/historia-clinica/Gripe/evolucion",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes",
+								"20304051",
+								"historia-clinica",
+								"Gripe",
+								"evolucion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateEvolucionPedidoLaboratorio",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"texto\": \"El paciente tiene dolor de cabeza.\",\r\n    \"textoPedidoLaboratorio\": \"Hacer fisioterapia.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/pacientes/20304051/historia-clinica/Hipertensión/evolucion",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pacientes",
+								"20304051",
+								"historia-clinica",
+								"Hipertensión",
+								"evolucion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateEvolucionReceta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"texto\": \"El paciente tiene la temperatura alta.\",\r\n    \"medicamentosReceta\": [\r\n        {\r\n            \"codigoMedicamento\": 52767,\r\n            \"cantidad\": 2\r\n        },\r\n        {\r\n            \"codigoMedicamento\": 48774,\r\n            \"cantidad\": 10\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -369,7 +525,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWNlcDFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MzI0OTM5OTcsImV4cCI6MTczMzA5ODc5NywiY3VpbCI6MjAxMjM0NTY3ODksIm5vbWJyZSI6Ik1hcsOtYSBMw7NwZXoifQ.fi2CeS6ip7dnTmSpouCdwn_Fs1jbF_IVX6s7snkDBfaj1dtyTH9imlGukMgcV8yV",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -399,7 +555,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDkwMDc4LCJleHAiOjE3MzMwOTQ4Nzh9.aYI6M_kjaZGWlCxF2SSLYjRNoHaNcUMNvrSQN7M-RqoQN2jfcE7_3NHnzutjEODw",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -430,7 +586,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDkwMDc4LCJleHAiOjE3MzMwOTQ4Nzh9.aYI6M_kjaZGWlCxF2SSLYjRNoHaNcUMNvrSQN7M-RqoQN2jfcE7_3NHnzutjEODw",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -461,7 +617,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNDkwMDc4LCJleHAiOjE3MzMwOTQ4Nzh9.aYI6M_kjaZGWlCxF2SSLYjRNoHaNcUMNvrSQN7M-RqoQN2jfcE7_3NHnzutjEODw",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -483,35 +639,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "GetOne",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNTc2MDQzLCJleHAiOjE3MzMxODA4NDIsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.pdOJnanAi9TYgjzuUgDBUi4l9V9kb_ac1d20KXmvOVJenBFiY-38MuDdgSjllaIH",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/pacientes/20304051",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pacientes",
-								"20304051"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -526,7 +653,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNTc2MDQzLCJleHAiOjE3MzMxODA4NDIsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.pdOJnanAi9TYgjzuUgDBUi4l9V9kb_ac1d20KXmvOVJenBFiY-38MuDdgSjllaIH",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -549,8 +676,29 @@
 				{
 					"name": "GetMedicoByCuil",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZWRpY28xQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMyNzQ5ODk1LCJleHAiOjE3MzMzNTQ2OTUsImN1aWwiOjIwMTIzNDU2Nzg5LCJub21icmUiOiJKdWFuIFDDqXJleiJ9.KUhvT_SNxjOFRmT6naDYYHLMGTv5JR6jSF5XygRcqAymS_G6N43qE24oDeeodItq",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/medicos/20123456789",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"medicos",
+								"20123456789"
+							]
+						}
 					},
 					"response": []
 				}
@@ -558,6 +706,19 @@
 		},
 		{
 			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"accessToken\", pm.response.json().accessToken);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -578,34 +739,6 @@
 					"port": "8080",
 					"path": [
 						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "NotFound",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZWNlcDFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MzI1MzQ1MzgsImV4cCI6MTczMzEzOTMzOCwiY3VpbCI6MjAxMjM0NTY3ODksIm5vbWJyZSI6Ik1hcsOtYSBMw7NwZXoifQ.pNhb3wRJUfBOSlUjxdXj5nrrdCpVpyN8eBI8IR4bKhptKFFcQuBRIueGZPNJarzP",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/egerg",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"egerg"
 					]
 				}
 			},
