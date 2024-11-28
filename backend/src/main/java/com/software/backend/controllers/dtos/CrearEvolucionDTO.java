@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 
@@ -15,7 +16,7 @@ public class CrearEvolucionDTO {
     @Valid
     @Size(min=1,max=2,message="La receta debe tener uno o dos medicamentos")
     private List<DetalleRecetaDTO> medicamentosReceta;
-    
+
     private String textoPedidoLaboratorio;
 
     public CrearEvolucionDTO() {

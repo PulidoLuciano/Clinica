@@ -47,7 +47,7 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     @Override
     public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto) {
         Paciente paciente = verificarCuilPaciente(cuilPaciente);
-        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema"));
+        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnóstico con ese nombre en el sistema"));
         Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
         return paciente.createEvolucion(medico, diagnostico, texto);
     }
@@ -56,7 +56,7 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto,
             List<Map<String, Integer>> detallesReceta) {
         Paciente paciente = verificarCuilPaciente(cuilPaciente);
-        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema"));
+        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnóstico con ese nombre en el sistema"));
         Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
         List<DetalleReceta> medicamentosRecetados = verificarMedicamentos(detallesReceta);
         return paciente.createEvolucion(medico, diagnostico, texto, medicamentosRecetados);
@@ -66,7 +66,7 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
     public Evolucion createEvolucion(Long cuilPaciente, Long cuilMedico, String nombreDiagnostico, String texto,
             String textoPedidoLaboratorio) {
         Paciente paciente = verificarCuilPaciente(cuilPaciente);
-        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnostico con ese nombre en el sistema"));
+        Diagnostico diagnostico = diagnosticoRepository.findById(nombreDiagnostico).orElseThrow(() -> new IllegalArgumentException("No existe un diagnóstico con ese nombre en el sistema"));
         Medico medico = medicoRepository.findById(cuilMedico).orElseThrow(() -> new IllegalArgumentException("No existe un médico con ese CUIL en el sistema"));
         return paciente.createEvolucion(medico, diagnostico, texto, textoPedidoLaboratorio);
     }
