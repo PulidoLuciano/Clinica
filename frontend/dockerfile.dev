@@ -1,0 +1,14 @@
+FROM node:18 AS development
+ENV NODE_ENV development
+
+#Install dependencies in cache directory
+WORKDIR /cache
+COPY package.json .
+COPY package-lock.json .
+RUN npm i
+
+#Copy all files in app directory
+WORKDIR /app
+COPY . .
+EXPOSE 5173
+
