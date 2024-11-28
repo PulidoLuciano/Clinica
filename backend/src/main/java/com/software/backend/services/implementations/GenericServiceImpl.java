@@ -38,4 +38,8 @@ public class GenericServiceImpl<T extends Identifiable<ID>, ID, IRepository exte
     public IRepository getRepositorio() {
         return repositorio;
     }
+
+    public void setRepositorio(IRepository repositorio) {
+        this.repositorio = repositorio;
+    }
 }

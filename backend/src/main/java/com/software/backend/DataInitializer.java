@@ -69,8 +69,8 @@ public class DataInitializer implements CommandLineRunner{
         List<Paciente> pacientes = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Paciente paciente = new Paciente(
-                20304050 + i, // CUIL
-                30040500 + i, // DNI
+                20304050L + i, // CUIL
+                30040500L + i, // DNI
                 new Date(90, random.nextInt(12), random.nextInt(28) + 1), // Fecha de nacimiento
                 "paciente" + i + "@email.com", // Email
                 1140000000 + i, // Teléfono

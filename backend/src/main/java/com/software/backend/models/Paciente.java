@@ -13,7 +13,7 @@ public class Paciente extends Persona{
         this.historiaClinica = new HistoriaClinica();
     }
     
-    public Paciente(int cuil, int dni, Date fechaNacimiento, String email, int telefono, String nombre, String apellido,
+    public Paciente(Long cuil, Long dni, Date fechaNacimiento, String email, int telefono, String nombre, String apellido,
             Direccion direccion, int numeroAfiliado, ObraSocial obraSocial) {
         super(cuil, dni, fechaNacimiento, email, telefono, nombre, apellido, direccion);
         this.numeroAfiliado = numeroAfiliado;
