@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import ModalCrearPaciente from "../Modal/ModalCrearPaciente";
 import { fetchPaciente, createPaciente } from "../../api/pacientes";
 import { fetchHistoriaClinica } from "../../api/historiaClinica";
+import ModalAgregarEvolucion from "../Modal/ModalAgregarEvolucion";
 
 function MainPage() {
     const navigate = useNavigate();
     const [paciente, setPaciente] = useState(null);
     const [historiaClinica, setHistoriaClinica] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalEvolucionVisible, setModalEvolucionVisible] = useState(false);
     const [nuevoPaciente, setNuevoPaciente] = useState({
         cuil: "",
         dni: "",
@@ -112,6 +114,18 @@ function MainPage() {
     const handleChangeNuevoPaciente = (e) => {
         const { name, value } = e.target;
         setNuevoPaciente({ ...nuevoPaciente, [name]: value });
+    };
+
+    const handleCreateEvolucion = async (evolucion) => {
+        try {
+            const token = sessionStorage.getItem("jwt");
+            // Aquí iría la llamada a la API para crear la evolución
+            console.log("Nueva evolución:", evolucion);
+            setModalEvolucionVisible(false);
+        } catch (error) {
+            console.error("Error al crear la evolución:", error);
+            alert("Error al crear la evolución");
+        }
     };
 
     const toggleDiagnostico = (index) => {
@@ -391,7 +405,10 @@ function MainPage() {
                             )}
                         </div>
                         <div className="flex-shrink-0">
-                            <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 w-full">
+                            <button
+                                onClick={() => setModalEvolucionVisible(true)}
+                                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 w-full"
+                            >
                                 Agregar evolución
                             </button>
                         </div>
@@ -504,6 +521,13 @@ function MainPage() {
                 onCreate={handleCreatePaciente}
                 pacienteData={nuevoPaciente}
                 onChange={handleChangeNuevoPaciente}
+            />
+
+            {/* Modal para agregar evolución */}
+            <ModalAgregarEvolucion
+                visible={modalEvolucionVisible}
+                onClose={() => setModalEvolucionVisible(false)}
+                onSubmit={handleCreateEvolucion}
             />
         </div>
     );
