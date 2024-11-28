@@ -17,6 +17,7 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
     }, [timeoutId]);
 
     const buscarMedicamentos = async (descripcion) => {
+        if (descripcion.length < 3) return;
         if (!descripcion.trim()) {
             setMedicamentosEncontrados([]);
             return;
@@ -26,13 +27,17 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
         try {
             const descripcionCodificada = encodeURIComponent(descripcion);
             const url = `https://istp1service.azurewebsites.net/api/servicio-salud/medicamentos?descripcion=${descripcionCodificada}`;
-            console.log("URL de búsqueda:", url); // Agregar log para depuración
+            const proxyUrl = `https://cors-anywhere.herokuapp.com/${url}`;
+            console.log("URL de búsqueda:", proxyUrl); // Agregar log para depuración
 
-            const response = await fetch(url);
+            const response = await fetch(proxyUrl, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    accept: "*/*",
+                },
+            });
             console.log("Response status:", response.status); // Agregar log para depuración
-            if (!response.ok) {
-                throw new Error("Error en la respuesta del servidor");
-            }
             const data = await response.json();
             console.log("Datos obtenidos:", data); // Agregar log para depuración
             setMedicamentosEncontrados(data);
@@ -104,6 +109,8 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
             textoPedidoLaboratorio:
                 tipoEvolucion === "laboratorio" ? textoPedidoLaboratorio : null,
         };
+
+        console.log("Evolución a enviar:", evolucion); // Agregar log para depuración
 
         onSubmit(evolucion);
         limpiarFormulario();
