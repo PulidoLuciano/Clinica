@@ -1,23 +1,45 @@
 import React, { useState, useEffect } from "react";
 
-function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
+function ModalAgregarEvolucion({ visible, onClose, onSubmit, paciente }) {
     const [texto, setTexto] = useState("");
     const [medicamentos, setMedicamentos] = useState([]);
     const [textoPedidoLaboratorio, setTextoPedidoLaboratorio] = useState("");
     const [busquedaMedicamento, setBusquedaMedicamento] = useState("");
     const [medicamentosEncontrados, setMedicamentosEncontrados] = useState([]);
     const [tipoEvolucion, setTipoEvolucion] = useState(""); // 'receta' o 'laboratorio'
+    const [diagnosticoSeleccionado, setDiagnosticoSeleccionado] = useState("");
+    const [diagnosticos, setDiagnosticos] = useState([]);
+    const [nuevoDiagnostico, setNuevoDiagnostico] = useState("");
     const [timeoutId, setTimeoutId] = useState(null);
     const [buscando, setBuscando] = useState(false);
 
     useEffect(() => {
-        return () => {
-            if (timeoutId) clearTimeout(timeoutId);
+        const cargarDiagnosticos = async () => {
+            try {
+                const url = `http://localhost:8080/diagnosticos`;
+                const response = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            "jwt"
+                        )}`, // Agregar encabezado de autenticación
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error("Error en la respuesta del servidor");
+                }
+                const data = await response.json();
+                setDiagnosticos(data);
+            } catch (error) {
+                console.error("Error al cargar diagnósticos:", error);
+            }
         };
-    }, [timeoutId]);
+
+        cargarDiagnosticos();
+    }, []);
 
     const buscarMedicamentos = async (descripcion) => {
-        if (descripcion.length < 3) return;
         if (!descripcion.trim()) {
             setMedicamentosEncontrados([]);
             return;
@@ -30,7 +52,7 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${sessionStorage.getItem("jwt")}`
+                    Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
                 },
             });
             console.log("Response status:", response.status); // Agregar log para depuración
@@ -42,6 +64,29 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
             setMedicamentosEncontrados([]);
         } finally {
             setBuscando(false);
+        }
+    };
+
+    const crearDiagnostico = async (nombre) => {
+        try {
+            const url = `http://localhost:8080/diagnosticos`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("jwt")}`, // Agregar encabezado de autenticación
+                },
+                body: JSON.stringify({ nombre }),
+            });
+            if (!response.ok) {
+                throw new Error("Error al crear diagnóstico");
+            }
+            const data = await response.json();
+            console.log("Diagnóstico creado:", data); // Agregar log para depuración
+            setDiagnosticoSeleccionado(data.nombre);
+            setDiagnosticos([...diagnosticos, data]);
+        } catch (error) {
+            console.error("Error al crear diagnóstico:", error);
         }
     };
 
@@ -68,11 +113,16 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!texto.trim()) {
             alert("El texto de la evolución no puede estar vacío");
+            return;
+        }
+
+        if (!diagnosticoSeleccionado) {
+            alert("Debe seleccionar un diagnóstico");
             return;
         }
 
@@ -101,15 +151,42 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
                           codigoMedicamento: m.codigo,
                           cantidad: m.cantidad,
                       }))
-                    : [],
+                    : undefined,
             textoPedidoLaboratorio:
-                tipoEvolucion === "laboratorio" ? textoPedidoLaboratorio : null,
+                tipoEvolucion === "laboratorio"
+                    ? textoPedidoLaboratorio
+                    : undefined,
         };
 
-        console.log("Evolución a enviar:", evolucion); // Agregar log para depuración
+        console.log("Evolución a enviar:", JSON.stringify(evolucion, null, 2));
 
-        onSubmit(evolucion);
-        limpiarFormulario();
+        try {
+            const url = `http://localhost:8080/pacientes/${paciente.cuil}/historia-clinica/${diagnosticoSeleccionado}/evolucion`;
+            console.log("URL de envío:", url);
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
+                },
+                body: JSON.stringify(evolucion),
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(
+                    `Error al crear evolución: ${
+                        errorData.message || response.statusText
+                    }`
+                );
+            }
+            const data = await response.json();
+            console.log("Evolución creada:", data);
+            onSubmit(data);
+            limpiarFormulario();
+        } catch (error) {
+            console.error("Error al crear evolución:", error);
+            alert(`Error al crear evolución: ${error.message}`);
+        }
     };
 
     const limpiarFormulario = () => {
@@ -119,6 +196,8 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
         setBusquedaMedicamento("");
         setMedicamentosEncontrados([]);
         setTipoEvolucion("");
+        setDiagnosticoSeleccionado("");
+        setNuevoDiagnostico("");
     };
 
     if (!visible) return null;
@@ -152,6 +231,55 @@ function ModalAgregarEvolucion({ visible, onClose, onSubmit }) {
                             required
                             placeholder="Ingrese el texto de la evolución"
                         />
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Diagnóstico *
+                        </label>
+                        <div className="relative">
+                            <select
+                                value={diagnosticoSeleccionado}
+                                onChange={(e) =>
+                                    setDiagnosticoSeleccionado(e.target.value)
+                                }
+                                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="">
+                                    Seleccione un diagnóstico
+                                </option>
+                                {diagnosticos.map((diag) => (
+                                    <option key={diag.id} value={diag.nombre}>
+                                        {diag.nombre}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        {diagnosticoSeleccionado === "" && (
+                            <div className="mt-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2">
+                                    Crear nuevo diagnóstico
+                                </label>
+                                <input
+                                    type="text"
+                                    value={nuevoDiagnostico}
+                                    onChange={(e) =>
+                                        setNuevoDiagnostico(e.target.value)
+                                    }
+                                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Nombre del nuevo diagnóstico"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        crearDiagnostico(nuevoDiagnostico)
+                                    }
+                                    className="mt-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                                >
+                                    Crear Diagnóstico
+                                </button>
+                            </div>
+                        )}
                     </div>
 
                     <div className="mb-4">
