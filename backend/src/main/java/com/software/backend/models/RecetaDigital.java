@@ -40,6 +40,7 @@ public class RecetaDigital {
         if(detalles.size() > 2) throw new IllegalArgumentException("El número de medicamentos en la receta debe ser dos o menos");
         if(detalles.isEmpty()) throw new IllegalArgumentException("El número de medicamentos recetados no puede ser menor que uno");
         if(detalles.stream().anyMatch(detalle -> detalle.getCantidad() < 1))throw new IllegalArgumentException("No se puede recetar una cantidad menor a uno de un medicamento");
+        if(detalles.size() == 2)
         if(detalles.get(0).getMedicamentos().getCodigo() == detalles.get(1).getMedicamentos().getCodigo()){
             detalles = List.of(new DetalleReceta(detalles.get(0).getMedicamentos(), detalles.get(0).getCantidad() + detalles.get(1).getCantidad()));
         }
