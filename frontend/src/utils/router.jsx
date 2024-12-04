@@ -7,15 +7,11 @@ const UnauthorizedPage = lazy(()=> import("../pages/UnauthorizedPage.jsx"))
 
 export const routes = [
     {
-        path:"/",
+        path:"/login",
         element: <RedirectIfLoggedIn><LoginPage/></RedirectIfLoggedIn>
     },
     {
-        path:"/historiaClinica",
+        path:"/",
         element: <ProtectedRoutes element={<HistoriaClinicaPage/>}/>
-    },
-    {
-        path:"/unauthorized",
-        element: <UnauthorizedPage/>
     }
 ];

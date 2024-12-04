@@ -29,18 +29,16 @@ export const AuthContext = ({children}) => {
 
     },[])
     
-    const login = (user)=>{
-
+    const login = async (user)=>{
         try {
-            const userData = authService.login(user);
+            const userData = await authService.login(user);
             if(userData){
                 setUser(userData);
                 setIsAuthenticated(true);
             } 
         } catch (error) {
-            return error.message;
+            throw error;
         }
-
     }
 
     const logout = () =>{
