@@ -20,9 +20,16 @@ export const AuthContext = ({children}) => {
             }
 
             const user = jwtDecode(jwt);
-
-            setUser(user);
-            setIsAuthenticated(true);
+            
+            if(user.sub){
+                if(user.exp * 1000 < new Date().getTime()){
+                    setIsAuthenticated(false);
+                    setUser(null);
+                }else{
+                    setUser(user);
+                    setIsAuthenticated(true);
+                }
+            }
         }
 
         verificarSesion();
