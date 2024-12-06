@@ -1,6 +1,7 @@
 const API_URL = "http://localhost:8080";
 
-export const fetchPaciente = async (cuil, token) => {
+export const fetchPaciente = async (cuil) => {
+    const token = sessionStorage.getItem("jwt");
     const response = await fetch(`${API_URL}/pacientes/${cuil}`, {
         method: "GET",
         headers: {
@@ -18,7 +19,8 @@ export const fetchPaciente = async (cuil, token) => {
     return await response.json();
 };
 
-export const createPaciente = async (nuevoPaciente, token) => {
+export const createPaciente = async (nuevoPaciente) => {
+    const token = sessionStorage.getItem("jwt");
     const response = await fetch(`${API_URL}/pacientes`, {
         method: "POST",
         headers: {

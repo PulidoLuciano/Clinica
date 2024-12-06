@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { fetchPaciente } from "../../api/pacientes";
 import ModalCrearPaciente from "../Modal/ModalCrearPaciente";
-import { fetchPaciente, createPaciente } from "../../api/pacientes";
 
 function Navbar({ setPaciente }) {
-    const navigate = useNavigate();
+    
+    const auth = useAuth();
     const [modalVisible, setModalVisible] = useState(false);
+    
     const [nuevoPaciente, setNuevoPaciente] = useState({
         cuil: "",
         dni: "",
@@ -17,81 +19,56 @@ function Navbar({ setPaciente }) {
         numeroAfiliado: "",
         obraSocial: "",
     });
-
-    const handleLogout = () => {
-        if (window.confirm("¿Estás seguro de que deseas cerrar sesión?")) {
-            sessionStorage.removeItem("jwt");
-            sessionStorage.removeItem("email");
-            navigate("/");
-        }
-    };
-
-    const calcularEdad = (fechaNacimiento) => {
-        const hoy = new Date();
-        const nacimiento = new Date(fechaNacimiento);
-        let edad = hoy.getFullYear() - nacimiento.getFullYear();
-        const mes = hoy.getMonth() - nacimiento.getMonth();
-        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-            edad--;
-        }
-        return edad;
-    };
-
-    const handleFetchPaciente = async (cuil) => {
-        try {
-            const token = sessionStorage.getItem("jwt");
-            const pacienteEncontrado = await fetchPaciente(cuil, token);
-
-            if (!pacienteEncontrado) {
-                setModalVisible(true); // Mostrar modal si no existe el paciente
-                return;
-            }
-
-            setPaciente({
-                nombre: `${pacienteEncontrado.nombre} ${pacienteEncontrado.apellido}`,
-                dni: pacienteEncontrado.dni,
-                edad: calcularEdad(pacienteEncontrado.fechaNacimiento),
-                obraSocial: pacienteEncontrado.obraSocial.denominacion,
-            });
-        } catch (error) {
-            console.error("Error al obtener el paciente:", error);
-        }
-    };
-
-    const handleSearch = (event) => {
+    
+    const handleSearch = async (event) => {
         event.preventDefault();
         const cuil = event.target.cuil.value.trim();
         if (cuil) {
-            handleFetchPaciente(cuil);
+            const pacienteEncontrado = await fetchPaciente(cuil);
+      
+            if (!pacienteEncontrado) {
+              setModalVisible(true); // Mostrar modal si no existe el paciente
+              return;
+            }
+            setPaciente(
+                {
+                    ...pacienteEncontrado,
+                    edad: calcularEdad(pacienteEncontrado.fechaNacimiento)
+                }
+            );
+        }
+    };
+
+    const handleLogout = () => {
+        if (window.confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+          auth.logout();
         }
     };
 
     const handleCreatePaciente = async () => {
         try {
-            const token = sessionStorage.getItem("jwt");
-            await createPaciente(nuevoPaciente, token);
-            alert("Paciente creado con éxito");
-            setModalVisible(false);
+          await createPaciente(nuevoPaciente);
+          alert("Paciente creado con éxito");
+          setModalVisible(false);
         } catch (error) {
-            console.error("Error al crear el paciente:", error);
-            alert("Error al crear el paciente");
+          console.error("Error al crear el paciente:", error);
+          alert("Error al crear el paciente");
         }
-    };
-
-    const handleChangeNuevoPaciente = (e) => {
+      };
+    
+      const handleChangeNuevoPaciente = (e) => {
         const { name, value } = e.target;
         setNuevoPaciente({ ...nuevoPaciente, [name]: value });
-    };
-
-    return (
-        <nav className="bg-white shadow-lg">
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="flex justify-between h-16">
+      };
+    
+    return(
+        <>
+            <nav className="bg-white shadow-lg flex justify-between h-16 max-w-7xl w-full mx-auto px-4">
                     {/* Encabezado de la clínica */}
                     <div className="flex items-center">
                         <div className="flex-shrink-0 flex items-center">
                             <span className="text-xl font-semibold text-gray-800">
-                                Clínica
+                            Clínica
                             </span>
                         </div>
                     </div>
@@ -100,16 +77,16 @@ function Navbar({ setPaciente }) {
                     <div className="flex items-center gap-4">
                         <form onSubmit={handleSearch} className="flex gap-2">
                             <input
-                                type="text"
-                                name="cuil"
-                                placeholder="Buscar por CUIL"
-                                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            type="text"
+                            name="cuil"
+                            placeholder="Buscar por CUIL"
+                            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
                             <button
-                                type="submit"
-                                className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            type="submit"
+                            className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
-                                Buscar
+                            Buscar
                             </button>
                         </form>
                         <button
@@ -119,19 +96,29 @@ function Navbar({ setPaciente }) {
                             Cerrar sesión
                         </button>
                     </div>
-                </div>
-            </div>
+            </nav>
 
             {/* Modal para crear paciente */}
             <ModalCrearPaciente
-                visible={modalVisible}
-                onClose={() => setModalVisible(false)}
-                onCreate={handleCreatePaciente}
-                pacienteData={nuevoPaciente}
-                onChange={handleChangeNuevoPaciente}
+            visible={modalVisible}
+            onClose={() => setModalVisible(false)}
+            onCreate={handleCreatePaciente}
+            pacienteData={nuevoPaciente}
+            onChange={handleChangeNuevoPaciente}
             />
-        </nav>
+        </>
     );
 }
+
+const calcularEdad = (fechaNacimiento) => {
+    const hoy = new Date();
+    const nacimiento = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+      edad--;
+    }
+    return edad;
+  };
 
 export default Navbar;
