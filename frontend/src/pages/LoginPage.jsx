@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -9,7 +9,7 @@ function LoginPage() {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const [authError, setAuthError] = useState(null); // Estado para manejar errores de autenticación
+    const [authError, setAuthError] = useState(null);
 
     const onSubmit = async (data) => {
       try{
