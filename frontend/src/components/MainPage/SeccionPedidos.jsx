@@ -1,10 +1,17 @@
-export default function SeccionPedidos({ historiaClinica }) {
+export default function SeccionPedidos() {
   return (
     <div className="flex-1 overflow-y-auto">
       <h3 className="bg-blue-500 text-white text-center p-2 rounded-md sticky top-0">
         Pedidos de laboratorio
       </h3>
-      {historiaClinica ? (
+      
+    </div>
+  );
+}
+
+/*
+
+{historiaClinica ? (
         <div className="p-2">
           {historiaClinica.pedidosLaboratorio.map((pedido, index) => (
             <div
@@ -18,6 +25,4 @@ export default function SeccionPedidos({ historiaClinica }) {
       ) : (
         <p className="text-center">No hay pedidos de laboratorio disponibles</p>
       )}
-    </div>
-  );
-}
+*/

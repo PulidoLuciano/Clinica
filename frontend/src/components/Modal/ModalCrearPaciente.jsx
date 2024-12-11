@@ -3,6 +3,7 @@ import "../Modal/ModalCrearPaciente.css";
 import { useState, useEffect } from "react";
 import calcularEdad from "../../utils/calcularEdad";
 import { pacienteService } from "../../service/pacienteService";
+import { generalService } from "../../service/generalService";
 
 function ModalCrearPaciente({ visible, onClose, setPaciente }) {
   const [obrasSociales, setObrasSociales] = useState([]);
@@ -17,21 +18,10 @@ function ModalCrearPaciente({ visible, onClose, setPaciente }) {
   useEffect(() => {
     const cargarObrasSociales = async () => {
       try {
-        const url = `http://localhost:8080/obras-sociales`;
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Error en la respuesta del servidor");
-        }
-        const data = await response.json();
+        const data = await generalService.getAll("obras-sociales");
         setObrasSociales(data);
       } catch (error) {
-        console.error("Error al cargar diagnósticos:", error);
+        console.error(error.message);
       }
     };
 

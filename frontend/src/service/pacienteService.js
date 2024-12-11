@@ -1,7 +1,6 @@
 const API_URL = "http://localhost:8080";
 
 const getPacienteByCuil = async (cuil) => {
-
     const token = sessionStorage.getItem("jwt");
     if (!token) throw new Error("No estas autorizado para realizar esta acción.")
 
@@ -13,8 +12,9 @@ const getPacienteByCuil = async (cuil) => {
     });
     const data = await response.json();
     if (!response.ok) {
-
-        throw new Error(`${data.message}`);
+        if(response.status == 404){
+            return null;
+        }else throw new Error(`${data.message}`);
     }
     return data
 }
@@ -41,8 +41,6 @@ const createPaciente = async (nuevoPaciente) => {
 };
 
 const getHistoriaClinicaPaciente = async (cuil) => {
-
-
     const token = sessionStorage.getItem("jwt");
     if (!token) throw new Error("No estas autorizado para realizar esta acción.")
 
@@ -62,7 +60,6 @@ const getHistoriaClinicaPaciente = async (cuil) => {
 }
 
 const getRecetasPaciente = async (cuil) => {
-
     const token = sessionStorage.getItem("jwt");
     if (!token) throw new Error("No estas autorizado para realizar esta acción.")
 
@@ -81,7 +78,6 @@ const getRecetasPaciente = async (cuil) => {
 }
 
 const getPedidosLaboratorioPaciente = async (cuil) => {
-
     const token = sessionStorage.getItem("jwt");
     if (!token) throw new Error("No estas autorizado para realizar esta acción.")
 
@@ -112,7 +108,7 @@ const getDiagnosticosPaciente = async (cuil) => {
     const data = await response.json();
     if (!response.ok) {
 
-        throw new Error(`${data.message}`);
+        throw new Error(`${data.details.message}`);
     }
     return data
 
