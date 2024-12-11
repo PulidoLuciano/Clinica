@@ -71,5 +71,10 @@ public class Paciente extends Persona{
         return historiaClinica.getEvolucionesPorDiagnostico(diagnostico);
     }
 
+    
+    public List<Evolucion> getEvoluciones(){
+        return historiaClinica.getEvoluciones();
+    }
+
 }
 

@@ -99,6 +99,12 @@ public class PacienteController
         return ResponseEntity.ok(pedidosLaboratorio);
     }
 
+    @GetMapping("/{cuilPaciente}/historia-clinica/evoluciones")
+    public ResponseEntity<List<Evolucion>> getEvolucionesPaciente(@PathVariable("cuilPaciente") Long cuilPaciente) {
+        List<Evolucion> evoluciones = super.getServicio().getEvolucionesPaciente(cuilPaciente);
+        return ResponseEntity.ok(evoluciones);
+    }
+
     public Long getLoggedCuil() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();

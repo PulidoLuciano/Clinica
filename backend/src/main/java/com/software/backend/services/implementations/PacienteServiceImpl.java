@@ -128,4 +128,13 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
         return evoluciones;
     }
 
+    @Override
+    public List<Evolucion> getEvolucionesPaciente(long cuil){
+        Paciente paciente = verificarCuilPaciente(cuil);
+        List<Evolucion> evoluciones = paciente.getEvoluciones();
+        if(evoluciones.isEmpty()) throw new IllegalArgumentException("Este paciente no tiene evoluciones");
+        return evoluciones;
+    }
+
+
 }

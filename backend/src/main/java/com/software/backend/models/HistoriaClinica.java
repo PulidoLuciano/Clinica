@@ -91,4 +91,10 @@ public class HistoriaClinica {
         return evoluciones;
     } 
 
+    public List<Evolucion> getEvoluciones(){
+        List<Evolucion> evoluciones = new ArrayList<>();
+        detalles.forEach(detalle->{ evoluciones.addAll(detalle.getEvoluciones());});
+        return evoluciones;
+    }
+
 }
