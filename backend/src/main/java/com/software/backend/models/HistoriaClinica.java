@@ -3,6 +3,8 @@ package com.software.backend.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 public class HistoriaClinica {
@@ -76,5 +78,17 @@ public class HistoriaClinica {
         }
         return detalle;
     }
+
+    public List<Evolucion> getEvolucionesPorDiagnostico(String diagnostico){
+        List<Evolucion> evoluciones = new ArrayList<>();
+        try{
+            DetalleDiagnostico detalle = detalles.stream().filter(d->d.getDiagnostico().getNombre().equals(diagnostico)).findFirst().get();
+            evoluciones = detalle.getEvoluciones();
+        }catch(NoSuchElementException ex){
+            throw new NoSuchElementException("Este diagnostico no tiene evoluciones");
+        }
+        
+        return evoluciones;
+    } 
 
 }

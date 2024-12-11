@@ -66,4 +66,10 @@ public class Paciente extends Persona{
     public List<PedidoLaboratorio> getPedidosLaboratorio(){
         return historiaClinica.getPedidosLaboratorio();
     }
+
+    public List<Evolucion> getEvolucionesPorDiagnostico(String diagnostico){
+        return historiaClinica.getEvolucionesPorDiagnostico(diagnostico);
+    }
+
 }
+

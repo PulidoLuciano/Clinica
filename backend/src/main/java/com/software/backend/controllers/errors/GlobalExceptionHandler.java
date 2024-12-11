@@ -3,6 +3,7 @@ package com.software.backend.controllers.errors;
 import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,6 +78,12 @@ public class GlobalExceptionHandler{
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
         System.err.println(ex.getClass());
         ErrorResponse response = new ErrorResponse("Ocurrió un error inesperado", createDetails(ex));
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> hadnleNoSuchElementException(NoSuchElementException ex) {
+        ErrorResponse response = new ErrorResponse("No se encontraron los datos", createDetails(ex));
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

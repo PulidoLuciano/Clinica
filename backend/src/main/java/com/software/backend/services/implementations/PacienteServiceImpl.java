@@ -119,4 +119,13 @@ public class PacienteServiceImpl extends GenericServiceImpl<Paciente, Long, Paci
         if(pedidosLaboratorio.isEmpty()) throw new IllegalArgumentException("Esta historia clinica no tiene evoluciones con pedidos de laboratorio");  
          return pedidosLaboratorio;
     }
+
+    @Override
+    public List<Evolucion> getEvolucionesPorDiagnostico(long cuil,String diagnostico){
+        Paciente paciente = verificarCuilPaciente(cuil);
+        List<Evolucion> evoluciones = paciente.getEvolucionesPorDiagnostico(diagnostico);
+        if(evoluciones.isEmpty()) throw new IllegalArgumentException("Este diagnostico no tiene evoluciones");
+        return evoluciones;
+    }
+
 }

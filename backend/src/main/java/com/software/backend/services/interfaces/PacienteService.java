@@ -24,4 +24,6 @@ public interface PacienteService extends GenericService<Paciente, Long> {
     public List<Diagnostico> getDiagnosticos(Long cuil);
 
     public List<PedidoLaboratorio> getPedidos(Long cuil);
+    
+    public List<Evolucion> getEvolucionesPorDiagnostico(long cuil,String diagnostico);
 }

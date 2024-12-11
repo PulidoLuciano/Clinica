@@ -41,6 +41,13 @@ public class PacienteController
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    @GetMapping("/{cuilPaciente}/{nombreDiagnostico}/evoluciones")
+    public ResponseEntity<List<Evolucion>> getEvolucionesPorDiagnostico(@PathVariable("cuilPaciente") long cuilPaciente, @PathVariable("nombreDiagnostico") String nombreDiagnostico){
+
+        List<Evolucion> evoluciones = super.getServicio().getEvolucionesPorDiagnostico(cuilPaciente,nombreDiagnostico);
+        return ResponseEntity.ok(evoluciones);
+    }
+
     @PostMapping("/{cuilPaciente}/historia-clinica/{nombreDiagnostico}/evolucion")
     public ResponseEntity<Evolucion> createEvolucion(@Valid @RequestBody CrearEvolucionDTO dto,
             @PathVariable("cuilPaciente") Long cuilPaciente,
