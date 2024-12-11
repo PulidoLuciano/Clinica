@@ -11,7 +11,7 @@ export const fetchPaciente = async (cuil) => {
 
     if (!response.ok) {
         if (response.status === 404) {
-            return null; // Paciente no encontrado
+            return null;
         }
         throw new Error("Error al obtener los pacientes.");
     }
@@ -31,7 +31,7 @@ export const createPaciente = async (nuevoPaciente) => {
     });
 
     if (!response.ok) {
-        throw new Error("Error al crear el paciente");
+        throw new Error("Error al crear el paciente. Intente más tarde");
     }
 
     return await response.json();
