@@ -1,22 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalAgregarEvolucion from "../Modal/ModalAgregarEvolucion";
+import { pacienteService } from "../../service/pacienteService";
+import DatosEvolucion from "./DatosEvolucion";
 
-export default function SeccionEvoluciones({
-  cuilPaciente,
-  diagnosticoActivo,
-}) {
+export default function SeccionEvoluciones({evoluciones,setEvoluciones,cuilPaciente,diagnosticoActivo}) {
   const [modalEvolucionVisible, setModalEvolucionVisible] = useState(false);
+  // const [evoluciones,setEvoluciones] = useState(null);
+  const [error,setError] = useState(null);
 
+  console.log(diagnosticoActivo);
+  
+  useEffect(()=>{
+
+    async function getEvoluciones(diagnosticoActivo) {
+      try{
+        let data;
+        if(diagnosticoActivo == "Todos"){     
+          data = await pacienteService.getEvoluciones(cuilPaciente);
+        }else{
+          data = await pacienteService.getEvolucionesPorDiagnostico(cuilPaciente,diagnosticoActivo);
+        }
+        setEvoluciones(data);
+      }catch(error){
+        setError(error.message);
+      }
+
+    }
+
+    if(cuilPaciente){
+      getEvoluciones(diagnosticoActivo);
+    } 
+      
+
+  },[cuilPaciente,diagnosticoActivo]);
+  
   return (
     <>
-      <section className="flex-1 bg-gray-100 p-4 border border-gray-300 rounded-md overflow-y-auto relative">
-        <div className="flex flex-col h-full">
+      <section className="flex-1  bg-gray-100 p-4 border border-gray-300 rounded-md overflow-y-auto relative">
+        <div className="flex flex-col  h-full">
           <div className="flex-1 mb-4 overflow-y-auto">
             <h3 className="bg-blue-500 text-white text-center p-2 rounded-md sticky top-0">
               Evoluciones
             </h3>
           </div>
           <div className="flex-shrink-0">
+            {cuilPaciente && 
+              evoluciones? evoluciones.map((evolucion)=>{
+                return <DatosEvolucion evolucion={evolucion} />
+              }) : <p>{error}</p>
+            }
+
             {cuilPaciente && (
               <button
                 onClick={() => setModalEvolucionVisible(true)}

@@ -137,6 +137,47 @@ const createEvolucion = async (cuil,diagnostico,evolucion) => {
 
 }
 
+const getEvoluciones =  async(cuil,diagnostico)  =>{
+
+    const token = sessionStorage.getItem("jwt");
+    if (!token) throw new Error("No estas autorizado para realizar esta acción.")
+
+        const url = `http://localhost:8080/pacientes/${cuil}/historia-clinica/evoluciones`;
+        const response = await fetch(url, {
+            method: "Get",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(`Error al buscar evoluciones: ${data.details.message}`);
+        }
+        return data;
+
+}
+
+const getEvolucionesPorDiagnostico = async(cuil,diagnostico) =>{
+
+    const token = sessionStorage.getItem("jwt");
+    if (!token) throw new Error("No estas autorizado para realizar esta acción.")
+
+        const url = `http://localhost:8080/pacientes/${cuil}/${diagnostico}/evoluciones`;
+        const response = await fetch(url, {
+            method: "Get",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(`Error al buscar evoluciones: ${data.details.message}`);
+        }
+        return data;
+
+}
+
+
 export const pacienteService = {
     getPacienteByCuil,
     createPaciente,
@@ -144,5 +185,7 @@ export const pacienteService = {
     getRecetasPaciente,
     getPedidosLaboratorioPaciente,
     getDiagnosticosPaciente,
-    createEvolucion
+    createEvolucion,
+    getEvoluciones,
+    getEvolucionesPorDiagnostico
 }
