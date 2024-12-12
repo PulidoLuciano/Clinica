@@ -72,7 +72,7 @@ export default function SeccionEvoluciones({
         visible={modalEvolucionVisible}
         onClose={() => setModalEvolucionVisible(false)}
         cuilPaciente={cuilPaciente}
-        diagnosticos={["Gripe", "Muerte"]}
+        diagnosticoActivo={diagnosticoActivo}
       />
     </>
   );

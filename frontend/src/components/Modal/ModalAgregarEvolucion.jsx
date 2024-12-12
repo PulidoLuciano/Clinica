@@ -22,7 +22,11 @@ function ModalAgregarEvolucion({
     reset,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      diagnostico: diagnosticoActivo
+    }
+  });
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -152,6 +156,7 @@ function ModalAgregarEvolucion({
               type="text"
               id="diagnostico"
               list="diagnosticos"
+              defaultValue={(diagnosticoActivo == "Todos") ? "" : diagnosticoActivo}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               {...register("diagnostico", {
                 required: "El diagnóstico es necesario",
