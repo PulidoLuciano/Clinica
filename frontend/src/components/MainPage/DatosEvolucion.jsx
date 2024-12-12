@@ -7,7 +7,7 @@ const DatosEvolucion = ({ evolucion }) => {
     function handleVisible(){
         setVisible(!visible)
     }
-
+    
     return (
 
         <div className='border border-gray-300 p-3 rounded-md my-2'>

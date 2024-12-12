@@ -18,6 +18,11 @@ const Secciones = ({ cuilPaciente, diagnosticoActivo, setDiagnosticoActivo }) =>
             diagnosticoActivo
           );
         }
+        data = data.map(e => {
+          const fecha = new Date(e.fecha);
+          const fechaFormateada = `${fecha.getDay()}/${fecha.getMonth()}/${fecha.getFullYear()}`
+          return e = {...e,fecha:fechaFormateada};
+        })
         setEvoluciones(data);
       } catch (error) {
         console.error(error.message);
