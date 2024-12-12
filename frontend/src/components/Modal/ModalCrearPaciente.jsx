@@ -5,7 +5,7 @@ import calcularEdad from "../../utils/calcularEdad";
 import { pacienteService } from "../../service/pacienteService";
 import { generalService } from "../../service/generalService";
 
-function ModalCrearPaciente({ visible, onClose, setPaciente }) {
+function ModalCrearPaciente({ cuilNuevo, onClose, setPaciente }) {
   const [obrasSociales, setObrasSociales] = useState([]);
   const [generalError, setGeneralError] = useState(null);
 
@@ -48,7 +48,7 @@ function ModalCrearPaciente({ visible, onClose, setPaciente }) {
     }
   };
 
-  if (!visible) return null;
+  if (!cuilNuevo) return null;
 
   return (
     <div className="modal">
@@ -111,6 +111,7 @@ function ModalCrearPaciente({ visible, onClose, setPaciente }) {
             <input
               type="text"
               id="cuil"
+              defaultValue={cuilNuevo}
               {...register("cuil", {
                 required: "El CUIL es necesario",
                 pattern: {

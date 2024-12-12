@@ -5,11 +5,11 @@ import calcularEdad from "../../utils/calcularEdad";
 import { pacienteService } from "../../service/pacienteService";
 
 export default function FormBuscar({ setPaciente }) {
-  const [modalCrearVisible, setModalCrearVisible] = useState(false);
+  const [cuilNuevo, setCuilNuevo] = useState(null);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm();
 
   const handleSearch = async (data) => {
@@ -17,7 +17,7 @@ export default function FormBuscar({ setPaciente }) {
     if (cuilBuscado) {
       const pacienteEncontrado = await pacienteService.getPacienteByCuil(cuilBuscado);
       if(!pacienteEncontrado){
-        setModalCrearVisible(true);
+        setCuilNuevo(cuilBuscado);
         return;
       }
       console.log(pacienteEncontrado)
@@ -57,8 +57,8 @@ export default function FormBuscar({ setPaciente }) {
         </button>
       </form>
       <ModalCrearPaciente
-        visible={modalCrearVisible}
-        onClose={() => setModalCrearVisible(false)}
+        cuilNuevo={cuilNuevo}
+        onClose={() => setCuilNuevo(null)}
         setPaciente={setPaciente}
       />
     </>
