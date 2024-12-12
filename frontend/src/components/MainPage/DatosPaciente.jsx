@@ -9,7 +9,7 @@ export default function DatosPaciente({ setCuilPaciente }) {
   }, [paciente]);
 
   return (
-    <section className="bg-gray-100 p-4 border border-gray-300 rounded-md overflow-y-auto relative">
+    <section className="bg-gray-100 m-2 p-4 border border-gray-300 rounded-md  relative">
       <h3 className="bg-blue-500 text-white text-center p-2 rounded-md sticky top-0">
         Datos del paciente
       </h3>

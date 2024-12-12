@@ -27,11 +27,16 @@ const Secciones = ({ cuilPaciente, diagnosticoActivo, setDiagnosticoActivo }) =>
         console.error(error.message);
       }
     }
+    
+    
     if (cuilPaciente) {
       getEvoluciones(diagnosticoActivo);
     } else {
       setEvoluciones([]);
     }
+
+
+
   }, [cuilPaciente, diagnosticoActivo]);
 
   const getPedidos = () => {
@@ -45,19 +50,32 @@ const Secciones = ({ cuilPaciente, diagnosticoActivo, setDiagnosticoActivo }) =>
     return pedidos;
   };
 
+  const getRecetas = () =>{
+    var recetas = [];
+    if(evoluciones){
+      evoluciones.forEach(evolucion =>{
+        if(evolucion.receta){
+          recetas.push(evolucion.receta);
+        }
+          
+      });
+    }
+    return recetas;
+  }
+
   return (
-    <section className="flex flex-1 gap-2 bg-white overflow-y-auto p-4">
+    <section className="h-3/5 grid grid-cols-10 grid-rows-10 gap-2 bg-white p-4">
       <SeccionEvoluciones
         evoluciones={evoluciones}
         cuilPaciente={cuilPaciente}
         diagnosticoActivo={diagnosticoActivo}
         setDiagnosticoActivo={setDiagnosticoActivo}
       />
-      <div className="flex-1 bg-gray-100 p-4 border border-gray-300 rounded-md overflow-y-auto relative">
-        <div className="flex flex-col h-full">
-          <SeccionRecetas evoluciones={evoluciones} />
+      <div className="grid grid-rows-10 grid-cols-1 col-span-4 row-span-10 flex flex-col p-4 border  bg-gray-100 border-gray-300 rounded-md relative">
+        
+          <SeccionRecetas recetas={getRecetas()} />
           <SeccionPedidos pedidos={getPedidos()} />
-        </div>
+       
       </div>
     </section>
   );

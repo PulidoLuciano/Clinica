@@ -28,7 +28,7 @@ export default function SeccionDiagnosticos({ cuilPaciente, diagnosticoActivo, s
   }, [cuilPaciente, diagnosticoActivo]);
 
   return (
-    <section className="p-4 border border-gray-300 rounded-md overflow-y-auto">
+    <section className="p-4 border border-gray-300 rounded-md m-2 ">
       <h3 className="bg-blue-500 text-white text-center p-2 rounded-md sticky top-0">
         Filtrar por diagnósticos del paciente
       </h3>

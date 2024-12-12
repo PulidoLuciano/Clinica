@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import flechaAbajo from "../../icons/flechaAbajo.svg"
 import flechaArriba from "../../icons/flechaArriba.svg"
+import DatosReceta from './DatosReceta';
+import telefono from "../../icons/telefono.svg"
+import emailIcon from "../../icons/emailIcon.svg"
+import pillIcon from "../../icons/pillIcon.svg"
 
 const DatosEvolucion = ({ evolucion }) => {
     const [visible, setVisible] = useState(false);
@@ -19,15 +23,15 @@ const DatosEvolucion = ({ evolucion }) => {
                     </button>
                 </div>
 
-                {!visible &&  <p className=''><b>Texto:</b> {evolucion.texto.length>80? `${evolucion.texto.substring(0,80)}...` :evolucion.texto}</p>}
+                {!visible && <p className='truncate'><b>Texto:</b> {evolucion.texto}</p>}
                 {console.log(evolucion.texto.length)}
 
             </div>
 
             {visible &&
-                <div className='flex flex-col text-wrap '>
-                    
-                    <p className=''><b>Texto:</b> {evolucion.texto}</p>
+                <div className='flex flex-col text-wrap'>
+
+                    <p><b>Texto:</b> {evolucion.texto}</p>
                     {evolucion.pedidoLaboratio &&
                         <div className='flex gap-1'>
                             <label className='font-bold'>Pedido Laboratorio: </label>
@@ -35,18 +39,30 @@ const DatosEvolucion = ({ evolucion }) => {
                         </div>
                     }
                     {evolucion.receta &&
-                        <div className='flex flex-col justify-items-start gap-1'>
-                            <label className='font-bold'>Medicamentos Recetados:</label>
+                        <div className='flex flex-col'>
+                            <p className='font-bold'>Medicamentos:</p>
                             <ul>
-                                {evolucion.receta.detalles.map((detalle, index) => {
-                                    return <li key={index} className='flex gap-1'><p className='font-semibold'>{detalle.medicamentos.descripcion}:</p><p>{detalle.cantidad}</p></li>
-                                })}
+                                {
+                                    evolucion.receta.detalles.map((detalleReceta, idr) => (
 
+                                        <li className='flex' key={idr}><img src={pillIcon}/>{detalleReceta.medicamentos.descripcion} x{detalleReceta.cantidad}</li>
+
+                                    ))
+                                }
                             </ul>
                         </div>
+
                     }
                     <p><b>Médico:</b> {evolucion.medico.nombre + " " + evolucion.medico.apellido}</p>
-                    
+                    <p><b>Especialidad:</b> {evolucion.medico.especialidad.nombre}</p>
+                    <div className='flex flex-col'>
+                        <p className='font-bold'>Contactos Médico:</p>
+                        <ul className='pl-5'>
+                            <li className='flex'><img src={emailIcon} /><b>E-mail:</b> {evolucion.medico.email}</li>
+                            <li className='flex'><img src={telefono} /><b>Teléfono:</b> {evolucion.medico.telefono}</li>
+                        </ul>
+                    </div>
+
                 </div>}
 
         </div>
