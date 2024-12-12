@@ -84,7 +84,7 @@ function ModalAgregarEvolucion({
         await pacienteService.createEvolucion(cuilPaciente, diagnostico, requestBody);
         break;
     }
-    setDiagnosticoActivo("Todos");
+    setDiagnosticoActivo("");
     onClose();
   };
 

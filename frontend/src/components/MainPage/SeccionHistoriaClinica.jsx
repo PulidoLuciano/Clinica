@@ -7,7 +7,8 @@ export default function SeccionHistoriaClinica({ cuilPaciente }) {
   const [diagnosticoActivo, setDiagnosticoActivo] = useState("Todos");
 
   useEffect(() => {
-    console.log(diagnosticoActivo)
+    if(diagnosticoActivo == "")
+    setDiagnosticoActivo("Todos")
   }, [diagnosticoActivo])
   
   return (
