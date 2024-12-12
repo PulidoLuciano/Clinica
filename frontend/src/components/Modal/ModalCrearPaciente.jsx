@@ -7,6 +7,7 @@ import { generalService } from "../../service/generalService";
 
 function ModalCrearPaciente({ visible, onClose, setPaciente }) {
   const [obrasSociales, setObrasSociales] = useState([]);
+  const [generalError, setGeneralError] = useState(null);
 
   const {
     register,
@@ -29,13 +30,21 @@ function ModalCrearPaciente({ visible, onClose, setPaciente }) {
   }, []);
 
   const handleCrearPaciente = async (data) => {
-    try{
-      data.obraSocial = { codigo: obrasSociales.find((obra) => obra.denominacion == data.obraSocial)?.codigo}
+    try {
+      data.obraSocial = {
+        codigo: obrasSociales.find(
+          (obra) => obra.denominacion == data.obraSocial
+        )?.codigo,
+      };
       const pacienteCreado = await pacienteService.createPaciente(data);
       onClose();
-      setPaciente({...pacienteCreado, edad: calcularEdad(data.fechaNacimiento)});
-    }catch(e){
-      console.error(e);
+      setGeneralError(null);
+      setPaciente({
+        ...pacienteCreado,
+        edad: calcularEdad(data.fechaNacimiento),
+      });
+    } catch (e) {
+      setGeneralError(e.message);
     }
   };
 
@@ -125,7 +134,12 @@ function ModalCrearPaciente({ visible, onClose, setPaciente }) {
               id="fechaNacimiento"
               {...register("fechaNacimiento", {
                 required: "La fecha de nacimiento es necesaria",
-                validate: (value) => { return (new Date() > new Date(value) || "La fecha no puede ser posterior a hoy")}
+                validate: (value) => {
+                  return (
+                    new Date() > new Date(value) ||
+                    "La fecha no puede ser posterior a hoy"
+                  );
+                },
               })}
             />
             {errors.fechaNacimiento && (
@@ -186,15 +200,20 @@ function ModalCrearPaciente({ visible, onClose, setPaciente }) {
               list="obras-sociales"
               {...register("obraSocial", {
                 required: "La obra social es necesaria",
-                validate: (value) => {return (obrasSociales.find((obra) => obra.denominacion == value) || "La obra social no es válida")},
+                validate: (value) => {
+                  return (
+                    obrasSociales.find((obra) => obra.denominacion == value) ||
+                    "La obra social no es válida"
+                  );
+                },
               })}
             />
             <datalist id="obras-sociales">
-              {
-                obrasSociales.map((obra) => 
-                  <option value={obra.denominacion} key={obra.id}>{obra.sigla}</option>
-                )
-              }
+              {obrasSociales.map((obra) => (
+                <option value={obra.denominacion} key={obra.id}>
+                  {obra.sigla}
+                </option>
+              ))}
             </datalist>
             {errors.obraSocial && (
               <label htmlFor="obraSocial" className="text-red-500 text-xs mt-1">
@@ -233,11 +252,18 @@ function ModalCrearPaciente({ visible, onClose, setPaciente }) {
             <button
               type="reset"
               className="bg-red-500 hover:bg-red-600"
-              onClick={() => {reset(); onClose();}}
+              onClick={() => {
+                reset();
+                onClose();
+                setGeneralError(null);
+              }}
             >
               Cancelar
             </button>
           </div>
+          {generalError &&
+            <label className="text-red-500 text-xs mt-1">{generalError}</label>
+          }
         </form>
       </div>
     </div>

@@ -35,7 +35,7 @@ const createPaciente = async (nuevoPaciente) => {
 
     const data = await response.json();
     if (!response.ok) {
-        throw new Error(`${data.message}`);
+        throw new Error(`${data.details.message}`);
     }
     return data;
 };
