@@ -4,49 +4,50 @@ import flechaArriba from "../../icons/flechaArriba.svg"
 
 const DatosEvolucion = ({ evolucion }) => {
     const [visible, setVisible] = useState(false);
-    function handleVisible(){
+    function handleVisible() {
         setVisible(!visible)
     }
-    
+
     return (
 
         <div className='border border-gray-300 p-3 rounded-md my-2'>
-            <button onClick={handleVisible} className='flex gap-1'>
-                <p className='font-semibold'>Fecha:</p>
-                <p>{evolucion.fecha}</p>
-                <img src={visible? flechaArriba : flechaAbajo} />
-             </button>
-            {visible && 
-            <div className='flex flex-col'>
-                <div className='flex gap-1'>
-                    <label className='font-semibold'> Realizada por:</label>
-                    <p>{evolucion.medico.nombre + " " + evolucion.medico.apellido}</p>
+            <div>
+                <div className='flex justify-between'>
+                    <p><b>Fecha:</b> {evolucion.fecha}</p>
+                    <button onClick={handleVisible} className=''>
+                        <img src={visible ? flechaArriba : flechaAbajo} />
+                    </button>
                 </div>
-                <div className='flex gap-1'>
-                    <label className='font-semibold'> Texto:</label>
-                    <p>{evolucion.texto}</p>
-                </div>
-                <div className='flex gap-1'>
-                    <label className='font-semibold'>Fecha: </label>
-                    <p>{evolucion.fecha}</p>
-                </div>
-                {evolucion.pedidoLaboratio &&
-                    <div className='flex gap-1'>
-                        <label className='font-semibold'>Pedido Laboratorio: </label>
-                        <p>{evolucion.pedidoLaboratorio}</p>
-                    </div>}
-                {evolucion.receta &&
-                    <div className='flex flex-col  justify-items-start gap-1'>
-                        <label className='font-semibold'>Medicamentos Recetados:</label>
-                        <ul>
-                            {evolucion.receta.detalles.map((detalle, index) => {
-                                return <li key={index} className='flex gap-1'><p className='font-semibold'>{detalle.medicamentos.descripcion}:</p><p>{detalle.cantidad}</p></li>
-                            })}
 
-                        </ul>
-                    </div>
-                }
-            </div>}
+                {!visible &&  <p className=''><b>Texto:</b> {evolucion.texto.length>80? `${evolucion.texto.substring(0,80)}...` :evolucion.texto}</p>}
+                {console.log(evolucion.texto.length)}
+
+            </div>
+
+            {visible &&
+                <div className='flex flex-col text-wrap '>
+                    
+                    <p className=''><b>Texto:</b> {evolucion.texto}</p>
+                    {evolucion.pedidoLaboratio &&
+                        <div className='flex gap-1'>
+                            <label className='font-bold'>Pedido Laboratorio: </label>
+                            <p>{evolucion.pedidoLaboratorio}</p>
+                        </div>
+                    }
+                    {evolucion.receta &&
+                        <div className='flex flex-col justify-items-start gap-1'>
+                            <label className='font-bold'>Medicamentos Recetados:</label>
+                            <ul>
+                                {evolucion.receta.detalles.map((detalle, index) => {
+                                    return <li key={index} className='flex gap-1'><p className='font-semibold'>{detalle.medicamentos.descripcion}:</p><p>{detalle.cantidad}</p></li>
+                                })}
+
+                            </ul>
+                        </div>
+                    }
+                    <p><b>Médico:</b> {evolucion.medico.nombre + " " + evolucion.medico.apellido}</p>
+                    
+                </div>}
 
         </div>
     )
