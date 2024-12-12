@@ -28,14 +28,8 @@ function ModalAgregarEvolucion({
     control,
     name: "medicamentos",
     rules: {
-      minLength: {
-        message: "Se debe recetar al menos un medicamento",
-        value: 1,
-      },
-      maxLength: {
-        message: "La cantidad de medicamentos no puede ser mayor a dos",
-        value: 2,
-      },
+      required: "Se debe recetar al menos un medicamento",
+      maxLength: {value: 2, message: "No se puede recetar más de dos medicamentos"}
     },
   });
 
@@ -54,6 +48,8 @@ function ModalAgregarEvolucion({
 
   useEffect(() => {
     if (!visible) {
+      setTipoEvolucion("Ninguno")
+      remove();
       reset();
     }
   }, [visible, reset]);
@@ -156,9 +152,6 @@ function ModalAgregarEvolucion({
               type="text"
               id="diagnostico"
               list="diagnosticos"
-              defaultValue={
-                diagnosticoActivo == "Todos" ? "" : diagnosticoActivo
-              }
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               {...register("diagnostico", {
                 required: "El diagnóstico es necesario",
@@ -324,17 +317,13 @@ function ModalAgregarEvolucion({
                       </button>
                     </div>
                     {errors.medicamentos?.[index] && (
-                      <p className="text-red-500 text-sm">
+                      <p className="text-red-500 text-sm" key={item.id}> 
                         {errors.medicamentos?.[index].cantidad.message}
                       </p>
                     )}
                   </>
                 ))}
-                {errors.medicamentos && (
-                  <p className="text-red-500 text-sm">
-                    {errors.medicamentos.message}
-                  </p>
-                )}
+              <p className="text-red-500 text-sm">{errors.medicamentos?.root?.message}</p>
               </div>
             </div>
           )}
