@@ -12,11 +12,11 @@ export default function PlantillasTextArea({
 }) {
   const [filteredPlantillas, setFilteredPlantillas] = useState([]);
 
-    console.log(filteredPlantillas)
+    
 
   const filtrarPlantillas = (value) => {
     const lowerValue = value.toLowerCase();
-    console.log(lowerValue)
+    
     setFilteredPlantillas(
       plantillas.filter(
         (plantilla) =>

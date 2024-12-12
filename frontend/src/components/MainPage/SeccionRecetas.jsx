@@ -14,7 +14,7 @@ export default function SeccionRecetas({ recetas }) {
           {recetas ? (
             <div className="p-2">
               {recetas.map((receta, index) => (
-                <DatosReceta receta={receta} index={index} />
+                <DatosReceta receta={receta} key={index} />
               ))}
             </div>
           ) : (

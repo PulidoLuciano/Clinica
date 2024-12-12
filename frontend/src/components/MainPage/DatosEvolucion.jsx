@@ -5,6 +5,7 @@ import DatosReceta from './DatosReceta';
 import telefono from "../../icons/telefono.svg"
 import emailIcon from "../../icons/emailIcon.svg"
 import pillIcon from "../../icons/pillIcon.svg"
+import pedidoLabIcon from "../../icons/pedidoLabIcon.svg"
 
 const DatosEvolucion = ({ evolucion }) => {
     const [visible, setVisible] = useState(false);
@@ -24,7 +25,7 @@ const DatosEvolucion = ({ evolucion }) => {
                 </div>
 
                 {!visible && <p className='truncate'><b>Texto:</b> {evolucion.texto}</p>}
-                {console.log(evolucion.texto.length)}
+                
 
             </div>
 
@@ -32,10 +33,10 @@ const DatosEvolucion = ({ evolucion }) => {
                 <div className='flex flex-col text-wrap'>
 
                     <p><b>Texto:</b> {evolucion.texto}</p>
-                    {evolucion.pedidoLaboratio &&
+                    {evolucion.pedidoLaboratorio &&
                         <div className='flex gap-1'>
-                            <label className='font-bold'>Pedido Laboratorio: </label>
-                            <p>{evolucion.pedidoLaboratorio}</p>
+                            <label className='flex font-bold'><img src={pedidoLabIcon}/>Pedido Laboratorio: </label>
+                            <p>{evolucion.pedidoLaboratorio.texto}</p>
                         </div>
                     }
                     {evolucion.receta &&
@@ -45,7 +46,7 @@ const DatosEvolucion = ({ evolucion }) => {
                                 {
                                     evolucion.receta.detalles.map((detalleReceta, idr) => (
 
-                                        <li className='flex' key={idr}><img src={pillIcon}/>{detalleReceta.medicamentos.descripcion} x{detalleReceta.cantidad}</li>
+                                        <li className='flex pl-5' key={idr}><img src={pillIcon}/>{detalleReceta.medicamentos.descripcion} x{detalleReceta.cantidad}</li>
 
                                     ))
                                 }

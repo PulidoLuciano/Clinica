@@ -1,9 +1,9 @@
 import React from 'react'
 
-const DatosReceta = ({receta,index}) => {
+const DatosReceta = ({receta}) => {
     return (
         <div
-            key={index}
+            
             className="mb-2 border rounded-md p-2 border-gray-300 mt-2"
         >
             <p>

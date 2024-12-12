@@ -18,10 +18,21 @@ const Secciones = ({ cuilPaciente, diagnosticoActivo, setDiagnosticoActivo }) =>
             diagnosticoActivo
           );
         }
+        
+        
+        
+        data.sort((a, b) => {
+          const fechaA = new Date(a.fecha);
+          const fechaB = new Date(b.fecha);
+          return fechaB - fechaA;
+      });
+        
         data = data.map(e => {
           const fecha = new Date(e.fecha);
           return e = {...e,fecha:fecha.toLocaleDateString()};
         })
+        
+        
         setEvoluciones(data);
       } catch (error) {
         console.error(error.message);

@@ -13,9 +13,9 @@ export default function SeccionPedidos({ pedidos }) {
           {!pedidos ? (
             <p>No hay pedidos para mostrar</p>
           ) : (
-            pedidos.map((pedido) =>
+            pedidos.map((pedido,index) =>
             (
-              <DatosPedidosLab
+              <DatosPedidosLab key={index}
                 textoPedido={pedido.texto}
                 fechaEvolucion={pedido.fechaEvolucion}
               />
