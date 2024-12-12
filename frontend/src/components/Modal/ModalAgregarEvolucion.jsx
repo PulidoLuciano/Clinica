@@ -3,13 +3,18 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { generalService } from "../../service/generalService";
 import { pacienteService } from "../../service/pacienteService";
 import "../Modal/ModalCrearPaciente.css";
+import {
+  PlantillasEvoluciones,
+  PlantillasPedidos,
+} from "../../data/plantillas";
+import PlantillasTextArea from "./inputs/PlantillasTextArea";
 
 function ModalAgregarEvolucion({
   visible,
   onClose,
   cuilPaciente,
   diagnosticoActivo,
-  setDiagnosticoActivo
+  setDiagnosticoActivo,
 }) {
   const [diagnosticos, setDiagnosticos] = useState([]);
   const [tipoEvolucion, setTipoEvolucion] = useState("Ninguno");
@@ -23,6 +28,7 @@ function ModalAgregarEvolucion({
     handleSubmit,
     reset,
     control,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -69,7 +75,11 @@ function ModalAgregarEvolucion({
     switch (tipoEvolucion) {
       case "Ninguno":
         requestBody = { texto };
-        await pacienteService.createEvolucion(cuilPaciente, diagnostico, requestBody);
+        await pacienteService.createEvolucion(
+          cuilPaciente,
+          diagnostico,
+          requestBody
+        );
         break;
       case "Receta":
         medicamentosReceta = medicamentosReceta.map((medicamento) => ({
@@ -77,11 +87,19 @@ function ModalAgregarEvolucion({
           cantidad: medicamento.cantidad,
         }));
         requestBody = { texto, medicamentosReceta };
-        await pacienteService.createEvolucion(cuilPaciente, diagnostico, requestBody);
+        await pacienteService.createEvolucion(
+          cuilPaciente,
+          diagnostico,
+          requestBody
+        );
         break;
       case "Laboratorio":
         requestBody = { texto, textoPedidoLaboratorio };
-        await pacienteService.createEvolucion(cuilPaciente, diagnostico, requestBody);
+        await pacienteService.createEvolucion(
+          cuilPaciente,
+          diagnostico,
+          requestBody
+        );
         break;
     }
     setDiagnosticoActivo("");
@@ -148,28 +166,18 @@ function ModalAgregarEvolucion({
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="texto"
-            >
-              Texto de la evolución*
-            </label>
-            <textarea
-              {...register("texto", {
-                required: "El texto de la evolución es obligatorio.",
-              })}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              rows="4"
-              placeholder="Ingrese el texto de la evolución"
-              id="texto"
-            />
-            {errors.texto && (
-              <label htmlFor="texto" className="text-red-500 text-sm">
-                {errors.texto.message}
-              </label>
-            )}
-          </div>
+          <PlantillasTextArea
+            label={"Texto de la evolución*"}
+            placeholder={"Ingrese el texto de la evolución"}
+            register={register}
+            name={"texto"}
+            validations={{
+              required: "El texto de la evolución es obligatorio.",
+            }}
+            error={errors.texto}
+            plantillas={PlantillasEvoluciones}
+            setValue={setValue}
+          />
 
           <div className="mb-4">
             <label
@@ -262,27 +270,21 @@ function ModalAgregarEvolucion({
           </div>
 
           {tipoEvolucion === "Laboratorio" && (
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Texto del pedido de laboratorio
-              </label>
-              <textarea
-                {...register("textoPedidoLaboratorio", {
-                  required:
-                    tipoEvolucion === "Laboratorio"
-                      ? "El texto del pedido de laboratorio es obligatorio."
-                      : false,
-                })}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows="4"
-                placeholder="Ingrese el texto del pedido de laboratorio"
-              />
-              {errors.textoPedidoLaboratorio && (
-                <p className="text-red-500 text-sm">
-                  {errors.textoPedidoLaboratorio.message}
-                </p>
-              )}
-            </div>
+            <PlantillasTextArea
+              label={"Texto del pedido de laboratorio"}
+              placeholder={"Ingrese el texto del pedido de laboratorio"}
+              register={register}
+              name={"textoPedidoLaboratorio"}
+              validations={{
+                required:
+                  tipoEvolucion === "Laboratorio"
+                    ? "El texto del pedido de laboratorio es obligatorio."
+                    : false,
+              }}
+              error={errors.textoPedidoLaboratorio}
+              plantillas={PlantillasPedidos}
+              setValue={setValue}
+            />
           )}
 
           {tipoEvolucion === "Receta" && (
