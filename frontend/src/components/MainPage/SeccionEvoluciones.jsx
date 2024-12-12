@@ -3,37 +3,42 @@ import ModalAgregarEvolucion from "../Modal/ModalAgregarEvolucion";
 import { pacienteService } from "../../service/pacienteService";
 import DatosEvolucion from "./DatosEvolucion";
 
-export default function SeccionEvoluciones({evoluciones,setEvoluciones,cuilPaciente,diagnosticoActivo}) {
+export default function SeccionEvoluciones({
+  evoluciones,
+  setEvoluciones,
+  cuilPaciente,
+  diagnosticoActivo,
+}) {
   const [modalEvolucionVisible, setModalEvolucionVisible] = useState(false);
   // const [evoluciones,setEvoluciones] = useState(null);
-  const [error,setError] = useState(null);
+  const [error, setError] = useState(null);
 
   console.log(diagnosticoActivo);
-  
-  useEffect(()=>{
 
+  useEffect(() => {
     async function getEvoluciones(diagnosticoActivo) {
-      try{
+      try {
         let data;
-        if(diagnosticoActivo == "Todos"){     
+        if (diagnosticoActivo == "Todos") {
           data = await pacienteService.getEvoluciones(cuilPaciente);
-        }else{
-          data = await pacienteService.getEvolucionesPorDiagnostico(cuilPaciente,diagnosticoActivo);
+        } else {
+          data = await pacienteService.getEvolucionesPorDiagnostico(
+            cuilPaciente,
+            diagnosticoActivo
+          );
         }
         setEvoluciones(data);
-      }catch(error){
+      } catch (error) {
         setError(error.message);
       }
-
     }
-
-    if(cuilPaciente){
+    if (cuilPaciente) {
       getEvoluciones(diagnosticoActivo);
-    } 
-      
+    } else {
+      setEvoluciones([]);
+    }
+  }, [cuilPaciente, diagnosticoActivo]);
 
-  },[cuilPaciente,diagnosticoActivo]);
-  
   return (
     <>
       <section className="flex-1  bg-gray-100 p-4 border border-gray-300 rounded-md overflow-y-auto relative">
@@ -44,11 +49,13 @@ export default function SeccionEvoluciones({evoluciones,setEvoluciones,cuilPacie
             </h3>
           </div>
           <div className="flex-shrink-0">
-            {cuilPaciente && 
-              evoluciones? evoluciones.map((evolucion)=>{
-                return <DatosEvolucion evolucion={evolucion} />
-              }) : <p>{error}</p>
-            }
+            {cuilPaciente && evoluciones ? (
+              evoluciones.map((evolucion) => {
+                return <DatosEvolucion evolucion={evolucion} />;
+              })
+            ) : (
+              <p>{error}</p>
+            )}
 
             {cuilPaciente && (
               <button

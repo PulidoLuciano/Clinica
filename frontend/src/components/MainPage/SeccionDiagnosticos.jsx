@@ -13,12 +13,15 @@ export default function SeccionDiagnosticos({ cuilPaciente, diagnosticoActivo, s
             cuilPaciente
           );
           const nombres = data.map((diagnostico) => diagnostico.nombre);
+          setError(null);
           setDiagnosticos(["Todos"].concat(nombres));
         } else {
+          setError(null);
           setDiagnosticos([]);
         }
       } catch (error) {
         setError(error.message);
+        setDiagnosticos([]);
       }
     };
     traerDiagnosticos(cuilPaciente);
