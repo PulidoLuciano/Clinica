@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { generalService } from "../../service/generalService";
+import { pacienteService } from "../../service/pacienteService";
 import "../Modal/ModalCrearPaciente.css";
 
 function ModalAgregarEvolucion({
@@ -8,6 +9,7 @@ function ModalAgregarEvolucion({
   onClose,
   cuilPaciente,
   diagnosticoActivo,
+  setDiagnosticoActivo
 }) {
   const [diagnosticos, setDiagnosticos] = useState([]);
   const [tipoEvolucion, setTipoEvolucion] = useState("Ninguno");
@@ -22,18 +24,20 @@ function ModalAgregarEvolucion({
     reset,
     control,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      diagnostico: diagnosticoActivo
-    }
-  });
+  } = useForm();
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "medicamentos",
+    name: "medicamentosReceta",
     rules: {
-      required: "Se debe recetar al menos un medicamento",
-      maxLength: {value: 2, message: "No se puede recetar más de dos medicamentos"}
+      required:
+        tipoEvolucion === "Receta"
+          ? "Se debe recetar al menos un medicamento"
+          : false,
+      maxLength: {
+        value: 2,
+        message: "No se puede recetar más de dos medicamentos",
+      },
     },
   });
 
@@ -52,14 +56,36 @@ function ModalAgregarEvolucion({
 
   useEffect(() => {
     if (!visible) {
-      setTipoEvolucion("Ninguno")
+      setTipoEvolucion("Ninguno");
       remove();
       reset();
     }
   }, [visible, reset]);
 
-  const onSubmit = (data) => {
-    console.log({ ...data });
+  const onSubmit = async (data) => {
+    let { texto, textoPedidoLaboratorio, diagnostico, medicamentosReceta } =
+      data;
+    let requestBody;
+    switch (tipoEvolucion) {
+      case "Ninguno":
+        requestBody = { texto };
+        await pacienteService.createEvolucion(cuilPaciente, diagnostico, requestBody);
+        break;
+      case "Receta":
+        medicamentosReceta = medicamentosReceta.map((medicamento) => ({
+          codigoMedicamento: medicamento.codigo,
+          cantidad: medicamento.cantidad,
+        }));
+        requestBody = { texto, medicamentosReceta };
+        await pacienteService.createEvolucion(cuilPaciente, diagnostico, requestBody);
+        break;
+      case "Laboratorio":
+        requestBody = { texto, textoPedidoLaboratorio };
+        await pacienteService.createEvolucion(cuilPaciente, diagnostico, requestBody);
+        break;
+    }
+    setDiagnosticoActivo("Todos");
+    onClose();
   };
 
   const buscarMedicamentos = async (descripcion) => {
@@ -156,7 +182,9 @@ function ModalAgregarEvolucion({
               type="text"
               id="diagnostico"
               list="diagnosticos"
-              defaultValue={(diagnosticoActivo == "Todos") ? "" : diagnosticoActivo}
+              defaultValue={
+                diagnosticoActivo == "Todos" ? "" : diagnosticoActivo
+              }
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               {...register("diagnostico", {
                 required: "El diagnóstico es necesario",
@@ -192,7 +220,7 @@ function ModalAgregarEvolucion({
               type="button"
               onClick={() => {
                 setTipoEvolucion("Ninguno");
-                setMedicamentos([]);
+                remove();
               }}
               className={`flex-1 px-4 py-2 rounded-lg w-full mb-2 ${
                 tipoEvolucion === "Ninguno"
@@ -207,7 +235,6 @@ function ModalAgregarEvolucion({
                 type="button"
                 onClick={() => {
                   setTipoEvolucion("Receta");
-                  setTextoPedidoLaboratorio("");
                 }}
                 className={`flex-1 px-4 py-2 rounded-lg ${
                   tipoEvolucion === "Receta"
@@ -221,7 +248,7 @@ function ModalAgregarEvolucion({
                 type="button"
                 onClick={() => {
                   setTipoEvolucion("Laboratorio");
-                  setMedicamentos([]);
+                  remove();
                 }}
                 className={`flex-1 px-4 py-2 rounded-lg ${
                   tipoEvolucion === "Laboratorio"
@@ -300,11 +327,12 @@ function ModalAgregarEvolucion({
                       </span>
                       <input
                         type="number"
-                        {...register(`medicamentos.${index}.cantidad`, {
+                        {...register(`medicamentosReceta.${index}.cantidad`, {
                           required: "La cantidad de cajas es obligatoria",
                           min: {
                             value: 1,
-                            message: "La cantidad de cajas no puede ser menor a uno"
+                            message:
+                              "La cantidad de cajas no puede ser menor a uno",
                           },
                           pattern: {
                             value: /^\d+$/,
@@ -321,14 +349,16 @@ function ModalAgregarEvolucion({
                         ✕
                       </button>
                     </div>
-                    {errors.medicamentos?.[index] && (
-                      <p className="text-red-500 text-sm" key={item.id}> 
-                        {errors.medicamentos?.[index].cantidad.message}
+                    {errors.medicamentosReceta?.[index] && (
+                      <p className="text-red-500 text-sm" key={index}>
+                        {errors.medicamentosReceta?.[index].cantidad.message}
                       </p>
                     )}
                   </>
                 ))}
-              <p className="text-red-500 text-sm">{errors.medicamentos?.root?.message}</p>
+                <p className="text-red-500 text-sm">
+                  {errors.medicamentosReceta?.root?.message}
+                </p>
               </div>
             </div>
           )}

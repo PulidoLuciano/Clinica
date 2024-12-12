@@ -25,7 +25,7 @@ export default function SeccionDiagnosticos({ cuilPaciente, diagnosticoActivo, s
       }
     };
     traerDiagnosticos(cuilPaciente);
-  }, [cuilPaciente]);
+  }, [cuilPaciente, diagnosticoActivo]);
 
   return (
     <section className="p-4 border border-gray-300 rounded-md overflow-y-auto">
